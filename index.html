@@ -17,7 +17,6 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             font-family: 'Inter', sans-serif;
             background-color: var(--color-2);
             color: var(--color-1);
@@ -46,6 +45,15 @@
         .card:hover {
             transform: scale(1.05);
         }
+        .card h2 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .card p {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            color: var(--color-2);
+        }
         .combo-1 {
             color: var(--color-1);
             background-color: var(--color-2);
@@ -54,7 +62,7 @@
 </head>
 <body class="combo-1">
     <div class="w-full max-w-xl mx-auto">
-        <h1 class="text-4xl md:text-6xl font-black text-center mb-4">Social Audits</h1>
+        <h1 class="text-5xl md:text-7xl font-black text-center mb-4">Social Audits</h1>
         <p class="text-xl md:text-2xl font-bold text-center">Presentation Files</p>
         <div class="grid grid-cols-1 gap-8 mt-12">
             <a href="onepager.html" class="card">
