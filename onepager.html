@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wise One: Social Audits</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            /* New Light Theme Color Scheme */
+            --color-bg: #F0F0F0; /* Off-white background */
+            --color-text-primary: rgb(18, 3, 65); /* Dark blue-purple for main text */
+            --color-text-secondary: #5a5a6a; /* Darker gray for secondary text */
+            --color-card-bg: rgb(18, 3, 65); /* Dark blue-purple for card backgrounds */
+            --color-card-text-primary: #FFFFFF; /* White for card headings */
+            --color-card-text-secondary: #A0A0B0; /* Cool gray for card body text */
+            --color-border: #DDDDDD; /* Light gray for borders */
+
+            /* Gradient colors to match the new theme */
+            --color-gradient-start: #4a3f80;
+            --color-gradient-end: rgb(18, 3, 65);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            scroll-behavior: smooth;
+        }
+        .bg-gradient-purple {
+            background-image: linear-gradient(to right, var(--color-gradient-start), var(--color-gradient-end));
+        }
+        .card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-bg);
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card h3, .card .font-black {
+            color: var(--color-card-text-primary);
+        }
+        .card p {
+            color: var(--color-card-text-secondary);
+        }
+        .section-title {
+            font-weight: 900;
+            font-size: 2.5rem; /* 40px */
+            line-height: 1.2;
+        }
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 3rem; /* 48px */
+            }
+        }
+        .gradient-text {
+            background: linear-gradient(to right, var(--color-gradient-start), var(--color-gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+
+        <!-- Header/Hero Section -->
+        <header class="text-center mb-20 md:mb-32">
+            <h1 class="text-5xl md:text-6xl font-black mb-4">Social Audits</h1>
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">The Premier Influencer Audit & Performance Platform</h2>
+            <p class="max-w-4xl mx-auto mt-4 text-lg md:text-xl text-[color:var(--color-text-secondary)]">
+                Stop guessing. Start knowing. We replace vanity metrics with verifiable proof of impact.
+            </p>
+        </header>
+
+        <!-- The Problem Section -->
+        <section class="mb-20 md:mb-32 text-center">
+            <h2 class="section-title mb-4">The Problem: <span class="gradient-text">Chaos in KOL Marketing</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">The Fear of Fraud</h3>
+                    <p>Marketing budgets are wasted on ghost followers and botted engagement, leading to a lack of confidence and wasted spend.</p>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">The Risk of Ruin</h3>
+                    <p>Partnering with the wrong influencer can cause significant brand reputation damage.</p>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">The Danger of Deception</h3>
+                    <p>Without verifiable data, proving marketing ROI to stakeholders is nearly impossible.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Solution Section -->
+        <section class="mb-20 md:mb-32">
+            <div class="text-center">
+                 <h2 class="section-title mb-12">The Solution: <span class="gradient-text">Clarity Over Chaos</span></h2>
+                 <p class="max-w-4xl mx-auto text-lg md:text-xl text-[color:var(--color-text-secondary)] mb-12">
+                    WiseOne turns doubt into data with a powerful pipeline powered by koat.ai.
+                 </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-2">Audited Insights</h3>
+                    <p>We go beyond vanity metrics to verify engagement, detect bots, and deliver an accurate, historical picture of an influencer's true impact.</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-2">Actionable Data</h3>
+                    <p>Our platform provides verifiable ROI, enabling informed decisions and strategic planning.</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-2">Fraud Prevention</h3>
+                    <p>Our advanced bot detection algorithms filter out automated activity, ensuring you get authentic, human-driven conversations.</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-2">Trust Ecosystem</h3>
+                    <p>We are building a secure environment where projects, agencies, and KOLs can collaborate with confidence.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Competitive Advantage Section -->
+        <section class="mb-20 md:mb-32 text-center">
+            <h2 class="section-title mb-12">Your <span class="gradient-text">Competitive Advantage</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">Unshakeable Confidence</h3>
+                    <p>Avoid fraud with advanced bot detection and make decisions with verifiable data.</p>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">Maximum ROI</h3>
+                    <p>Eliminate wasted spending on ineffective campaigns and optimize your marketing budget with data-driven insights.</p>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">Strategic Clarity</h3>
+                    <p>Understand true sentiment and campaign reach to outmaneuver your competitors.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Pricing Section -->
+        <section class="mb-20 md:mb-32">
+            <div class="text-center">
+                <h2 class="section-title mb-4"><span class="gradient-text">Pricing</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                <div class="card p-8 flex flex-col">
+                    <h3 class="text-2xl font-bold">24HR Pulse</h3>
+                    <p class="text-4xl font-black my-4">$29.99</p>
+                    <p class="flex-grow">Backdate a KOL’s last 24 hours to audit a viral post.</p>
+                </div>
+                <div class="card p-8 flex flex-col">
+                    <h3 class="text-2xl font-bold">7-Day Audit</h3>
+                    <p class="text-4xl font-black my-4">$89.99</p>
+                    <p class="flex-grow">Analyze a full week for consistency versus one-off spikes.</p>
+                </div>
+                <div class="card p-8 flex flex-col">
+                    <h3 class="text-2xl font-bold">30-Day Deep Dive</h3>
+                    <p class="text-4xl font-black my-4">$259.99</p>
+                    <p class="flex-grow">Understand long-term reach, manipulation attempts, and impact.</p>
+                </div>
+                <div class="card p-8 flex flex-col">
+                    <h3 class="text-2xl font-bold">KOL Subscription</h3>
+                    <p class="text-4xl font-black my-4">$399.99<span class="text-lg font-medium">/mo</span></p>
+                    <p class="flex-grow">Continuous tracking of a project and 5 KOLs for 30 days.</p>
+                </div>
+                <div class="card p-8 flex flex-col md:col-span-2 lg:col-span-1">
+                    <h3 class="text-2xl font-bold">Custom KOL Audit</h3>
+                    <p class="text-4xl font-black my-4">$599.99</p>
+                    <p class="flex-grow">A full audit for KOLs who want to prove their organic reach and value.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Started Section -->
+        <section class="mb-20 md:mb-32 text-center">
+            <h2 class="section-title mb-12">Get Started <span class="gradient-text">Today</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">First Report in 24 Hours</h3>
+                    <p>Receive your first comprehensive report within a day of indexing.</p>
+                </div>
+                <div class="card p-8">
+                    <h3 class="text-xl font-bold mb-2">Daily Campaign Updates</h3>
+                    <p>Get daily updates to track all changes during your campaign.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="text-center">
+            <h2 class="section-title mb-4">Ready to uncover the truth behind your data?</h2>
+            <button class="bg-gradient-purple text-white font-bold py-4 px-10 rounded-lg text-xl hover:opacity-90 transition-opacity mt-4">
+                Contact Our Team
+            </button>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 border-t border-[color:var(--color-border)]">
+        <p class="text-[color:var(--color-text-secondary)]">&copy; 2024 Wise One. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

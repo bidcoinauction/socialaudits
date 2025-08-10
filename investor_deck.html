@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Audits Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-1: rgb(7.2489% 1.0588% 25.364%);
+            --color-2: hsl(180 60% 100%);
+            --color-bg: #0D0B14;
+            --color-surface: #13111B;
+            --color-card: #1A1823;
+            --color-border: #2C2A37;
+            --color-text-primary: #FFFFFF;
+            --color-text-secondary: #A0A0A0;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-2);
+            color: var(--color-1);
+        }
+        #deck {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .slide {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: opacity 0.7s ease-in-out;
+            opacity: 0;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            position: relative;
+        }
+        .gradient-text {
+            color: var(--color-1);
+        }
+        .gradient-text-red {
+            color: #dc2626;
+        }
+        .card {
+            background-color: var(--color-1);
+            border: 1px solid var(--color-1);
+            border-radius: 1rem;
+            padding: 2rem;
+            height: 100%;
+            color: var(--color-2);
+        }
+        .card .text-secondary {
+            color: var(--color-2);
+        }
+        .card .text-white {
+            color: var(--color-2);
+        }
+        .primary-button {
+            background-color: #4c4c4c;
+            color: white;
+            border: 1px solid #333;
+        }
+        .primary-button:hover {
+            opacity: 0.9;
+        }
+        .secondary-button {
+            background-color: transparent;
+            border: 1px solid var(--color-1);
+            color: var(--color-1);
+        }
+        .secondary-button:hover {
+            background-color: var(--color-1);
+            color: var(--color-2);
+        }
+        .footer-nav {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+        }
+        .slide.active .footer-nav {
+            display: block;
+        }
+        .text-secondary {
+            color: var(--color-1);
+        }
+        .combo-1 {
+            color: var(--color-1);
+            background-color: var(--color-2);
+        }
+        .combo-2 {
+            color: var(--color-2);
+            background-color: var(--color-1);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8 combo-1">
+
+    <div id="deck" class="w-full max-w-7xl mx-auto rounded-2xl shadow-2xl overflow-hidden border border-gray-400">
+        <main id="slides" class="w-full h-full relative p-4 sm:p-8 md:p-12">
+            <!-- Slide 1 -->
+            <section id="s1" class="slide active">
+                <h1 class="text-5xl md:text-7xl font-black text-secondary tracking-tight">Social Audits</h1>
+                <p class="mt-6 text-2xl md:text-3xl font-bold text-secondary max-w-3xl">The Premier Influencer Audit & Performance Platform</p>
+            </section>
+
+            <!-- Slide 2 -->
+            <section id="s2" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold mb-8">The <span class="text-red-600">$1.3 Billion</span> Problem of Trust</h2>
+                <p class="text-center text-lg text-secondary mb-8 italic">"90% of the KOLs are absolutely garbage." - Bitlayer Labs</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                    <div class="card text-center flex flex-col items-center">
+                        <svg class="w-16 h-16 mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                        <h3 class="text-xl font-bold mb-2">Wasted Spend</h3>
+                        <p class="text-lg text-secondary">Budgets are wasted on ghost followers and botted engagement, making true ROI impossible to measure.</p>
+                    </div>
+                    <div class="card text-center flex flex-col items-center">
+                        <svg class="w-16 h-16 mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+                        <h3 class="text-xl font-bold mb-2">Brand Risk</h3>
+                        <p class="text-lg text-secondary">Partnering with the wrong influencer can destroy brand reputation and investor confidence overnight.</p>
+                    </div>
+                    <div class="card text-center flex flex-col items-center">
+                        <svg class="w-16 h-16 mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h3 class="text-xl font-bold mb-2">No Verifiable Data</h3>
+                        <p class="text-lg text-secondary">Without verifiable data, marketing performance is a black box, eroding stakeholder trust.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: Solution -->
+            <section id="s3" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold mb-8">Our Solution: <span class="text-secondary">Verifiable ROI</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                    <div class="card text-center flex flex-col items-center">
+                        <p class="text-lg font-bold text-red-400 mb-2">BEFORE</p>
+                        <h3 class="text-xl font-bold mb-2">Chaos & Guesswork</h3>
+                        <p class="text-lg text-secondary">Vanity metrics, wasted spend, and brand risk are the status quo.</p>
+                    </div>
+                    <div class="card text-center flex flex-col items-center justify-center border-2 border-border">
+                        <h3 class="text-2xl font-bold text-white mb-2">Social Audits</h3>
+                        <p class="text-white font-semibold">Forensic-Grade Intelligence</p>
+                    </div>
+                    <div class="card text-center flex flex-col items-center">
+                        <p class="text-lg font-bold text-green-400 mb-2">AFTER</p>
+                        <h3 class="text-xl font-bold mb-2">Confidence & ROI</h3>
+                        <p class="text-lg text-secondary">Verifiable data, optimized spend, and confident decision-making.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Market Opportunity -->
+            <section id="s4" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-10">A Rapidly Growing, <span class="text-secondary">Multi-Billion Dollar Market</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                    <div class="card p-6 text-center">
+                        <p class="text-lg text-secondary">Total Addressable Market (TAM)</p>
+                        <p class="text-4xl font-bold text-white my-2">$1.5B - $2.3B</p>
+                        <p class="text-md text-secondary">North American Finance + Crypto</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <p class="text-lg text-secondary">Serviceable Addressable Market (SAM)</p>
+                        <p class="text-4xl font-bold text-white my-2">$110M - $275M</p>
+                        <p class="text-md text-secondary">Serviceable Segment</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <p class="text-lg text-secondary">Serviceable Obtainable Market (SOM)</p>
+                        <p class="text-4xl font-bold text-white my-2">$1.2M - $2.1M</p>
+                        <p class="text-md text-secondary">12-month Capture Target</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Product & Moat -->
+            <section id="s5" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-8">Our Product & <span class="text-secondary">Defensible Moat</span></h2>
+                <div class="grid grid-cols-2 gap-8 w-full max-w-6xl">
+                    <div class="card p-6">
+                        <h3 class="text-2xl font-bold text-white mb-4">Proprietary Data Engine</h3>
+                        <p class="text-secondary mb-4">We transform chaotic online chatter into verifiable intelligence via a 5-stage pipeline:</p>
+                        <ol class="list-decimal list-inside text-secondary space-y-2">
+                            <li><span class="font-bold text-white">Partnership:</span> Exclusive access to 1B+ data points from koat.ai.</li>
+                            <li><span class="font-bold text-white">Ingestion:</span> Millions of new data points daily from all major platforms.</li>
+                            <li><span class="font-bold text-white">Filtering:</span> Advanced bot detection ensures authentic, human-driven data.</li>
+                            <li><span class="font-bold text-white">Enrichment:</span> Sentiment, emotion, and topic modeling provide deep context.</li>
+                            <li><span class="font-bold text-white">Delivery:</span> Anomaly detection delivers clean, trusted insights.</li>
+                        </ol>
+                    </div>
+                    <div class="card p-6 flex flex-col items-center justify-center">
+                        <h3 class="text-2xl font-bold text-white mb-4">Example Insight</h3>
+                        <img src="https://placehold.co/400x250/13111B/C879FF?text=Real+Product+Screenshot" class="rounded-lg border border-border" alt="Product Screenshot Placeholder">
+                        <p class="text-sm text-secondary mt-4 text-center">Our platform identified that 70% of a campaign's engagement was botted, saving our client $50k.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Slide 6: Traction / Validation -->
+            <div id="slide-6" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-8">Traction & <span class="text-secondary">Validation</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl">
+                    <div class="card p-6">
+                        <h3 class="text-2xl font-bold text-white mb-4">Early Traction</h3>
+                        <ul class="space-y-4 text-secondary text-lg">
+                            <li class="flex items-start"><span class="text-white font-bold mr-3">&rarr;</span><span><strong class="text-white">[Number]</strong> pilot programs with leading Web3 brands, including Bitlayer Labs.</span></li>
+                            <li class="flex items-start"><span class="text-white font-bold mr-3">&rarr;</span><span><strong class="text-white">[$$$]</strong> in initial revenue generated from one-off reports.</span></li>
+                            <li class="flex items-start"><span class="text-white font-bold mr-3">&rarr;</span><span>Strong interest from <strong class="text-white">[Number]</strong> agencies for our subscription tiers post-launch.</span></li>
+                        </ul>
+                    </div>
+                    <div class="card flex flex-col justify-center p-8 bg-surface">
+                        <blockquote class="text-xl text-secondary italic mb-6 flex-grow">
+                            "If there’s an AI tool to really find the empirical truth, then I don’t need to listen to all these advisors."
+                        </blockquote>
+                        <cite class="font-bold text-secondary not-italic text-right">- Charlie, Bitlayer Labs</cite>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Business Model -->
+            <div id="slide-7" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-8">A Scalable, <span class="text-secondary">Defensible Flywheel</span></h2>
+                <div class="flex items-center justify-center w-full max-w-7xl">
+                    <div class="card p-6 flex flex-col items-center text-center">
+                        <h3 class="text-xl font-bold text-white mb-4">1. Attract Brands & Agencies</h3>
+                        <p class="text-secondary text-sm">Offer audited data for campaign measurement, generating initial SaaS revenue.</p>
+                    </div>
+                    <svg class="w-16 h-16 text-secondary mx-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    <div class="card p-6 flex flex-col items-center text-center">
+                        <h3 class="text-xl font-bold text-white mb-4">2. Onboard Vetted KOLs</h3>
+                        <p class="text-secondary text-sm">Invite top-performing KOLs to gain a "Social Audits Verified" status, proving their value.</p>
+                    </div>
+                     <svg class="w-16 h-16 text-secondary mx-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    <div class="card p-6 flex flex-col items-center text-center">
+                        <h3 class="text-xl font-bold text-white mb-4">3. Create a Trusted Marketplace</h3>
+                        <p class="text-secondary text-sm">Brands hire from a pool of verified KOLs, creating a powerful network effect and a new revenue stream.</p>
+                    </div>
+                </div>
+                <p class="text-center text-lg text-secondary mt-6">Monetization: High-margin SaaS subscriptions + Marketplace take-rate.</p>
+            </div>
+
+            <!-- Slide 8: Go-to-Market Strategy -->
+            <div id="slide-8" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-8">Go-to-Market <span class="text-secondary">Strategy</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-7xl">
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">Direct Sales</h3>
+                        <p class="text-secondary text-sm">Target Web3 marketing agencies and crypto projects with a clear need for ROI verification.</p>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">Partnerships</h3>
+                        <p class="text-secondary text-sm">Collaborate with launchpads, VCs, and exchanges who need to vet projects and their marketing.</p>
+                    </div>
+                     <div class="card p-6">
+                        <h3 class="text-xl font-bold text-white mb-4">Content Marketing</h3>
+                        <p class="text-secondary text-sm">Publish data-driven reports on industry trends to establish thought leadership and generate leads.</p>
+                    </div>
+                     <div class="card p-6 border-2 border-border">
+                        <h3 class="text-xl font-bold text-white mb-4">Why Now?</h3>
+                        <p class="text-secondary text-sm">Regulatory scrutiny and the rise of AI-driven manipulation demand a trusted, third-party data source.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Competitive Landscape -->
+            <div id="slide-9" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-6">Competitive <span class="text-secondary">Landscape</span></h2>
+                <p class="text-center text-xl text-secondary mb-8 font-bold">"Others track noise. We track trust."</p>
+                <div class="w-full max-w-6xl">
+                    <div class="grid grid-cols-4 text-center text-sm font-bold border-b border-border pb-2 mb-4">
+                        <div></div>
+                        <div class="text-secondary">Social Audits</div>
+                        <div class="text-secondary">Legacy Platforms</div>
+                        <div class="text-secondary">Basic Analytics Tools</div>
+                    </div>
+                    <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                        <div class="text-left font-bold text-secondary">Data Source</div>
+                        <div class="text-green-400 font-semibold">Proprietary & Audited</div>
+                        <div class="text-yellow-400">Public APIs</div>
+                        <div class="text-red-400">Public APIs</div>
+                    </div>
+                    <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                        <div class="text-left font-bold text-secondary">Bot & Fraud Detection</div>
+                        <div class="text-green-400 font-semibold">Advanced</div>
+                        <div class="text-yellow-400">Limited</div>
+                        <div class="text-red-400">None</div>
+                    </div>
+                    <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                        <div class="text-left font-bold text-secondary">Web3 Native</div>
+                        <div class="text-green-400 font-semibold">Yes</div>
+                        <div class="text-red-400">No</div>
+                        <div class="text-yellow-400">Partial</div>
+                    </div>
+                    <div class="grid grid-cols-4 text-center text-sm items-center py-3">
+                        <div class="text-left font-bold text-secondary">Pricing Model</div>
+                        <div class="text-green-400 font-semibold">Value-Based Tiers</div>
+                        <div class="text-red-400">High Enterprise Contracts</div>
+                        <div class="text-yellow-400">Low-Cost SaaS</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 10: Team -->
+            <div id="slide-10" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-10">The Right <span class="text-secondary">Team</span> to Win</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
+                    <div class="card text-center flex flex-col items-center p-6">
+                        <img src="https://placehold.co/128x128/1A1823/C879FF?text=Founder" class="w-32 h-32 rounded-full mb-4 border-2 border-border" alt="Founder 1">
+                        <h3 class="text-xl font-bold text-white">Founder Name</h3>
+                        <p class="text-md text-white mb-2">CEO & Co-Founder</p>
+                        <p class="text-sm text-secondary">Serial entrepreneur with 10+ years in data analytics. Co-Founder of koat.ai, the engine powering Social Audits.</p>
+                    </div>
+                    <div class="card text-center flex flex-col items-center p-6">
+                        <img src="https://placehold.co/128x128/1A1823/C879FF?text=Founder" class="w-32 h-32 rounded-full mb-4 border-2 border-border" alt="Founder 2">
+                        <h3 class="text-xl font-bold text-white">Founder Name</h3>
+                        <p class="text-md text-white mb-2">CTO & Co-Founder</p>
+                        <p class="text-sm text-secondary">Lead architect of the koat.ai data pipeline. Expert in machine learning and large-scale data systems.</p>
+                    </div>
+                    <div class="card text-center flex flex-col items-center p-6">
+                        <img src="https://placehold.co/128x128/1A1823/C879FF?text=Founder" class="w-32 h-32 rounded-full mb-4 border-2 border-border" alt="Founder 3">
+                        <h3 class="text-xl font-bold text-white">Founder Name</h3>
+                        <p class="text-md text-white mb-2">Head of Product</p>
+                        <p class="text-sm text-secondary">Experienced product leader from top Web3 marketing agencies. Deep understanding of customer pain points.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Financial Projections -->
+            <div id="slide-11" class="slide">
+                <h2 class="text-4xl md:text-6xl font-bold text-center mb-6">Financial <span class="text-secondary">Projections</span> & Milestones</h2>
+                <div class="w-full max-w-5xl">
+                    <div class="card p-6 rounded-lg border border-border mb-6">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="border-b border-border">
+                                    <th class="p-3 text-lg text-white">Metric</th>
+                                    <th class="p-3 text-lg text-white text-center">Year 1</th>
+                                    <th class="p-3 text-lg text-white text-center">Year 2</th>
+                                    <th class="p-3 text-lg text-white text-center">Year 3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-border">
+                                    <td class="p-3 text-secondary">Revenue</td>
+                                    <td class="p-3 text-2xl font-bold text-center text-white">$500K</td>
+                                    <td class="p-3 text-2xl font-bold text-center text-white">$4M</td>
+                                    <td class="p-3 text-2xl font-bold text-center text-white">$15M</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-secondary">Gross Margin</td>
+                                    <td class="p-3 text-2xl font-bold text-center text-white">75%</td>
+                                    <td class="p-3 text-2xl font-bold text-center text-white">80%</td>
+                                    <td class="p-3 text-2xl font-bold text-center text-white">85%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-center text-secondary">This pre-seed round unlocks our next 12-18 months of growth, allowing us to achieve product-market fit and reach <span class="font-bold text-secondary">$50k MRR</span>.</p>
+                </div>
+            </div>
+
+            <!-- Slide 12: Closing / Ask -->
+            <div id="slide-12" class="slide text-center">
+                <h2 class="text-4xl md:text-6xl font-black text-secondary tracking-tight mb-6">Join Us in Building the Future of Trusted Marketing</h2>
+                <div class="card p-8 border-2 border-border max-w-4xl">
+                    <p class="text-2xl text-secondary">We are raising <span class="font-bold text-white">$200,000</span> to reach <span class="font-bold text-white">$50k MRR</span> in 12 months.</p>
+                    <p class="text-5xl font-bold text-white my-4">$200,000 at a $1M Valuation</p>
+                    <p class="text-2xl text-secondary">(SAFE + Token Warrants)</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <!-- Navigation -->
+    <footer class="flex justify-between items-center p-4 bg-gray-200 border-t border-gray-400">
+        <button id="prevBtn" class="secondary-button font-bold py-2 px-5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Previous
+        </button>
+        <div id="slide-indicator" class="text-secondary text-sm font-medium"></div>
+        <button id="nextBtn" class="primary-button font-bold py-2 px-5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+            Next
+        </button>
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- PRESENTATION SCALING ---
+        const presentationContainer = document.getElementById('presentation-container');
+        const nativeWidth = 1280;
+        const nativeHeight = 720;
+
+        function scalePresentation() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            const scale = Math.min(viewportWidth / nativeWidth, viewportHeight / nativeHeight);
+            
+            if (presentationContainer) {
+                presentationContainer.style.transform = `scale(${scale})`;
+            }
+        }
+
+        // --- SLIDE NAVIGATION ---
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideIndicator = document.getElementById('slide-indicator');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide) => {
+                slide.classList.remove('active');
+            });
+            if (slides[index]) {
+                slides[index].classList.add('active');
+            }
+            if (slideIndicator) {
+                slideIndicator.textContent = `Slide ${index + 1} of ${totalSlides}`;
+            }
+            if (prevBtn) {
+                prevBtn.disabled = index === 0;
+            }
+            if (nextBtn) {
+                nextBtn.disabled = index === totalSlides - 1;
+            }
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            });
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                nextBtn && nextBtn.click();
+            } else if (e.key === 'ArrowLeft') {
+                prevBtn && prevBtn.click();
+            }
+        });
+
+        // Initial and on-resize scaling
+        scalePresentation();
+        window.addEventListener('resize', scalePresentation);
+        showSlide(currentSlide);
+    });
+</script>
+</body>
+</html>
