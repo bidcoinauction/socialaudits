@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Audits - Deck Index</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-1: rgb(7.2489% 1.0588% 25.364%);
+            --color-2: hsl(180 60% 100%);
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-2);
+            color: var(--color-1);
+        }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem;
+            text-align: center;
+        }
+        .card {
+            background-color: var(--color-1);
+            border-radius: 1rem;
+            padding: 2rem;
+            height: 100%;
+            color: var(--color-2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease-in-out;
+            text-decoration: none;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .combo-1 {
+            color: var(--color-1);
+            background-color: var(--color-2);
+        }
+    </style>
+</head>
+<body class="combo-1">
+    <div class="w-full max-w-xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-black text-center mb-4">Social Audits</h1>
+        <p class="text-xl md:text-2xl font-bold text-center">Presentation Files</p>
+        <div class="grid grid-cols-1 gap-8 mt-12">
+            <a href="onepager.html" class="card">
+                <h2 class="text-3xl font-bold">One-Pager</h2>
+                <p class="mt-2 text-base text-white">A concise summary for quick introductions.</p>
+            </a>
+            <a href="investor_deck.html" class="card">
+                <h2 class="text-3xl font-bold">Investor Deck</h2>
+                <p class="mt-2 text-base text-white">Full-length presentation for potential investors.</p>
+            </a>
+            <a href="pitchdeck.html" class="card">
+                <h2 class="text-3xl font-bold">Pitch Deck</h2>
+                <p class="mt-2 text-base text-white">Our primary sales and product overview.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
