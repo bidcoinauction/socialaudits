@@ -119,6 +119,15 @@
             color: var(--color-2);
             background-color: var(--color-1);
         }
+        .table-header {
+            background-color: var(--color-1);
+            color: var(--color-2);
+            font-weight: 700;
+        }
+        .table-row {
+            background-color: var(--color-2);
+            color: var(--color-1);
+        }
     </style>
 </head>
 <body class="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8 combo-1">
@@ -128,12 +137,13 @@
             <!-- Slide 1 -->
             <section id="s1" class="slide active">
                 <h1 class="text-5xl md:text-7xl font-black text-secondary tracking-tight">Social Audits</h1>
+                <p class="mt-6 text-2xl md:text-3xl font-bold text-secondary max-w-3xl">The Premier Influencer Audit & Performance Platform</p>
             </section>
 
             <!-- Slide 2 -->
             <section id="s2" class="slide">
                 <h2 class="text-4xl md:text-6xl font-bold mb-8">The <span class="text-red-600">$1.3 Billion</span> Problem of Trust</h2>
-                <p class="text-center text-lg text-secondary mb-8 italic">"90% of the KOLs are absolutely garbage." - Bitlayer Labs</p>
+                
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl">
                     <div class="card text-center flex flex-col items-center">
                         <svg class="w-16 h-16 mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
@@ -290,31 +300,36 @@
                 <h2 class="text-4xl md:text-6xl font-bold text-center mb-6">Competitive <span class="text-secondary">Landscape</span></h2>
                 <p class="text-center text-xl text-secondary mb-8 font-bold">"Others track noise. We track trust."</p>
                 <div class="w-full max-w-6xl">
-                    <div class="grid grid-cols-4 text-center text-sm font-bold border-b border-border pb-2 mb-4">
+                    <!-- Table Header -->
+                    <div class="grid grid-cols-4 text-center text-sm font-bold table-header rounded-t-lg p-3">
                         <div></div>
-                        <div class="text-secondary">Social Audits</div>
-                        <div class="text-secondary">Legacy Platforms</div>
-                        <div class="text-secondary">Basic Analytics Tools</div>
+                        <div class="text-white">Social Audits</div>
+                        <div class="text-white">Legacy Platforms</div>
+                        <div class="text-white">Basic Analytics Tools</div>
                     </div>
-                    <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                    <!-- Data Row 1 -->
+                    <div class="grid grid-cols-4 text-center text-sm items-center table-row border-b border-border py-3">
                         <div class="text-left font-bold text-secondary">Data Source</div>
                         <div class="text-green-400 font-semibold">Proprietary & Audited</div>
                         <div class="text-yellow-400">Public APIs</div>
                         <div class="text-red-400">Public APIs</div>
                     </div>
-                    <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                    <!-- Data Row 2 -->
+                    <div class="grid grid-cols-4 text-center text-sm items-center table-row border-b border-border py-3">
                         <div class="text-left font-bold text-secondary">Bot & Fraud Detection</div>
                         <div class="text-green-400 font-semibold">Advanced</div>
                         <div class="text-yellow-400">Limited</div>
                         <div class="text-red-400">None</div>
                     </div>
-                    <div class="grid grid-cols-4 text-center text-sm items-center border-b border-border py-3">
+                    <!-- Data Row 3 -->
+                    <div class="grid grid-cols-4 text-center text-sm items-center table-row border-b border-border py-3">
                         <div class="text-left font-bold text-secondary">Web3 Native</div>
                         <div class="text-green-400 font-semibold">Yes</div>
                         <div class="text-red-400">No</div>
                         <div class="text-yellow-400">Partial</div>
                     </div>
-                    <div class="grid grid-cols-4 text-center text-sm items-center py-3">
+                    <!-- Data Row 4 -->
+                    <div class="grid grid-cols-4 text-center text-sm items-center table-row rounded-b-lg py-3">
                         <div class="text-left font-bold text-secondary">Pricing Model</div>
                         <div class="text-green-400 font-semibold">Value-Based Tiers</div>
                         <div class="text-red-400">High Enterprise Contracts</div>
@@ -390,7 +405,7 @@
                     <p class="text-5xl font-bold text-white my-4">$200,000 at a $1M Valuation</p>
                     <p class="text-2xl text-secondary">(SAFE + Token Warrants)</p>
                 </div>
-            </div>
+            </section>
 
         </div>
     </main>
@@ -429,4 +444,3 @@
 </script>
 </body>
 </html>
-
