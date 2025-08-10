@@ -71,6 +71,9 @@
             padding: 2rem;
             height: 100%;
             color: var(--color-2);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
         }
         .card .text-secondary {
             color: var(--color-2);
@@ -125,7 +128,6 @@
             <!-- Slide 1 -->
             <section id="s1" class="slide active">
                 <h1 class="text-5xl md:text-7xl font-black text-secondary tracking-tight">Social Audits</h1>
-                <p class="mt-6 text-2xl md:text-3xl font-bold text-secondary max-w-3xl">The Premier Influencer Audit & Performance Platform</p>
             </section>
 
             <!-- Slide 2 -->
@@ -392,75 +394,39 @@
 
         </div>
     </main>
-    <!-- Navigation -->
-    <footer class="flex justify-between items-center p-4 bg-gray-200 border-t border-gray-400">
-        <button id="prevBtn" class="secondary-button font-bold py-2 px-5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            Previous
-        </button>
-        <div id="slide-indicator" class="text-secondary text-sm font-medium"></div>
-        <button id="nextBtn" class="primary-button font-bold py-2 px-5 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-            Next
-        </button>
-    </footer>
+    
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- PRESENTATION SCALING ---
-        const presentationContainer = document.getElementById('presentation-container');
-        const nativeWidth = 1280;
-        const nativeHeight = 720;
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    let i = 0;
 
-        function scalePresentation() {
-            const viewportWidth = window.innerWidth;
-            const viewportHeight = window.innerHeight;
+    function go(n) {
+        if (n === i || n < 0 || n >= slides.length) return;
+        slides[i].classList.remove('active');
+        slides[i].style.display = 'none';
+        slides[n].style.display = 'flex';
+        slides[n].classList.add('active');
+        i = n;
+    }
 
-            const scale = Math.min(viewportWidth / nativeWidth, viewportHeight / nativeHeight);
-            
-            if (presentationContainer) {
-                presentationContainer.style.transform = `scale(${scale})`;
-            }
-        }
+    function next() { if (i < slides.length - 1) go(i + 1); }
+    function prev() { if (i > 0) go(i - 1); }
 
-        // --- SLIDE NAVIGATION ---
-        const slides = document.querySelectorAll('.slide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const slideIndicator = document.getElementById('slide-indicator');
-        let currentSlide = 0;
-        const totalSlides = slides.length;
-
-        function showSlide(index) {
-            slides.forEach((slide) => {
-                slide.classList.remove('active');
-            });
-            if (slides[index]) {
-                slides[index].classList.add('active');
-            }
-            if (slideIndicator) {
-                slideIndicator.textContent = `Slide ${index + 1} of ${totalSlides}`;
-            }
-            if (prevBtn) {
-                prevBtn.disabled = index === 0;
-            }
-            if (nextBtn) {
-                nextBtn.disabled = index === totalSlides - 1;
-            }
-        }
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') {
-                nextBtn && nextBtn.click();
-            } else if (e.key === 'ArrowLeft') {
-                prevBtn && prevBtn.click();
-            }
-        });
-
-        // Initial and on-resize scaling
-        scalePresentation();
-        window.addEventListener('resize', scalePresentation);
-        showSlide(currentSlide);
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+        if (e.key === 'ArrowLeft') { prev(); }
     });
+
+    document.getElementById('deck').addEventListener('click', (e) => {
+        const tag = (e.target.tagName || '').toLowerCase();
+        if (['a','button','video'].includes(tag)) return;
+        next();
+    });
+
+    // Initial state
+    go(0);
 </script>
 </body>
 </html>
+
