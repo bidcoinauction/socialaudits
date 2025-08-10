@@ -447,24 +447,6 @@
                 nextBtn.disabled = index === totalSlides - 1;
             }
         }
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                if (currentSlide < totalSlides - 1) {
-                    currentSlide++;
-                    showSlide(currentSlide);
-                }
-            });
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                if (currentSlide > 0) {
-                    currentSlide--;
-                    showSlide(currentSlide);
-                }
-            });
-        }
         
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') {
