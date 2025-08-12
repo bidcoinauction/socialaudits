@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Audits Presentation</title>
+    <title>SocialAudits Presentation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -29,6 +28,8 @@
             overflow: hidden;
             background-color: var(--color-background);
             position: relative; /* Needed for pseudo-elements */
+            font-family: 'Inter', sans-serif;
+            color: var(--color-text-primary);
         }
         body::before {
             content: '';
@@ -51,10 +52,6 @@
             background: radial-gradient(circle, rgba(236, 72, 153, 0.1), transparent 70%);
             filter: blur(100px);
             z-index: -1;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--color-text-primary);
         }
         #deck {
             width: 100%;
@@ -108,7 +105,7 @@
         }
         /* --- Card & Component Styling --- */
         .card {
-            background-color: var(--color-surface);
+            background-color: #F9FAFB;
             border: 1px solid #E5E7EB;
             border-radius: 1rem;
             padding: 2rem;
@@ -117,11 +114,16 @@
             flex-direction: column;
             text-align: left;
             transition: transform 0.3s, box-shadow 0.3s;
-            color: var(--color-text-primary);
         }
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px -10px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            color: var(--color-primary);
+        }
+        .card p, .card li, .card span {
+            color: var(--color-text-secondary);
         }
         .investor-hook {
             font-style: italic;
@@ -141,14 +143,14 @@
         <main id="slides" class="w-full h-full relative p-4 sm:p-8 md:p-12">
             <!-- Slide 1 -->
             <section id="s1" class="slide active">
-                <h1 class="text-5xl md:text-7xl font-black text-primary tracking-tight">Social Audits</h1>
+                <h1 class="text-5xl md:text-7xl font-black text-primary tracking-tight">SocialAudits</h1>
                 <h2 class="mt-4 text-2xl md:text-3xl font-bold text-primary">The Premier Influencer Audit & Performance Platform</h2>
                 <p class="mt-6 text-lg md:text-xl text-text-secondary max-w-3xl">Stop guessing. Start knowing. We replace vanity metrics with verifiable proof of impact.</p>
             </section>
 
             <!-- Slide 2 -->
             <section id="s2" class="slide">
-                <h2 class="text-4xl md:text-6xl font-bold mb-8">The Problem: <span class="text-text-primary">Chaos</span> in KOL Marketing</h2>
+                <h2 class="text-4xl md:text-6xl font-bold mb-8">The Problem: <span class="text-primary">Chaos</span> in KOL Marketing</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                     <div class="card text-center flex flex-col items-center">
                         <div>
@@ -174,7 +176,7 @@
             <!-- Slide 3 -->
             <section id="s3" class="slide">
                 <h2 class="text-4xl md:text-6xl font-bold mb-8">The Solution: <span class="text-primary">Clarity Over Chaos</span></h2>
-                <p class="text-lg text-text-secondary max-w-3xl mb-10">When fraud is everywhere and bots are indistinguishable from fans, you don’t need more noise — you need the truth. Social Audits turns doubt into data.</p>
+                <p class="text-lg text-text-secondary max-w-3xl mb-10">When fraud is everywhere and bots are indistinguishable from fans, you don’t need more noise — you need the truth. SocialAudits turns doubt into data.</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                     <div class="card">
                         <div>
@@ -258,7 +260,7 @@
 
             <!-- Slide 7 -->
             <section id="s7" class="slide">
-                <h2 class="text-4xl md:text-6xl font-bold mb-10 text-primary">Why Social Audits?</h2>
+                <h2 class="text-4xl md:text-6xl font-bold mb-10 text-primary">Why SocialAudits?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
                     <div class="card p-6 text-left">
                         <h3 class="text-2xl font-bold text-primary mb-3">1. Unrivaled Data Integrity</h3>
@@ -314,7 +316,7 @@
             <section id="s9" class="slide">
                 <h2 class="text-4xl md:text-6xl font-bold mb-8 text-primary">Results & Testimonials</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <blockquote class="card p-6 italic text-lg text-primary">“Social Audits helped us identify the real impact of our KOL campaigns and saved thousands in wasted spend.”<cite class="block not-italic text-right font-bold text-primary mt-4">— Bitlayer Labs</cite></blockquote>
+                    <blockquote class="card p-6 italic text-lg text-primary">“SocialAudits helped us identify the real impact of our KOL campaigns and saved thousands in wasted spend.”<cite class="block not-italic text-right font-bold text-primary mt-4">— Bitlayer Labs</cite></blockquote>
                     <blockquote class="card p-6 italic text-lg text-primary">“The only platform that gave us true, actionable data on influencer performance.”<cite class="block not-italic text-right font-bold text-primary mt-4">— Agency Client</cite></blockquote>
                 </div>
             </section>
