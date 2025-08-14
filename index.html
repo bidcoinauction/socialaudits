@@ -28,18 +28,15 @@
             background-color: var(--color-background);
             font-family: 'Inter', sans-serif;
             color: var(--color-text-primary);
-            
-            /* -- NEW STACKED LAYOUT FOR ALL SCREENS -- */
             display: flex;
-            flex-direction: column; /* Stack items vertically */
-            align-items: center;      /* Center items horizontally */
-            justify-content: center;    /* Center the whole block vertically */
+            align-items: center;
+            justify-content: center;
             padding: 2rem;
         }
         
         #page-logo {
             width: 80px;
-            margin-bottom: 2.5rem; /* Creates space between the logo and the card */
+            margin-bottom: 2.5rem; /* Creates space between the logo and the title */
         }
 
         .main-container {
@@ -49,7 +46,7 @@
             border-radius: 2rem;
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
             border: 1px solid #E5E7EB;
-            text-align: center;
+            text-align: center; /* This will center the logo now that it's inside */
         }
 
         .card {
@@ -86,9 +83,9 @@
     </style>
 </head>
 <body>
-    <img id="page-logo" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png" alt="Social Audits Logo">
-    
     <div class="main-container max-w-2xl">
+        <img id="page-logo" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png" alt="Social Audits Logo">
+        
         <h1 class="text-5xl md:text-6xl font-black text-primary tracking-tight">Social Audits</h1>
         <p class="text-xl md:text-2xl font-medium text-secondary mt-4">Stop Guessing. Start Knowing.</p>
         <div class="grid grid-cols-1 gap-8 mt-12 w-full">
@@ -109,5 +106,7 @@
             </a>
         </div>
     </div>
+</body>
+</html>
 </body>
 </html>
