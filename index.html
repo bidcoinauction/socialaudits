@@ -58,9 +58,9 @@
         #page-logo {
             position: absolute;
             top: 50%;
-            left: 8rem; /* Adjust for spacing from the left edge */
+            left: 8rem; 
             transform: translateY(-50%);
-            width: 80px; /* Adjust size as needed */
+            width: 80px; 
             z-index: 10;
         }
         .main-container {
@@ -108,15 +108,15 @@
             color: var(--color-text-secondary);
         }
 
-        /* Responsive styles for screens smaller than 1200px */
-        @media (max-width: 1200px) {
+        /* UPDATED: Responsive styles for screens smaller than 1024px */
+        @media (max-width: 1024px) {
             body {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
+                padding-top: 4rem; /* Add space at the top on mobile */
                 overflow-y: auto;
-                padding: 2rem 1rem;
                 height: auto;
             }
             #page-logo {
@@ -158,5 +158,3 @@
     </div>
 </body>
 </html>
-</html>
-
