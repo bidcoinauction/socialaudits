@@ -1,0 +1,388 @@
+<!-- Chosen Palette: Warm Neutral -->
+<!-- Application Structure Plan: The SPA is designed as a single-page dashboard with a top navigation bar (Overview, The Opportunity, Strategy, Compensation) for thematic exploration. This structure was chosen over a simple two-part layout to create a cohesive narrative that serves both potential hires and internal stakeholders. It allows users to quickly jump to the information most relevant to them. Key interactions include clickable cards for target verticals to reveal details, a visual representation of the commission structure using a chart, and a toggle to explain the complex "Cliff" policy, promoting progressive disclosure and better user understanding of dense information. -->
+<!-- Visualization & Content Choices: 
+- Report Info: Core company description -> Goal: Inform -> Presentation: Hero section with title and summary -> Interaction: None -> Justification: Provides immediate context for the entire application.
+- Report Info: Job Role Details (Responsibilities, Qualifications) -> Goal: Inform, Organize -> Presentation: Multi-column layout with styled cards and lists -> Interaction: None -> Justification: Breaks down dense job info into scannable, digestible sections for potential applicants.
+- Report Info: Target Verticals & Platform Coverage -> Goal: Organize, Inform -> Presentation: Interactive grid of cards -> Interaction: Click to highlight and display context -> Justification: More engaging than a simple list; interaction encourages exploration of the company's market expansion.
+- Report Info: Commission Rate (15%) -> Goal: Compare, Inform -> Viz: Donut Chart (Chart.js) -> Interaction: Hover tooltip -> Justification: Visually emphasizes the key compensation metric, making it more impactful than plain text.
+- Report Info: Post-Employment Commission Policy -> Goal: Explain, Organize -> Presentation: An interactive toggle revealing a timeline diagram -> Interaction: Click to show/hide details -> Justification: Uses progressive disclosure to simplify a complex policy, with a visual timeline (HTML/CSS) to clarify the 6-month period.
+-->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Strategy & Job Opportunity</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #F9F7F5;
+            --bg-surface: #FFFFFF;
+            --text-primary: #2C2A2E;
+            --text-secondary: #656168;
+            --accent-primary: #A37E62;
+            --accent-secondary: #DDC9B8;
+            --border-color: #EAE5E0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            background-color: var(--accent-primary);
+            transition: width 0.3s, left 0.3s;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: var(--accent-primary);
+        }
+        .nav-link.active::after, .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 300px;
+        }
+        .vertical-card.selected {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .timeline {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .timeline-dot {
+            width: 16px;
+            height: 16px;
+            background-color: var(--accent-secondary);
+            border-radius: 50%;
+            border: 3px solid var(--accent-primary);
+        }
+        .timeline-line {
+            flex-grow: 1;
+            height: 4px;
+            background-color: var(--accent-secondary);
+        }
+        .timeline-label {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-[var(--border-color)]">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="font-bold text-xl text-[var(--text-primary)]">Growth Initiative</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#overview" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">Overview</a>
+                        <a href="#opportunity" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">The Opportunity</a>
+                        <a href="#strategy" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">Strategy & Verticals</a>
+                        <a href="#compensation" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">Compensation & Policy</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="overview" class="py-20 md:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--text-primary)]">Spearheading Growth in New Markets</h1>
+                <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-[var(--text-secondary)]">
+                    This document outlines our strategic expansion into new verticals and details the pivotal Account Executive role designed to drive this growth. Explore the opportunity, our market strategy, and the competitive compensation structure that supports our mission.
+                </p>
+            </div>
+        </section>
+
+        <section id="opportunity" class="py-20 md:py-28 bg-[var(--bg-surface)] border-y border-[var(--border-color)]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-primary)]">The Opportunity: Account Executive</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-[var(--text-secondary)]">
+                        A unique opportunity to build a significant book of business in a rapidly scaling, industry-agnostic data analytics platform.
+                    </p>
+                </div>
+
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
+                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-4">Core Responsibilities</h3>
+                        <ul id="responsibilities-list" class="space-y-3 text-[var(--text-secondary)]"></ul>
+                    </div>
+                    <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
+                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-4">Key Qualifications</h3>
+                        <ul id="qualifications-list" class="space-y-3 text-[var(--text-secondary)]"></ul>
+                    </div>
+                    <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
+                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-4">What We Offer</h3>
+                        <ul id="offer-list" class="space-y-3 text-[var(--text-secondary)]"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="py-20 md:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-primary)]">Strategy & Target Verticals</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-[var(--text-secondary)]">
+                        Our sales strategy is expanding beyond our roots. We are empowering our team to pursue qualified leads in any industry that utilizes influencer marketing, digital PR, or requires sophisticated media monitoring.
+                    </p>
+                </div>
+
+                <div class="mt-16">
+                    <h3 class="text-2xl font-bold text-center text-[var(--text-primary)]">Primary Target Verticals</h3>
+                    <p class="text-center text-[var(--text-secondary)] mt-2">Click a card to learn more.</p>
+                    <div id="verticals-grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+                    <div id="vertical-context" class="mt-8 min-h-[6rem] bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl p-6 text-center flex items-center justify-center transition-opacity duration-300 opacity-0">
+                        <p class="text-lg text-[var(--text-secondary)]"></p>
+                    </div>
+                </div>
+
+                <div class="mt-20">
+                    <h3 class="text-2xl font-bold text-center text-[var(--text-primary)]">Platform & Media Coverage</h3>
+                    <p class="text-center text-[var(--text-secondary)] mt-2">Our sales messaging emphasizes broad, platform-agnostic monitoring capabilities.</p>
+                    <div id="platforms-grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="compensation" class="py-20 md:py-28 bg-[var(--bg-surface)] border-y border-[var(--border-color)]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-primary)]">Compensation & Policy</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-[var(--text-secondary)]">
+                        A highly competitive, uncapped commission structure designed to attract and retain top sales talent.
+                    </p>
+                </div>
+                <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-[var(--text-primary)]">Commission Rate</h3>
+                        <p class="text-lg text-[var(--text-secondary)] mt-2">15% of the Total Contract Value (TCV) for all new business.</p>
+                        <div class="chart-container mt-4">
+                            <canvas id="commissionChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
+                            <h3 class="text-2xl font-bold text-[var(--text-primary)]">Post-Employment Commission Policy</h3>
+                            <p class="mt-2 text-[var(--text-secondary)]">A fair and predictable transition for departing team members to reward long-term relationship building.</p>
+                            <button id="policy-toggle" class="mt-4 text-sm font-semibold text-[var(--accent-primary)] hover:underline">Show Details</button>
+                            <div id="policy-details" class="hidden mt-4">
+                                <div id="policy-text"></div>
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-label">Departure</div>
+                                    </div>
+                                    <div class="timeline-line"></div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-label">6 Months</div>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-center mt-2 text-[var(--text-secondary)]">Commission continues for 6 months post-departure.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-8 bg-[var(--bg-main)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-sm text-[var(--text-secondary)]">&copy; 2025 Growth Initiative. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const appData = {
+                responsibilities: [
+                    "Drive the full sales cycle across multiple industries.",
+                    "Qualify leads based on budget, data needs, and campaign activity.",
+                    "Master and articulate the platform's value proposition.",
+                    "Conduct compelling platform demonstrations.",
+                    "Negotiate contracts and close deals ($189 - $599 target).",
+                    "Build and maintain a robust sales pipeline.",
+                    "Manage and nurture client relationships for upsell opportunities."
+                ],
+                qualifications: {
+                    "Essential": "Proven B2B SaaS or data product sales experience.",
+                    "Adaptable": "Ability to quickly learn new verticals is paramount.",
+                    "Articulate": "Excellent communication and value proposition skills.",
+                    "Tenacious": "World-class follow-up and relationship management.",
+                    "Confident": "Effective in handling sales conversations and closing.",
+                    "Process-Oriented": "Disciplined, organized, and structured."
+                },
+                offer: [
+                    "Highly competitive, uncapped 15% commission on new business.",
+                    "Opportunity to sell into multiple high-growth industries.",
+                    "Collaborative team with daily and weekly strategy sessions.",
+                    "A clear, 20-step sales process for efficiency and results."
+                ],
+                verticals: {
+                    "Marketing & PR": "Agencies of all sizes are a primary target, as our tool directly enhances their service offering and proves value to their clients.",
+                    "Crypto / Web3": "Our foundational market. These projects require sophisticated monitoring to track community sentiment and campaign impact.",
+                    "Health & Beauty": "A high-spend vertical where brand reputation and authentic influencer partnerships are critical for success.",
+                    "Finance & FinTech": "This sector demands data integrity and compliance. Our platform provides the verifiable insights they need.",
+                    "Fitness & Wellness": "A rapidly growing market where data can help brands identify genuine influencers and measure real-world impact."
+                },
+                platforms: {
+                    "Social": ["YouTube", "TikTok", "Instagram", "Reddit"],
+                    "News & Media": ["20,000+ News Sites"],
+                    "Upcoming": ["Telegram", "Discord"]
+                },
+                commissionPolicy: {
+                    condition: "Upon voluntary separation (resignation) from the company.",
+                    policy: "The departed sales representative will continue to receive their standard 15% commission on all contracts they personally closed for a period of six (6) months following their official departure date.",
+                    expiration: "After this six-month period, commissions on that book of business cease for the departed representative.",
+                    rationale: "This policy encourages the establishment of stable, long-term contracts and provides a fair and predictable transition. It does not apply in cases of termination for cause."
+                }
+            };
+
+            const createChecklistItem = (text) => `
+                <li class="flex items-start">
+                    <span class="flex-shrink-0 mr-3 mt-1 text-[var(--accent-primary)]">✔</span>
+                    <span>${text}</span>
+                </li>`;
+            
+            const createBoldChecklistItem = (key, value) => `
+                <li class="flex items-start">
+                    <span class="flex-shrink-0 mr-3 mt-1 text-[var(--accent-primary)]">✔</span>
+                    <span><strong>${key}:</strong> ${value}</span>
+                </li>`;
+
+            document.getElementById('responsibilities-list').innerHTML = appData.responsibilities.map(createChecklistItem).join('');
+            document.getElementById('qualifications-list').innerHTML = Object.entries(appData.qualifications).map(([k, v]) => createBoldChecklistItem(k, v)).join('');
+            document.getElementById('offer-list').innerHTML = appData.offer.map(createChecklistItem).join('');
+
+            const verticalsGrid = document.getElementById('verticals-grid');
+            Object.keys(appData.verticals).forEach(key => {
+                const card = document.createElement('div');
+                card.className = 'vertical-card bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-color)] text-center font-semibold cursor-pointer transition-all duration-300';
+                card.textContent = key;
+                card.dataset.key = key;
+                verticalsGrid.appendChild(card);
+            });
+
+            const platformsGrid = document.getElementById('platforms-grid');
+            Object.entries(appData.platforms).forEach(([category, list]) => {
+                list.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-color)] text-center';
+                    card.innerHTML = `<span class="font-semibold">${item}</span><p class="text-xs text-[var(--text-secondary)]">${category}</p>`;
+                    platformsGrid.appendChild(card);
+                });
+            });
+
+            const verticalContext = document.getElementById('vertical-context');
+            const verticalContextP = verticalContext.querySelector('p');
+            verticalsGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('vertical-card')) {
+                    const selectedKey = e.target.dataset.key;
+                    
+                    document.querySelectorAll('.vertical-card').forEach(c => c.classList.remove('selected'));
+                    e.target.classList.add('selected');
+
+                    verticalContextP.textContent = appData.verticals[selectedKey];
+                    verticalContext.classList.remove('opacity-0');
+                }
+            });
+
+            const policyToggle = document.getElementById('policy-toggle');
+            const policyDetails = document.getElementById('policy-details');
+            const policyText = document.getElementById('policy-text');
+            policyText.innerHTML = `
+                <p class="text-sm"><strong>Condition:</strong> ${appData.commissionPolicy.condition}</p>
+                <p class="text-sm mt-2"><strong>Policy:</strong> ${appData.commissionPolicy.policy}</p>
+                <p class="text-sm mt-2"><strong>Expiration:</strong> ${appData.commissionPolicy.expiration}</p>
+                <p class="text-sm mt-2"><strong>Rationale:</strong> ${appData.commissionPolicy.rationale}</p>
+            `;
+            policyToggle.addEventListener('click', () => {
+                const isHidden = policyDetails.classList.contains('hidden');
+                policyDetails.classList.toggle('hidden');
+                policyToggle.textContent = isHidden ? 'Hide Details' : 'Show Details';
+            });
+
+            const commissionCtx = document.getElementById('commissionChart').getContext('2d');
+            new Chart(commissionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Commission', 'Company Revenue'],
+                    datasets: [{
+                        data: [15, 85],
+                        backgroundColor: ['var(--accent-primary)', 'var(--accent-secondary)'],
+                        borderColor: 'var(--bg-surface)',
+                        borderWidth: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-50% 0px -50% 0px" });
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
+</body>
+</html>
