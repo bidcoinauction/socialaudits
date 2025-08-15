@@ -21,18 +21,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #F9F7F5;
-            --bg-surface: #FFFFFF;
-            --text-primary: #2C2A2E;
-            --text-secondary: #656168;
-            --accent-primary: #A37E62;
-            --accent-secondary: #DDC9B8;
-            --border-color: #EAE5E0;
+            --color-background: #F8F9FC;
+            --color-surface: #FFFFFF;
+            --color-primary: #1D243D;
+            --color-accent: #6D28D9;
+            --color-text-primary: #111827;
+            --color-text-secondary: #6B7280;
+            --border-color: #E5E7EB;
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
+            background-color: var(--color-background);
             color: var(--text-primary);
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            width: 40%;
+            height: 40%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.8;
+        }
+        body::before {
+            top: -10%;
+            left: -10%;
+            background: radial-gradient(circle, rgba(109, 40, 217, 0.1), transparent 70%);
+        }
+        body::after {
+            bottom: -10%;
+            right: -10%;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1), transparent 70%);
         }
         .nav-link {
             position: relative;
@@ -45,11 +66,11 @@
             height: 2px;
             bottom: -4px;
             left: 50%;
-            background-color: var(--accent-primary);
+            background-color: var(--color-accent);
             transition: width 0.3s, left 0.3s;
         }
         .nav-link.active, .nav-link:hover {
-            color: var(--accent-primary);
+            color: var(--color-accent);
         }
         .nav-link.active::after, .nav-link:hover::after {
             width: 100%;
@@ -66,8 +87,8 @@
         }
         .vertical-card.selected {
             transform: translateY(-5px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: var(--color-accent);
+            box-shadow: 0 10px 15px -3px rgba(109, 40, 217, 0.1), 0 4px 6px -2px rgba(109, 40, 217, 0.05);
         }
         .timeline {
             display: flex;
@@ -83,20 +104,31 @@
         .timeline-dot {
             width: 16px;
             height: 16px;
-            background-color: var(--accent-secondary);
+            background-color: #DDD6FE;
             border-radius: 50%;
-            border: 3px solid var(--accent-primary);
+            border: 3px solid var(--color-accent);
         }
         .timeline-line {
             flex-grow: 1;
             height: 4px;
-            background-color: var(--accent-secondary);
+            background-color: #DDD6FE;
         }
         .timeline-label {
             margin-top: 0.5rem;
             font-size: 0.875rem;
             font-weight: 500;
             color: var(--text-secondary);
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -106,7 +138,7 @@
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
-                    <span class="font-bold text-xl text-[var(--text-primary)]">Growth Initiative</span>
+                    <span class="font-bold text-xl text-[var(--color-primary)]">Growth Initiative</span>
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
@@ -114,6 +146,7 @@
                         <a href="#opportunity" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">The Opportunity</a>
                         <a href="#strategy" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">Strategy & Verticals</a>
                         <a href="#compensation" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">Compensation & Policy</a>
+                        <a href="#resources" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-[var(--text-secondary)]">Resources</a>
                     </div>
                 </div>
             </div>
@@ -123,33 +156,33 @@
     <main>
         <section id="overview" class="py-20 md:py-28">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--text-primary)]">Spearheading Growth in New Markets</h1>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-[var(--color-primary)]">Spearheading Growth in New Markets</h1>
                 <p class="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-[var(--text-secondary)]">
                     This document outlines our strategic expansion into new verticals and details the pivotal Account Executive role designed to drive this growth. Explore the opportunity, our market strategy, and the competitive compensation structure that supports our mission.
                 </p>
             </div>
         </section>
 
-        <section id="opportunity" class="py-20 md:py-28 bg-[var(--bg-surface)] border-y border-[var(--border-color)]">
+        <section id="opportunity" class="py-20 md:py-28 bg-[var(--color-surface)] border-y border-[var(--border-color)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-primary)]">The Opportunity: Account Executive</h2>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--color-primary)]">The Opportunity: Account Executive</h2>
                     <p class="mt-4 max-w-2xl mx-auto text-lg text-[var(--text-secondary)]">
                         A unique opportunity to build a significant book of business in a rapidly scaling, industry-agnostic data analytics platform.
                     </p>
                 </div>
 
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
-                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-4">Core Responsibilities</h3>
+                    <div class="card p-8">
+                        <h3 class="text-xl font-bold text-[var(--color-primary)] mb-4">Core Responsibilities</h3>
                         <ul id="responsibilities-list" class="space-y-3 text-[var(--text-secondary)]"></ul>
                     </div>
-                    <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
-                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-4">Key Qualifications</h3>
+                    <div class="card p-8">
+                        <h3 class="text-xl font-bold text-[var(--color-primary)] mb-4">Key Qualifications</h3>
                         <ul id="qualifications-list" class="space-y-3 text-[var(--text-secondary)]"></ul>
                     </div>
-                    <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
-                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-4">What We Offer</h3>
+                    <div class="card p-8">
+                        <h3 class="text-xl font-bold text-[var(--color-primary)] mb-4">What We Offer</h3>
                         <ul id="offer-list" class="space-y-3 text-[var(--text-secondary)]"></ul>
                     </div>
                 </div>
@@ -159,50 +192,50 @@
         <section id="strategy" class="py-20 md:py-28">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-primary)]">Strategy & Target Verticals</h2>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--color-primary)]">Strategy & Target Verticals</h2>
                     <p class="mt-4 max-w-3xl mx-auto text-lg text-[var(--text-secondary)]">
                         Our sales strategy is expanding beyond our roots. We are empowering our team to pursue qualified leads in any industry that utilizes influencer marketing, digital PR, or requires sophisticated media monitoring.
                     </p>
                 </div>
 
                 <div class="mt-16">
-                    <h3 class="text-2xl font-bold text-center text-[var(--text-primary)]">Primary Target Verticals</h3>
+                    <h3 class="text-2xl font-bold text-center text-[var(--color-primary)]">Primary Target Verticals</h3>
                     <p class="text-center text-[var(--text-secondary)] mt-2">Click a card to learn more.</p>
                     <div id="verticals-grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
-                    <div id="vertical-context" class="mt-8 min-h-[6rem] bg-[var(--bg-surface)] border border-[var(--border-color)] rounded-2xl p-6 text-center flex items-center justify-center transition-opacity duration-300 opacity-0">
+                    <div id="vertical-context" class="mt-8 min-h-[6rem] card p-6 text-center flex items-center justify-center transition-opacity duration-300 opacity-0">
                         <p class="text-lg text-[var(--text-secondary)]"></p>
                     </div>
                 </div>
 
                 <div class="mt-20">
-                    <h3 class="text-2xl font-bold text-center text-[var(--text-primary)]">Platform & Media Coverage</h3>
+                    <h3 class="text-2xl font-bold text-center text-[var(--color-primary)]">Platform & Media Coverage</h3>
                     <p class="text-center text-[var(--text-secondary)] mt-2">Our sales messaging emphasizes broad, platform-agnostic monitoring capabilities.</p>
                     <div id="platforms-grid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
                 </div>
             </div>
         </section>
 
-        <section id="compensation" class="py-20 md:py-28 bg-[var(--bg-surface)] border-y border-[var(--border-color)]">
+        <section id="compensation" class="py-20 md:py-28 bg-[var(--color-surface)] border-y border-[var(--border-color)]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center">
-                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-primary)]">Compensation & Policy</h2>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--color-primary)]">Compensation & Policy</h2>
                     <p class="mt-4 max-w-2xl mx-auto text-lg text-[var(--text-secondary)]">
                         A highly competitive, uncapped commission structure designed to attract and retain top sales talent.
                     </p>
                 </div>
                 <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div class="text-center">
-                        <h3 class="text-2xl font-bold text-[var(--text-primary)]">Commission Rate</h3>
+                        <h3 class="text-2xl font-bold text-[var(--color-primary)]">Commission Rate</h3>
                         <p class="text-lg text-[var(--text-secondary)] mt-2">15% of the Total Contract Value (TCV) for all new business.</p>
                         <div class="chart-container mt-4">
                             <canvas id="commissionChart"></canvas>
                         </div>
                     </div>
                     <div>
-                        <div class="bg-[var(--bg-main)] p-8 rounded-2xl border border-[var(--border-color)]">
-                            <h3 class="text-2xl font-bold text-[var(--text-primary)]">Post-Employment Commission Policy</h3>
+                        <div class="card p-8">
+                            <h3 class="text-2xl font-bold text-[var(--color-primary)]">Post-Employment Commission Policy</h3>
                             <p class="mt-2 text-[var(--text-secondary)]">A fair and predictable transition for departing team members to reward long-term relationship building.</p>
-                            <button id="policy-toggle" class="mt-4 text-sm font-semibold text-[var(--accent-primary)] hover:underline">Show Details</button>
+                            <button id="policy-toggle" class="mt-4 text-sm font-semibold text-[var(--color-accent)] hover:underline">Show Details</button>
                             <div id="policy-details" class="hidden mt-4">
                                 <div id="policy-text"></div>
                                 <div class="timeline">
@@ -223,10 +256,25 @@
                 </div>
             </div>
         </section>
+
+        <section id="resources" class="py-20 md:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--color-primary)]">Sales Enablement Resources</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-[var(--text-secondary)]">
+                    Access the tools and materials designed to support your success in the field.
+                </p>
+                <div class="mt-12 max-w-lg mx-auto">
+                    <a href="sales.html" class="block card p-8 transition-all duration-300">
+                        <h3 class="text-2xl font-bold text-[var(--color-primary)]">View the Sales Deck</h3>
+                        <p class="mt-2 text-[var(--text-secondary)]">Explore our updated sales deck, visually emphasizing our broad monitoring capabilities and platform-agnostic approach.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="py-8 bg-[var(--bg-main)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <footer class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center border-t border-[var(--border-color)] pt-8">
             <p class="text-sm text-[var(--text-secondary)]">&copy; 2025 Growth Initiative. All Rights Reserved.</p>
         </div>
     </footer>
@@ -279,13 +327,13 @@
 
             const createChecklistItem = (text) => `
                 <li class="flex items-start">
-                    <span class="flex-shrink-0 mr-3 mt-1 text-[var(--accent-primary)]">✔</span>
+                    <span class="flex-shrink-0 mr-3 mt-1 text-[var(--color-accent)]">✔</span>
                     <span>${text}</span>
                 </li>`;
             
             const createBoldChecklistItem = (key, value) => `
                 <li class="flex items-start">
-                    <span class="flex-shrink-0 mr-3 mt-1 text-[var(--accent-primary)]">✔</span>
+                    <span class="flex-shrink-0 mr-3 mt-1 text-[var(--color-accent)]">✔</span>
                     <span><strong>${key}:</strong> ${value}</span>
                 </li>`;
 
@@ -296,7 +344,7 @@
             const verticalsGrid = document.getElementById('verticals-grid');
             Object.keys(appData.verticals).forEach(key => {
                 const card = document.createElement('div');
-                card.className = 'vertical-card bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-color)] text-center font-semibold cursor-pointer transition-all duration-300';
+                card.className = 'vertical-card card p-4 text-center font-semibold cursor-pointer';
                 card.textContent = key;
                 card.dataset.key = key;
                 verticalsGrid.appendChild(card);
@@ -306,7 +354,7 @@
             Object.entries(appData.platforms).forEach(([category, list]) => {
                 list.forEach(item => {
                     const card = document.createElement('div');
-                    card.className = 'bg-[var(--bg-surface)] p-4 rounded-xl border border-[var(--border-color)] text-center';
+                    card.className = 'card p-4 text-center';
                     card.innerHTML = `<span class="font-semibold">${item}</span><p class="text-xs text-[var(--text-secondary)]">${category}</p>`;
                     platformsGrid.appendChild(card);
                 });
@@ -348,8 +396,8 @@
                     labels: ['Commission', 'Company Revenue'],
                     datasets: [{
                         data: [15, 85],
-                        backgroundColor: ['var(--accent-primary)', 'var(--accent-secondary)'],
-                        borderColor: 'var(--bg-surface)',
+                        backgroundColor: ['var(--color-accent)', '#DDD6FE'],
+                        borderColor: 'var(--color-surface)',
                         borderWidth: 4,
                     }]
                 },
@@ -386,3 +434,4 @@
     </script>
 </body>
 </html>
+
