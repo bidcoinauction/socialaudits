@@ -146,6 +146,10 @@
         .text-danger { color: var(--color-danger); }
         .text-success { color: var(--color-success); }
         .text-accent { color: var(--color-accent); }
+        .pricing-card ul { list-style: none; padding: 0;}
+        .pricing-card li { position: relative; padding-left: 1.5em; margin-bottom: 0.5em;}
+        .pricing-card li::before { content: '•'; color: var(--color-accent); position: absolute; left: 0; font-weight: bold; }
+
     </style>
 </head>
 <body>
@@ -335,39 +339,41 @@
             <!-- Slide 10 (Pricing) -->
             <section id="s10" class="slide">
                 <div class="w-full text-center flex flex-col items-center">
-                    <h2 class="text-4xl md:text-6xl font-bold text-center mb-2">Launch Promo <span class="text-primary">Pricing</span></h2>
-                    <p class="text-base text-text-secondary text-center mb-8 max-w-3xl">Limited‑time discounts to kickstart your next KOL campaign.</p>
-
-                    <!-- GRID: 4 cards in the first row, 1 full-width card below -->
-                    <div class="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-5">
-                        <!-- Card 1 -->
-                        <div class="card flex flex-col text-left">
-                            <h3 class="text-xl font-bold text-primary mb-1">24HR Pulse</h3>
-                            <p class="text-3xl font-semibold">$29.99</p>
-                            <p class="text-base text-text-secondary mt-2 flex-grow">Backdate a KOL’s last 24 hours and audit the real engagement behind a viral post.</p>
+                    <h2 class="text-4xl md:text-6xl font-bold text-center mb-8">Pricing</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl">
+                        <div class="card pricing-card text-center">
+                            <h3 class="text-2xl font-bold mb-4">24-Hour Pulse</h3>
+                            <p class="text-5xl font-black text-accent mb-4">$59</p>
+                            <ul class="text-left text-lg space-y-2 flex-grow">
+                                <li>Viral Post Analysis</li>
+                                <li>Immediate Manipulation Insights</li>
+                                <li>Based on Historical Data</li>
+                            </ul>
+                            <p class="text-sm text-text-secondary mt-4">Ideal for a quick check on a specific piece of content.</p>
                         </div>
-
-                        <!-- Card 2 -->
-                        <div class="card flex flex-col text-left">
-                            <h3 class="text-xl font-bold text-primary mb-1">7‑Day Audit</h3>
-                            <p class="text-3xl font-semibold">$159.99</p>
-                            <p class="text-base text-text-secondary mt-2 flex-grow">Analyze a full week. See consistency vs. one‑off spikes.</p>
+                        <div class="card pricing-card text-center border-2 border-accent shadow-2xl">
+                             <h3 class="text-2xl font-bold mb-4">7-Day Breakdown</h3>
+                            <p class="text-5xl font-black text-accent mb-4">$299</p>
+                            <ul class="text-left text-lg space-y-2 flex-grow">
+                                <li>Weekly Performance Summary</li>
+                                <li>Trend Analysis</li>
+                                <li>Based on Historical Data</li>
+                            </ul>
+                            <p class="text-sm text-text-secondary mt-4">Ideal for understanding weekly campaign performance.</p>
                         </div>
-
-                        <!-- Card 3 -->
-                        <div class="card flex flex-col text-left">
-                            <h3 class="text-xl font-bold text-primary mb-1">30‑Day Deep Dive</h3>
-                            <p class="text-3xl font-semibold">$399.99</p>
-                            <p class="text-base text-text-secondary mt-2 flex-grow">Understand reach, manipulation attempts, and long‑term impact.</p>
-                        </div>
-
-                        <!-- Card 4 -->
-                        <div class="card flex flex-col text-left">
-                            <h3 class="text-xl font-bold text-primary mb-1">KOL/Project Subscription</h3>
-                            <p class="text-3xl font-semibold">$599.99 <span class="text-base font-medium text-text-secondary">/ mo</span></p>
-                            <p class="text-base text-text-secondary mt-2 flex-grow">Real-time tracking with daily reports and a comprehensive monthly analysis.</p>
+                        <div class="card pricing-card text-center">
+                             <h3 class="text-2xl font-bold mb-4">Official Audit (Subscription)</h3>
+                            <p class="text-5xl font-black text-accent mb-4">$599<span class="text-xl font-semibold text-text-secondary">/mo</span></p>
+                            <ul class="text-left text-lg space-y-2 flex-grow">
+                                <li>Real-Time Tracking (10s intervals)</li>
+                                <li>Deleted Content Capture</li>
+                                <li>Daily & Monthly Reports</li>
+                                <li>"Verified Audit" Status</li>
+                            </ul>
+                            <p class="text-sm text-text-secondary mt-4">Ideal for ongoing due diligence and KOL certification.</p>
                         </div>
                     </div>
+                    <button class="mt-8 bg-accent text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-purple-700 transition-colors">Export to Sheets</button>
                 </div>
             </section>
 
@@ -430,4 +436,3 @@
 </script>
 </body>
 </html>
-
