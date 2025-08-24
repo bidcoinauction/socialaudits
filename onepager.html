@@ -17,8 +17,12 @@
             --color-text-primary: #111827;
             --color-text-secondary: #6B7280;
             --color-danger: #EF4444;
+            --color-success: #10B981;
         }
-        html, body {
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
@@ -51,10 +55,13 @@
             margin: 0 auto;
             padding: 4rem 2rem;
         }
-        #page-logo {
-            display: block;
-            max-width: 250px;
-            margin: 0 auto 2.5rem;
+        .main-content {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #E5E7EB;
+            padding: 4rem;
         }
         .section-title {
             font-size: 2.5rem;
@@ -70,8 +77,7 @@
             margin: 1rem auto 0;
         }
         .card {
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            background-color: #F9FAFB;
             border: 1px solid #E5E7EB;
             border-radius: 1.5rem;
             padding: 2.5rem;
@@ -79,6 +85,11 @@
             text-align: left;
             display: flex;
             flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.1);
         }
         .cta-button {
             background-color: var(--color-accent);
@@ -94,132 +105,156 @@
             background-color: #5B21B6;
             transform: translateY(-2px);
         }
+        .pricing-card ul { list-style: none; padding: 0;}
+        .pricing-card li { position: relative; padding-left: 1.75em; margin-bottom: 0.75em;}
+        .pricing-card li::before { 
+            content: '✓'; 
+            color: var(--color-success); 
+            position: absolute; 
+            left: 0; 
+            font-weight: bold; 
+            font-size: 1.2em;
+        }
+        .popular-plan {
+            border: 2px solid var(--color-accent);
+            transform: scale(1.05);
+            position: relative;
+        }
+        .popular-badge {
+            position: absolute;
+            top: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <div class="main-container">
+        <div class="main-content">
+            <!-- Header/Hero Section -->
+            <header class="text-center mb-24">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png" alt="Social Audits Logo" class="mx-auto w-48 mb-4">
+                <h1 class="text-5xl md:text-7xl font-black text-primary tracking-tight">SocialAudits</h1>
+                <h2 class="text-2xl md:text-3xl font-bold text-primary mt-4">The Premier Influencer Audit & Performance Platform</h2>
+                <p class="section-subtitle">Stop guessing. Start knowing. We replace vanity metrics with verifiable proof of impact.</p>
+            </header>
 
-        <!-- Header/Hero Section -->
-        <header class="text-center mb-24">
-            <img id="page-logo" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png" alt="Social Audits Logo">
-            <h1 class="text-5xl md:text-7xl font-black text-primary tracking-tight">SocialAudits</h1>
-            <h2 class="text-2xl md:text-3xl font-bold text-primary mt-4">The Premier Influencer Audit & Performance Platform</h2>
-            <p class="section-subtitle">Stop guessing. Start knowing. We replace vanity metrics with verifiable proof of impact.</p>
-        </header>
+            <!-- The Problem Section -->
+            <section class="mb-24 text-center">
+                <h2 class="section-title">The Problem: <span class="text-danger">Chaos in KOL Marketing</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="card items-center text-center">
+                        <svg class="w-12 h-12 text-danger mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 6v-1m0-1V4m0 2v1m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 18v-1m0-1v-1m0 1v1m0 0v1m0-1c1.11 0 2.08.402 2.599 1M12 18c-1.11 0-2.08-.402-2.599-1M12 18v-1m0 1v1m0 0v1"></path></svg>
+                        <h3 class="text-xl font-bold text-primary mb-2">The Fear of Fraud</h3>
+                        <p class="text-secondary">Your budget is bleeding out on ghost followers and botted engagement. Can you afford to keep guessing?</p>
+                    </div>
+                    <div class="card items-center text-center">
+                        <svg class="w-12 h-12 text-danger mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <h3 class="text-xl font-bold text-primary mb-2">The Risk of Ruin</h3>
+                        <p class="text-secondary">A partnership with the wrong influencer can destroy your brand overnight. Why roll those dice?</p>
+                    </div>
+                    <div class="card items-center text-center">
+                        <svg class="w-12 h-12 text-danger mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h3 class="text-xl font-bold text-primary mb-2">The Danger of Deception</h3>
+                        <p class="text-secondary">Without verifiable data, you can’t prove marketing works. Stakeholders won’t wait forever.</p>
+                    </div>
+                </div>
+            </section>
 
-        <!-- The Problem Section -->
-        <section class="mb-24 text-center">
-            <h2 class="section-title">The Problem: <span class="text-danger">Chaos in KOL Marketing</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">The Fear of Fraud</h3>
-                    <p class="text-secondary">Marketing budgets are wasted on ghost followers and botted engagement, leading to a lack of confidence and wasted spend.</p>
+            <!-- The Solution Section -->
+            <section class="mb-24 text-center">
+                <h2 class="section-title">The Solution: <span class="text-accent">Clarity Over Chaos</span></h2>
+                <p class="section-subtitle">When fraud is everywhere and bots are indistinguishable from fans, you don’t need more noise — you need the truth. SocialAudits turns doubt into data.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-primary mb-2">Proof Over Promises</h3>
+                        <p class="text-secondary">No more trusting screenshots. We expose the real numbers behind every influencer.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-primary mb-2">Bot‑Free by Design</h3>
+                        <p class="text-secondary">Ghost followers and manipulated impressions are filtered out by default.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-primary mb-2">ROI You Can Defend</h3>
+                        <p class="text-secondary">Give your team — and your board — proof of what worked and what to repeat.</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">The Risk of Ruin</h3>
-                    <p class="text-secondary">Partnering with the wrong influencer can cause significant brand reputation damage.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">The Danger of Deception</h3>
-                    <p class="text-secondary">Without verifiable data, proving marketing ROI to stakeholders is nearly impossible.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- The Solution Section -->
-        <section class="mb-24 text-center">
-            <h2 class="section-title">The Solution: <span class="text-accent">Clarity Over Chaos</span></h2>
-            <p class="section-subtitle">SocialAudits turns doubt into data with a powerful pipeline powered by koat.ai.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Audited Insights</h3>
-                    <p class="text-secondary">We go beyond vanity metrics to verify engagement, detect bots, and deliver an accurate, historical picture of an influencer's true impact.</p>
+            <!-- Competitive Advantage Section -->
+            <section class="mb-24 text-center">
+                <h2 class="section-title">Your Competitive Advantage</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-primary mb-2">Unshakeable Confidence</h3>
+                        <p class="text-secondary">Avoid fraud with advanced bot detection and make decisions with verifiable data.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-primary mb-2">Maximum ROI</h3>
+                        <p class="text-secondary">Eliminate wasted spending on ineffective campaigns and optimize your marketing budget with data-driven insights.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-xl font-bold text-primary mb-2">Strategic Clarity</h3>
+                        <p class="text-secondary">Understand true sentiment and campaign reach to outmaneuver your competitors.</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Actionable Data</h3>
-                    <p class="text-secondary">Our platform provides verifiable ROI, enabling informed decisions and strategic planning.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Fraud Prevention</h3>
-                    <p class="text-secondary">Our advanced bot detection algorithms filter out automated activity, ensuring you get authentic, human-driven conversations.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Trust Ecosystem</h3>
-                    <p class="text-secondary">We are building a secure environment where projects, agencies, and KOLs can collaborate with confidence.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Competitive Advantage Section -->
-        <section class="mb-24 text-center">
-            <h2 class="section-title">Your Competitive Advantage</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Unshakeable Confidence</h3>
-                    <p class="text-secondary">Avoid fraud with advanced bot detection and make decisions with verifiable data.</p>
+            <!-- Pricing Section -->
+            <section class="mb-24 text-center">
+                <h2 class="section-title">Simple, Transparent Pricing</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mx-auto mt-12">
+                    <div class="card pricing-card text-center">
+                        <h3 class="text-2xl font-bold mb-4">24-Hour Pulse</h3>
+                        <p class="text-5xl font-black text-accent mb-4">$59</p>
+                        <ul class="text-left text-lg space-y-2 flex-grow">
+                            <li>Viral Post Analysis</li>
+                            <li>Immediate Manipulation Insights</li>
+                            <li>Based on Historical Data</li>
+                        </ul>
+                        <p class="text-sm text-secondary mt-4">Ideal for a quick check on a specific piece of content.</p>
+                    </div>
+                    <div class="card pricing-card text-center popular-plan">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3 class="text-2xl font-bold mb-4">7-Day Breakdown</h3>
+                        <p class="text-5xl font-black text-accent mb-4">$299</p>
+                        <ul class="text-left text-lg space-y-2 flex-grow">
+                            <li>Weekly Performance Summary</li>
+                            <li>Trend Analysis</li>
+                            <li>Based on Historical Data</li>
+                        </ul>
+                        <p class="text-sm text-secondary mt-4">Ideal for understanding weekly campaign performance.</p>
+                    </div>
+                    <div class="card pricing-card text-center">
+                        <h3 class="text-2xl font-bold mb-4">Official Audit</h3>
+                        <p class="text-5xl font-black text-accent mb-4">$599<span class="text-xl font-semibold text-secondary">/mo</span></p>
+                        <ul class="text-left text-lg space-y-2 flex-grow">
+                            <li>Real-Time Tracking (10s intervals)</li>
+                            <li>Deleted Content Capture</li>
+                            <li>Daily & Monthly Reports</li>
+                            <li>"Verified Audit" Status</li>
+                        </ul>
+                        <p class="text-sm text-secondary mt-4">Ideal for ongoing due diligence and KOL certification.</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Maximum ROI</h3>
-                    <p class="text-secondary">Eliminate wasted spending on ineffective campaigns and optimize your marketing budget with data-driven insights.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Strategic Clarity</h3>
-                    <p class="text-secondary">Understand true sentiment and campaign reach to outmaneuver your competitors.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pricing Section -->
-        <section class="mb-24 text-center">
-            <h2 class="section-title">Pricing</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-                <div class="card text-center">
-                    <h3 class="text-2xl font-bold text-primary">24HR Pulse</h3>
-                    <p class="text-4xl font-black my-4 text-accent">$29.99</p>
-                    <p class="text-secondary flex-grow">Backdate a KOL’s last 24 hours to audit a viral post.</p>
-                </div>
-                <div class="card text-center">
-                    <h3 class="text-2xl font-bold text-primary">7-Day Audit</h3>
-                    <p class="text-4xl font-black my-4 text-accent">$159.99</p>
-                    <p class="text-secondary flex-grow">Analyze a full week for consistency versus one-off spikes.</p>
-                </div>
-                <div class="card text-center">
-                    <h3 class="text-2xl font-bold text-primary">30-Day Deep Dive</h3>
-                    <p class="text-4xl font-black my-4 text-accent">$399.99</p>
-                    <p class="text-secondary flex-grow">Understand long-term reach, manipulation attempts, and impact.</p>
-                </div>
-                <div class="card text-center md:col-span-2 lg:col-span-1 lg:col-start-2">
-                    <h3 class="text-2xl font-bold text-primary">KOL/Project Subscription</h3>
-                    <p class="text-4xl font-black my-4 text-accent">$599.99<span class="text-lg font-medium text-secondary">/mo</span></p>
-                    <p class="text-secondary flex-grow">Real-time tracking with daily reports and a comprehensive monthly analysis.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Get Started Section -->
-        <section class="mb-24 text-center">
-            <h2 class="section-title">Get Started Today</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">First Report in 24 Hours</h3>
-                    <p class="text-secondary">Receive your first comprehensive report within a day of indexing.</p>
-                </div>
-                <div class="card">
-                    <h3 class="text-xl font-bold text-primary mb-2">Daily Campaign Updates</h3>
-                    <p class="text-secondary">Get daily updates to track all changes during your campaign.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- CTA Section -->
-        <section class="text-center mt-24">
-            <h2 class="section-title">Ready to uncover the truth behind your data?</h2>
-            <a href="#" class="cta-button mt-8">
-                Contact Our Team
-            </a>
-        </section>
-
+            </section>
+            
+            <!-- CTA Section -->
+            <section class="text-center mt-24">
+                <h2 class="section-title">Get Started Today</h2>
+                <p class="section-subtitle">Receive your first comprehensive report within 24 hours and get daily updates to track every change during your campaign.</p>
+                <a href="#" class="cta-button mt-8">
+                    Contact Our Team
+                </a>
+            </section>
+        </div>
     </div>
 
     <!-- Footer -->
