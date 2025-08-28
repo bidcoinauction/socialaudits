@@ -250,11 +250,13 @@
     <div id="deck-container">
         <div id="deck">
             <main id="slides">
-                <!-- Slide 1: Title -->
+                <!-- Slide 1: Title (UPDATED LAYOUT) -->
                 <section id="s1" class="slide">
-                    <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png" alt="Social Audits Logo" class="slide-logo animated-item">
-                    <h1 class="slide-title animated-item">SocialAudits</h1>
-                    <p class="slide-subtitle animated-item">Validating Influencers in the KOL Economy</p>
+                    <div class="flex flex-col items-center animated-item">
+                        <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png" alt="Social Audits Logo" class="slide-logo" style="margin-bottom: 0.5rem;">
+                        <h1 class="slide-title">SocialAudits</h1>
+                    </div>
+                    <p class="slide-subtitle animated-item mt-2">Validating Influencers in the KOL Economy</p>
                 </section>
 
                 <!-- Slide 2: Our Mission -->
@@ -360,8 +362,74 @@
                     </div>
                 </section>
 
-                <!-- Slide 8: Revenue Potential (UPDATED) -->
+                <!-- Slide 8: Go-to-Market Strategy -->
                 <section id="s8" class="slide">
+                    <h2 class="slide-title animated-item">Go-to-Market <span class="text-accent">Strategy</span></h2>
+                    <p class="slide-subtitle animated-item">A disciplined market entry, starting with our initial target market and expanding outward.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl items-center mt-6">
+                        <div class="card text-left animated-item">
+                            <h3 class="text-xl font-bold text-primary mb-2">Initial Target Market: Finance</h3>
+                            <p class="text-base text-secondary mb-2">North American Finance + Crypto</p>
+                            <p class="text-3xl font-bold text-primary mb-4">TAM: $1.1B+</p>
+                            <h3 class="text-xl font-bold text-primary mb-2">Expansion Verticals</h3>
+                            <p class="text-base text-secondary">Health & Fitness, Beauty, and Gaming.</p>
+                        </div>
+                        <div class="card p-4 animated-item">
+                            <h3 class="text-lg font-bold text-primary mb-2">Why We Win Here First</h3>
+                            <div class="rounded-lg p-2 h-56 flex items-center justify-center">
+                                <canvas id="roiChart"></canvas>
+                            </div>
+                            <p class="text-xs text-secondary mt-2 text-center"><strong class="text-primary">Insight:</strong> Crypto & Finance campaigns have the highest manipulation rates, making them desperate for our solution.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Slide 9: Launch Partner (UPDATED) -->
+                <section id="s9" class="slide">
+                    <h2 class="slide-title animated-item">Launch <span class="text-accent">Partner</span></h2>
+                    <p class="slide-subtitle animated-item">Our GTM is accelerated by a strategic partnership providing immediate, exclusive distribution.</p>
+                    <div class="card w-full max-w-5xl mt-6 animated-item text-center">
+                         <h3 class="text-2xl font-bold text-primary mb-4">Solvent Labs & The Solana Ecosystem</h3>
+                         <p class="text-lg text-secondary mb-8">Our partnership with Solvent Labs makes us the exclusive ad partner on the new Solana phone, with ads played between games on Solvent—turning a critical need into a powerful, low-cost acquisition channel.</p>
+                         <div class="flex justify-around items-center">
+                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/solvent.png" alt="Solvent Logo" class="h-20 object-contain">
+                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/images.jpeg" alt="Solana Logo" class="h-20 object-contain">
+                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Bonk.png" alt="Bonk Logo" class="h-20 object-contain">
+                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Backpack.png" alt="Backpack Logo" class="h-20 object-contain">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Slide 10: Revenue Streams -->
+                <section id="s10" class="slide">
+                    <h2 class="slide-title animated-item"><span class="text-accent">Revenue</span> Streams</h2>
+                    <p class="slide-subtitle animated-item">We monetize across the full client lifecycle, maximizing LTV while reducing churn.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mt-6">
+                        <div class="card text-left p-4 animated-item">
+                            <h3 class="text-lg font-bold text-primary mb-2">One-Off Audits</h3>
+                            <p class="text-sm text-secondary">Forensic-grade reports tied to specific campaigns.</p>
+                            <p class="card-subtext mt-2">Ideal for project launches and campaign-specific due diligence.</p>
+                        </div>
+                        <div class="card text-left p-4 animated-item">
+                            <h3 class="text-lg font-bold text-primary mb-2">SaaS Subscriptions</h3>
+                            <p class="text-sm text-secondary">Tiered monthly plans for ongoing monitoring and intelligence.</p>
+                             <p class="card-subtext mt-2">Core offering for agencies and active marketing teams.</p>
+                        </div>
+                        <div class="card text-left p-4 animated-item">
+                            <h3 class="text-lg font-bold text-primary mb-2">Verified Marketplace</h3>
+                            <p class="text-sm text-secondary">Transaction fees from deals between brands and our pre-audited KOLs.</p>
+                            <p class="card-subtext mt-2">Creates a trusted ecosystem and network effects.</p>
+                        </div>
+                         <div class="card text-left p-4 animated-item">
+                            <h3 class="text-lg font-bold text-primary mb-2">Data & API Licensing</h3>
+                            <p class="text-sm text-secondary">Enterprise-level access to our enriched datasets and manipulation scores.</p>
+                            <p class="card-subtext mt-2">Targeting hedge funds, exchanges, and compliance teams.</p>
+                        </div>
+                    </div>
+                </section>
+
+                 <!-- Slide 11: Revenue Potential (UPDATED & MOVED) -->
+                <section id="s11" class="slide">
                     <h2 class="slide-title animated-item">Revenue <span class="text-accent">Potential</span></h2>
                     <p class="slide-subtitle animated-item">Our projections are based on capturing a small, achievable percentage of our target markets.</p>
                     <div class="w-full max-w-5xl mt-6 animated-item">
@@ -406,71 +474,6 @@
                     </div>
                 </section>
 
-                <!-- Slide 9: Go-to-Market Strategy (UPDATED) -->
-                <section id="s9" class="slide">
-                    <h2 class="slide-title animated-item">Go-to-Market <span class="text-accent">Strategy</span></h2>
-                    <p class="slide-subtitle animated-item">A disciplined market entry, starting with our initial target market and expanding outward.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-6xl items-center mt-6">
-                        <div class="card text-left animated-item">
-                            <h3 class="text-xl font-bold text-primary mb-2">Initial Target Market: Finance</h3>
-                            <p class="text-base text-secondary mb-2">North American Finance + Crypto</p>
-                            <p class="text-3xl font-bold text-primary mb-4">TAM: $1.1B+</p>
-                            <h3 class="text-xl font-bold text-primary mb-2">Expansion Verticals</h3>
-                            <p class="text-base text-secondary">Health & Fitness, Beauty, and Gaming.</p>
-                        </div>
-                        <div class="card p-4 animated-item">
-                            <h3 class="text-lg font-bold text-primary mb-2">Why We Win Here First</h3>
-                            <div class="rounded-lg p-2 h-56 flex items-center justify-center">
-                                <canvas id="roiChart"></canvas>
-                            </div>
-                            <p class="text-xs text-secondary mt-2 text-center"><strong class="text-primary">Insight:</strong> Crypto & Finance campaigns have the highest manipulation rates, making them desperate for our solution.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Slide 10: Launch Partner -->
-                <section id="s10" class="slide">
-                    <h2 class="slide-title animated-item">Launch <span class="text-accent">Partner</span></h2>
-                    <p class="slide-subtitle animated-item">Our GTM is accelerated by a strategic partnership providing immediate, exclusive distribution.</p>
-                    <div class="card w-full max-w-5xl mt-6 animated-item text-center">
-                         <h3 class="text-2xl font-bold text-primary mb-4">Solvent Labs & The Solana Ecosystem</h3>
-                         <p class="text-lg text-secondary mb-8">Our partnership with Solvent Labs provides direct access to the entire Solana ecosystem, turning a critical need into a powerful, low-cost acquisition channel.</p>
-                         <div class="flex justify-around items-center">
-                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/solvent.png" alt="Solvent Logo" class="h-16 object-contain">
-                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/images.jpeg" alt="Solana Logo" class="h-16 object-contain">
-                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Bonk.png" alt="Bonk Logo" class="h-16 object-contain">
-                            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Backpack.png" alt="Backpack Logo" class="h-16 object-contain">
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Slide 11: Revenue Streams -->
-                <section id="s11" class="slide">
-                    <h2 class="slide-title animated-item"><span class="text-accent">Revenue</span> Streams</h2>
-                    <p class="slide-subtitle animated-item">We monetize across the full client lifecycle, maximizing LTV while reducing churn.</p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mt-6">
-                        <div class="card text-left p-4 animated-item">
-                            <h3 class="text-lg font-bold text-primary mb-2">One-Off Audits</h3>
-                            <p class="text-sm text-secondary">Forensic-grade reports tied to specific campaigns.</p>
-                            <p class="card-subtext mt-2">Ideal for project launches and campaign-specific due diligence.</p>
-                        </div>
-                        <div class="card text-left p-4 animated-item">
-                            <h3 class="text-lg font-bold text-primary mb-2">SaaS Subscriptions</h3>
-                            <p class="text-sm text-secondary">Tiered monthly plans for ongoing monitoring and intelligence.</p>
-                             <p class="card-subtext mt-2">Core offering for agencies and active marketing teams.</p>
-                        </div>
-                        <div class="card text-left p-4 animated-item">
-                            <h3 class="text-lg font-bold text-primary mb-2">Verified Marketplace</h3>
-                            <p class="text-sm text-secondary">Transaction fees from deals between brands and our pre-audited KOLs.</p>
-                            <p class="card-subtext mt-2">Creates a trusted ecosystem and network effects.</p>
-                        </div>
-                         <div class="card text-left p-4 animated-item">
-                            <h3 class="text-lg font-bold text-primary mb-2">Data & API Licensing</h3>
-                            <p class="text-sm text-secondary">Enterprise-level access to our enriched datasets and manipulation scores.</p>
-                            <p class="card-subtext mt-2">Targeting hedge funds, exchanges, and compliance teams.</p>
-                        </div>
-                    </div>
-                </section>
     
                 <!-- Slide 12: Competitive Landscape -->
                 <section id="s12" class="slide">
@@ -529,7 +532,7 @@
                     </div>
                 </section>
         
-                <!-- Slide 14: The Ask & Opportunity (UPDATED) -->
+                <!-- Slide 14: The Ask & Opportunity -->
                 <section id="s14" class="slide text-center">
                     <h2 class="slide-title animated-item">The Ask & <span class="text-accent">Opportunity</span></h2>
                     <p class="slide-subtitle animated-item">We are seeking strategic partners to help us build the gold standard for trust in marketing.</p>
@@ -708,7 +711,7 @@
                     renderImpressionsChart();
                     renderEngagementChart();
                 }
-                if (slides[currentSlideIndex].id === 's9') {
+                if (slides[currentSlideIndex].id === 's8') { // Note: ID updated for GTM slide
                     renderRoiChart();
                 }
             }, 50);
@@ -746,4 +749,5 @@
 </script>
 </body>
 </html>
+
 
