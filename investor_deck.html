@@ -114,12 +114,14 @@
 
         /* --- Typography --- */
         .slide-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
             color: var(--color-primary);
             line-height: 1.1;
-            letter-spacing: -0.025em;
-            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         .text-accent { color: var(--color-accent); }
 
@@ -264,17 +266,6 @@
         .slide.active .animated-item:nth-child(5) { transition-delay: 0.5s; }
         .slide.active .animated-item:nth-child(6) { transition-delay: 0.6s; }
 
-        .slide-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 900;
-            color: var(--color-primary);
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
         .slide-subtitle {
             font-size: clamp(1rem, 2.5vw, 1.5rem);
             font-weight: 600;
@@ -339,7 +330,7 @@
             background: rgba(255, 255, 255, 0.8);
             border: 1px solid rgba(59, 130, 246, 0.2);
             border-radius: var(--border-radius-md);
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -352,7 +343,7 @@
         }
 
         .metric-value {
-            font-size: 3rem;
+            font-size: 2.6rem;
             font-weight: 800;
             color: var(--color-accent);
             line-height: 1;
@@ -374,7 +365,7 @@
             background: var(--color-surface);
             border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: var(--border-radius-md);
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: var(--shadow-sm);
@@ -424,7 +415,7 @@
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
             width: 100%;
             max-width: 1200px;
         }
@@ -432,7 +423,7 @@
         .grid-4 {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
+            gap: 1rem;
             width: 100%;
             max-width: 1200px;
         }
@@ -440,7 +431,7 @@
         .grid-5 {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 1.25rem;
+            gap: 1rem;
             width: 100%;
             max-width: 1400px;
         }
@@ -879,7 +870,97 @@
                 </div>
             </div>
 
-            <!-- Slide 8: Market Size -->
+            <!-- Slide 8: The Ask & Use of Funds -->
+            <div class="slide" id="use-funds">
+                <h2 class="slide-title animated-item">The Ask & <span class="accent-text">Opportunity</span></h2>
+                <p class="slide-subtitle animated-item">Strategic partners to build the gold standard for trust in marketing</p>
+                <div class="grid-2 animated-item">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-accent);">$10M</div>
+                        <div class="metric-label">Raise @ $50M Valuation</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-success);">18 Months</div>
+                        <div class="metric-label">Runway | Q1 target: 0.1% capture</div>
+                    </div>
+                </div>
+                <div class="grid-2 animated-item" style="margin-top: 2rem; text-align: left;">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-accent);">$6.0M</div>
+                        <div class="metric-label">Sales & Marketing (60%)</div>
+                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>Marketing campaigns & brand: $2.4M</li>
+                            <li>Partnership development: $1.6M</li>
+                            <li>Events & industry presence: $1.2M</li>
+                            <li>Sales ops & tools: $0.8M</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-warning);">$1.5M</div>
+                        <div class="metric-label">Data Acquisition (15%)</div>
+                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>3rd-party data licensing: $0.7M</li>
+                            <li>Ingestion & processing infra: $0.35M</li>
+                            <li>Quality/enrichment tools: $0.25M</li>
+                            <li>Partnerships & integrations: $0.15M</li>
+                            <li>Data science talent: $0.05M</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid-2 animated-item" style="margin-top: 1.5rem; text-align: left;">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-success);">$1.7M</div>
+                        <div class="metric-label">Operations (17%)</div>
+                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>Team & leadership: $0.6M</li>
+                            <li>Office & overhead: $0.5M</li>
+                            <li>Legal & compliance: $0.4M</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-danger);">$0.8M</div>
+                        <div class="metric-label">Product & Eng. (8%)</div>
+                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>Platform stability & fixes: $0.4M</li>
+                            <li>API & integration maint.: $0.3M</li>
+                            <li>Security & monitoring: $0.2M</li>
+                            <li>Support infrastructure: $0.1M</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid-3 animated-item" style="margin-top: 2rem;">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-success);">75%</div>
+                        <div class="metric-label">Funds to Revenue Drivers</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary);">Sales, Marketing, Data</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-accent);">Proven</div>
+                        <div class="metric-label">Go-to-Market</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary);">Multi-channel with KPIs</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--color-warning);">Q1</div>
+                        <div class="metric-label">0.1% Market Capture</div>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary);">Aggressive but achievable</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8b: Use of Funds Visualization -->
+            <div class="slide" id="use-funds-chart">
+                <h2 class="slide-title animated-item">Use of <span class="accent-text">Funds</span></h2>
+                <p class="slide-subtitle animated-item">Allocation focused on revenue and data moats</p>
+                <div class="animated-item" style="margin-top: 1rem; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    <div class="metric-card" style="padding: 1rem;">
+                        <div style="height: 20rem;">
+                            <canvas id="fundsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 9: Market Size -->
             <div class="slide">
                 <h2 class="slide-title animated-item">Market <span class="accent-text">Size</span></h2>
                 <p class="slide-subtitle animated-item">Explosive growth with strong regional and vertical momentum</p>
@@ -1203,6 +1284,41 @@
                 </p>
             </div>
 
+            <!-- Slide 10b: Roadmap & Risk Mitigation (2-Year Plan) -->
+            <div class="slide">
+                <h2 class="slide-title animated-item">Roadmap & <span class="accent-text">Risk Mitigation</span></h2>
+                <p class="slide-subtitle animated-item">Clear 2-year plan; data risk removed with targeted acquisition (next raise)</p>
+                <div class="grid-3 animated-item">
+                    <div class="metric-card" style="text-align: left;">
+                        <div class="metric-value" style="color: var(--color-success);">Year 1</div>
+                        <div class="metric-label">Foundation & Traction</div>
+                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>0.1% market capture in Q1; 150–200 customers by M18</li>
+                            <li>Proof-of-Organic™ adoption across 3 priority verticals</li>
+                            <li>Scale GTM, partnerships, and verification marketplace</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card" style="text-align: left;">
+                        <div class="metric-value" style="color: var(--color-accent);">Year 2</div>
+                        <div class="metric-label">Own the Data Layer</div>
+                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li><strong>Acquire koat.ai</strong> in the next raise (not this round)</li>
+                            <li>Full data ownership eliminates vendor risk</li>
+                            <li>Lower COGS, higher margins; expanded data products</li>
+                        </ul>
+                    </div>
+                    <div class="metric-card" style="text-align: left;">
+                        <div class="metric-value" style="color: var(--color-warning);">Risk</div>
+                        <div class="metric-label">Mitigation</div>
+                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>Contractual exclusivity with renewal options</li>
+                            <li>Multi-source ingestion redundancy</li>
+                            <li>Acquisition plan addresses long-term dependency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <!-- Slide 11: Competition -->
             <div class="slide">
                 <h2 class="slide-title animated-item">Competition</h2>
@@ -1509,11 +1625,12 @@
             
             updateControls();
 
-            // Initialize charts when report slide (#s6) is first shown
+            // Initialize charts when report slide (#s6) or funds slides are first shown
             const activeSlide = slides[currentSlideIndex];
-            if (!chartsInitialized && activeSlide && activeSlide.id === 's6') {
+            if (!chartsInitialized && activeSlide && (activeSlide.id === 's6' || activeSlide.id === 'use-funds' || activeSlide.id === 'use-funds-chart')) {
                 try {
                     initReportCharts();
+                    initFundsChart();
                     chartsInitialized = true;
                 } catch (e) {
                     console.error('Chart init failed', e);
@@ -1594,9 +1711,31 @@
             { data: [10,18,9,4,3,6,9], backgroundColor: '#F59E0B' }
         ]);
     }
+
+    function initFundsChart() {
+        const el = document.getElementById('fundsChart');
+        if (!el || !window.Chart) return;
+        const data = {
+            labels: ['Sales & Marketing (60%)','Data (15%)','Operations (17%)','Prod/Eng (8%)'],
+            datasets: [{
+                data: [60,15,17,8],
+                backgroundColor: ['#6366F1','#10B981','#F59E0B','#EF4444'],
+                borderWidth: 0
+            }]
+        };
+        new Chart(el, {
+            type: 'doughnut',
+            data,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12 } }
+                },
+                cutout: '55%'
+            }
+        });
+    }
 </script>
 </body>
-</html>
-</html>
-</html>
 </html>
