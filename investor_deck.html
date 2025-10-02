@@ -6,6 +6,7 @@
     <title>SocialAudits Presentation - V14</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -71,7 +72,7 @@
         .slide {
             position: absolute;
             inset: 0;
-            padding: 3rem 4rem;
+            padding: 2.5rem 3.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -130,7 +131,7 @@
             font-weight: 500; 
             color: var(--color-text-secondary);
             max-width: 700px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1.25rem;
             line-height: 1.5;
         }
 
@@ -590,8 +591,6 @@
             
             .slide {
                 padding: 1.5rem;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
                 padding-bottom: 6rem; /* ensure bottom breathing room on mobile */
             }
 
@@ -605,7 +604,21 @@
         }
 
         /* Global bottom spacing to prevent overlap with slide edges/controls */
-        .slide { padding-bottom: 5rem; }
+        .slide { padding-bottom: 4.5rem; }
+
+        /* Compact styling to ensure Ask & Funds slides fit without scrolling */
+        #use-funds .slide-title { font-size: clamp(1.8rem, 4vw, 3.2rem); }
+        #use-funds .slide-subtitle { margin-bottom: 0.75rem; max-width: 900px; }
+        #use-funds .metric-card { padding: 1rem; }
+        #use-funds .metric-value { font-size: 2rem; }
+        #use-funds .metric-label { font-size: 0.8rem; }
+        #use-funds ul { font-size: 0.8rem; line-height: 1.4; margin-top: 0.4rem; }
+        #use-funds .grid-2 { gap: 0.75rem; }
+        #use-funds .grid-2 + .grid-2 { margin-top: 0.75rem !important; }
+
+        #use-funds-chart .slide-title { font-size: clamp(1.8rem, 4vw, 3.2rem); }
+        #use-funds-chart .metric-card { padding: 1rem; }
+        #use-funds-chart canvas { height: 22rem !important; }
         
         /* --- Report Slide Scoped Styles (#s6) --- */
         #s6 {
@@ -872,8 +885,8 @@
 
             <!-- Slide 8: The Ask & Use of Funds -->
             <div class="slide" id="use-funds">
-                <h2 class="slide-title animated-item">The Ask & <span class="accent-text">Opportunity</span></h2>
-                <p class="slide-subtitle animated-item">Strategic partners to build the gold standard for trust in marketing</p>
+                <h2 class="slide-title animated-item">The Ask & <span class="accent-text">Use of Funds</span></h2>
+                <p class="slide-subtitle animated-item">Where the $10M goes to accelerate revenue and own the data layer</p>
                 <div class="grid-2 animated-item">
                     <div class="metric-card">
                         <div class="metric-value" style="color: var(--color-accent);">$10M</div>
@@ -884,11 +897,11 @@
                         <div class="metric-label">Runway | Q1 target: 0.1% capture</div>
                     </div>
                 </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem; text-align: left;">
+                <div class="grid-2 animated-item" style="margin-top: 1rem; text-align: left; gap: 1rem;">
                     <div class="metric-card">
                         <div class="metric-value" style="color: var(--color-accent);">$6.0M</div>
                         <div class="metric-label">Sales & Marketing (60%)</div>
-                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <ul style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
                             <li>Marketing campaigns & brand: $2.4M</li>
                             <li>Partnership development: $1.6M</li>
                             <li>Events & industry presence: $1.2M</li>
@@ -898,53 +911,35 @@
                     <div class="metric-card">
                         <div class="metric-value" style="color: var(--color-warning);">$1.5M</div>
                         <div class="metric-label">Data Acquisition (15%)</div>
-                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
-                            <li>3rd-party data licensing: $0.7M</li>
-                            <li>Ingestion & processing infra: $0.35M</li>
-                            <li>Quality/enrichment tools: $0.25M</li>
-                            <li>Partnerships & integrations: $0.15M</li>
-                            <li>Data science talent: $0.05M</li>
+                        <ul style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>Data licensing: $0.70M</li>
+                            <li>Ingestion & infra: $0.35M</li>
+                            <li>Quality tools: $0.25M</li>
+                            <li>Integrations + data science: $0.20M</li>
                         </ul>
                     </div>
                 </div>
-                <div class="grid-2 animated-item" style="margin-top: 1.5rem; text-align: left;">
+                <div class="grid-2 animated-item" style="margin-top: 1rem; text-align: left; gap: 1rem;">
                     <div class="metric-card">
                         <div class="metric-value" style="color: var(--color-success);">$1.7M</div>
                         <div class="metric-label">Operations (17%)</div>
-                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
-                            <li>Team & leadership: $0.6M</li>
-                            <li>Office & overhead: $0.5M</li>
-                            <li>Legal & compliance: $0.4M</li>
+                        <ul style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>Team & leadership: $0.60M</li>
+                            <li>Office & overhead: $0.50M</li>
+                            <li>Legal & compliance: $0.40M</li>
                         </ul>
                     </div>
                     <div class="metric-card">
                         <div class="metric-value" style="color: var(--color-danger);">$0.8M</div>
                         <div class="metric-label">Product & Eng. (8%)</div>
-                        <ul style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
-                            <li>Platform stability & fixes: $0.4M</li>
-                            <li>API & integration maint.: $0.3M</li>
-                            <li>Security & monitoring: $0.2M</li>
-                            <li>Support infrastructure: $0.1M</li>
+                        <ul style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                            <li>Platform stability & fixes: $0.40M</li>
+                            <li>APIs & integration maintenance: $0.30M</li>
+                            <li>Security + support: $0.10M</li>
                         </ul>
                     </div>
                 </div>
-                <div class="grid-3 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">75%</div>
-                        <div class="metric-label">Funds to Revenue Drivers</div>
-                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary);">Sales, Marketing, Data</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">Proven</div>
-                        <div class="metric-label">Go-to-Market</div>
-                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary);">Multi-channel with KPIs</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">Q1</div>
-                        <div class="metric-label">0.1% Market Capture</div>
-                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary);">Aggressive but achievable</p>
-                    </div>
-                </div>
+                <!-- Trimmed highlight tiles moved to chart slide -->
             </div>
 
             <!-- Slide 8b: Use of Funds Visualization -->
@@ -1730,9 +1725,14 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'bottom', labels: { boxWidth: 12 } }
+                    legend: { position: 'right', labels: { boxWidth: 12 } },
+                    datalabels: {
+                        color: '#111827',
+                        formatter: (value, ctx) => `${value}%`,
+                        font: { weight: '700' }
+                    }
                 },
-                cutout: '55%'
+                cutout: '58%'
             }
         });
     }
