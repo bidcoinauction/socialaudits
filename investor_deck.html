@@ -617,10 +617,10 @@
         #use-funds .grid-2 + .grid-2 { margin-top: 0.75rem !important; }
 
         #use-funds-chart .slide-title { font-size: clamp(1.8rem, 4vw, 3.2rem); }
-        #use-funds-chart .metric-card { padding: 1rem; }
-        #use-funds-chart canvas { height: 24rem !important; }
+        #use-funds-chart .funds-chart-wrap { height: 26rem; padding: 0; background: transparent; border: none; box-shadow: none; overflow: visible; }
+        #use-funds-chart canvas { height: 100% !important; width: 100% !important; }
         @media (max-width: 768px) {
-            #use-funds-chart canvas { height: 18rem !important; }
+            #use-funds-chart .funds-chart-wrap { height: 18rem; }
         }
         
         /* --- Report Slide Scoped Styles (#s6) --- */
@@ -949,11 +949,9 @@
             <div class="slide" id="use-funds-chart">
                 <h2 class="slide-title animated-item">Use of <span class="accent-text">Funds</span></h2>
                 <p class="slide-subtitle animated-item">Allocation focused on revenue and data moats</p>
-                <div class="animated-item" style="margin-top: 1rem; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
-                    <div class="metric-card" style="padding: 1rem;">
-                        <div style="height: 20rem;">
-                            <canvas id="fundsChart"></canvas>
-                        </div>
+                <div class="animated-item" style="margin-top: 0.5rem; width: 100%; max-width: 1100px; margin-left: auto; margin-right: auto; overflow: visible;">
+                    <div class="funds-chart-wrap">
+                        <canvas id="fundsChart"></canvas>
                     </div>
                 </div>
             </div>
