@@ -618,7 +618,10 @@
 
         #use-funds-chart .slide-title { font-size: clamp(1.8rem, 4vw, 3.2rem); }
         #use-funds-chart .metric-card { padding: 1rem; }
-        #use-funds-chart canvas { height: 22rem !important; }
+        #use-funds-chart canvas { height: 24rem !important; }
+        @media (max-width: 768px) {
+            #use-funds-chart canvas { height: 18rem !important; }
+        }
         
         /* --- Report Slide Scoped Styles (#s6) --- */
         #s6 {
@@ -1725,14 +1728,17 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'right', labels: { boxWidth: 12 } },
+                    legend: { position: 'right', labels: { boxWidth: 12, color: '#4B5563', padding: 12 } },
                     datalabels: {
                         color: '#111827',
                         formatter: (value, ctx) => `${value}%`,
-                        font: { weight: '700' }
+                        font: { weight: '700' },
+                        clamp: true,
+                        anchor: 'center',
+                        align: 'center'
                     }
                 },
-                cutout: '58%'
+                cutout: '62%'
             }
         });
     }
