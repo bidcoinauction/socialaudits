@@ -601,6 +601,7 @@
                 padding: 1.5rem;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                padding-bottom: 6rem; /* ensure bottom breathing room on mobile */
             }
 
             .partnership-logos {
@@ -611,6 +612,9 @@
             #s6 .report-wrap { padding: 0.75rem; }
             #s6 .grid { gap: 0.75rem; }
         }
+
+        /* Global bottom spacing to prevent overlap with slide edges/controls */
+        .slide { padding-bottom: 5rem; }
         
         /* --- Report Slide Scoped Styles (#s6) --- */
         #s6 {
@@ -1596,5 +1600,3 @@
 </html>
 </html>
 </html>
-
-
