@@ -1047,6 +1047,72 @@
   #market-size .top-grid{ grid-template-columns: 1fr; }
 }
 
+        /* =========================
+   Expansion / Multi-Pipeline
+   ========================= */
+
+#expansion .slide-title { font-size: clamp(1.9rem, 4vw, 3rem); }
+
+/* Subtitle: normal weight + line break already added in HTML */
+#expansion .slide-subtitle {
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+/* 3×2 grid on desktop, responsive down */
+#expansion .grid-6 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 1rem auto 0;
+  align-items: stretch;
+}
+
+/* Cards: consistent height, subtle polish */
+#expansion .exp-card {
+  height: 100%;
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+/* Title line in cards uses your existing .metric-value colors */
+#expansion .exp-card .metric-value {
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.25;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+}
+
+/* Subtext normalized to sentence case, no all-caps */
+#expansion .exp-card .metric-label {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: clamp(.86rem, 1.2vw, .95rem);
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}
+
+/* Footnote */
+#expansion .exp-footnote {
+  margin-top: 1rem;
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  #expansion .grid-6 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  #expansion .grid-6 { grid-template-columns: 1fr; }
+}
+
     </style>
 </head>
 
@@ -1351,50 +1417,55 @@
             </div>
 
             <!-- Slide: Expansion to a Multi-Pipeline Infrastructure -->
-            <div class="slide" id="expansion">
-                <h2 class="slide-title animated-item">
-                    Expansion to a <span class="accent-text">Multi-Pipeline</span> Infrastructure
-                </h2>
-                <p class="slide-subtitle animated-item">
-                    While currently focused on real-time social and media data, the system is designed to scale into a
-                    multi-pipeline intelligence network.<br>
-                    <strong>Combining</strong> behavioral, financial, and environmental data.
-                </p>
+<div class="slide" id="expansion">
+  <h2 class="slide-title animated-item">
+    EXPANSION TO A <span class="accent-text">MULTI-PIPELINE</span> INFRASTRUCTURE
+  </h2>
 
-                <div class="grid-6 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value danger-text">Behavioral Interaction Data</div>
-                        <div class="metric-label">Engagement patterns, attention cycles, and content resonance.</div>
-                    </div>
+  <!-- normalized subtitle with line break + no bold on “Combining …” -->
+  <p class="slide-subtitle animated-item">
+    While currently focused on real-time social and media data, the system is designed to scale into a
+    multi-pipeline intelligence network.<br>
+    Combining behavioral, financial, and environmental data.
+  </p>
 
-                    <div class="metric-card">
-                        <div class="metric-value accent-text">Financial &amp; Market Intelligence</div>
-                        <div class="metric-label">Token, equity, and market indicators linked to audience behavior.
-                        </div>
-                    </div>
+  <!-- fixed 3×2 layout, sentence case subtext -->
+  <div class="grid-6 animated-item">
+    <div class="metric-card exp-card">
+      <div class="metric-value danger-text">Behavioral Interaction Data</div>
+      <div class="metric-label">Engagement patterns, attention cycles, and content resonance.</div>
+    </div>
 
-                    <div class="metric-card">
-                        <div class="metric-value success-text">Geo-Contextual Data</div>
-                        <div class="metric-label">Regional, dialectal, and cultural metadata.</div>
-                    </div>
+    <div class="metric-card exp-card">
+      <div class="metric-value accent-text">Financial &amp; Market Intelligence</div>
+      <div class="metric-label">Token, equity, and market indicators linked to audience behavior.</div>
+    </div>
 
-                    <div class="metric-card">
-                        <div class="metric-value warning-text">Search &amp; Trend Data</div>
-                        <div class="metric-label">Web and query pattern analytics for narrative detection.</div>
-                    </div>
+    <div class="metric-card exp-card">
+      <div class="metric-value success-text">Geo-contextual Data</div>
+      <div class="metric-label">Regional, dialectal, and cultural metadata.</div>
+    </div>
 
-                    <div class="metric-card">
-                        <div class="metric-value danger-text">Regulatory &amp; Policy Data</div>
-                        <div class="metric-label">Government, compliance, and sentiment datasets.</div>
-                    </div>
+    <div class="metric-card exp-card">
+      <div class="metric-value warning-text">Search &amp; Trend Data</div>
+      <div class="metric-label">Web and query pattern analytics for narrative detection.</div>
+    </div>
 
-                    <div class="metric-card">
-                        <div class="metric-value success-text">Knowledge Graph Data</div>
-                        <div class="metric-label">
-                            Relational mapping between influencers, institutions, projects, and brands.
-                        </div>
-                    </div>
-                </div>
+    <div class="metric-card exp-card">
+      <div class="metric-value danger-text">Regulatory &amp; Policy Data</div>
+      <div class="metric-label">Government, compliance, and sentiment datasets.</div>
+    </div>
+
+    <div class="metric-card exp-card">
+      <div class="metric-value success-text">Knowledge Graph Data</div>
+      <div class="metric-label">Relational mapping between influencers, institutions, projects, and brands.</div>
+    </div>
+  </div>
+
+  <p class="animated-item exp-footnote">
+    Each dataset connects into the same multilingual, synchronized, and compliant reporting ecosystem.
+  </p>
+</div>
 
                 <p class="animated-item" style="margin-top:1rem; color:var(--color-text-secondary);">
                     Each dataset connects into the same multilingual, synchronized, and compliant reporting ecosystem.
