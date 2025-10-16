@@ -1,407 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialAudits - One Pager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-background: #F8F9FC;
-            --color-surface: #FFFFFF;
-            --color-primary: #1D243D;
-            --color-accent: #6D28D9;
-            --color-text-primary: #111827;
-            --color-text-secondary: #6B7280;
-            --color-success: #10B981;
-            --color-danger: #EF4444;
-            --color-warning: #F59E0B;
-            --border-radius-lg: 2rem;
-            --border-radius-md: 1rem;
-            --transition-speed: 0.4s;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SocialAudits — One Pager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --color-background:#F8F9FC;
+      --color-surface:#FFFFFF;
+      --color-primary:#1A1A1A;
+      --color-accent:#6366F1; /* Deck accent */
+      --color-text-primary:#111827;
+      --color-text-secondary:#6B7280;
+      --color-success:#10B981;
+      --color-danger:#EF4444;
+      --color-warning:#F59E0B;
+      --radius-lg:2rem;
+      --radius-md:1rem;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.06);
+      --shadow-md:0 8px 24px rgba(0,0,0,.08);
+      --shadow-lg:0 20px 48px rgba(0,0,0,.12);
+      --content-max:1200px;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:'Inter',sans-serif;
+      background:linear-gradient(135deg,#FAFAFA 0%,#F3F4F6 100%);
+      color:var(--color-text-primary);
+      line-height:1.6; overflow-x:hidden; position:relative;
+    }
+    /* soft blooms */
+    body::before,body::after{
+      content:""; position:fixed; width:42%; height:42%;
+      filter:blur(120px); z-index:-1; opacity:.45; pointer-events:none;
+    }
+    body::before{ top:-18%; left:-18%;
+      background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%) }
+    body::after{ bottom:-18%; right:-18%;
+      background:radial-gradient(circle,rgba(16,185,129,.10),transparent 70%) }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .wrap{ max-width:1400px; margin:0 auto; padding:4rem 1.5rem }
+    .card{
+      background:rgba(255,255,255,.9);
+      border:1px solid #E5E7EB;
+      border-radius:var(--radius-md);
+      box-shadow:var(--shadow-sm);
+      transition:.25s ease;
+    }
+    .card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md) }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-background);
-            color: var(--color-text-primary);
-            line-height: 1.6;
-            position: relative;
-            overflow-x: hidden;
-        }
+    .glass{
+      background:rgba(255,255,255,.9);
+      backdrop-filter:blur(8px);
+      border:1px solid #E5E7EB;
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-lg);
+    }
 
-        /* Decorative background gradients */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            width: 40%;
-            height: 40%;
-            filter: blur(120px);
-            z-index: -1;
-            opacity: 0.4;
-            pointer-events: none;
-        }
-        body::before {
-            top: -20%;
-            left: -20%;
-            background: radial-gradient(circle, rgba(109, 40, 217, 0.15), transparent 70%);
-        }
-        body::after {
-            bottom: -20%;
-            right: -20%;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.15), transparent 70%);
-        }
+    .title{
+      font-size:clamp(2.4rem,4.8vw,3.6rem);
+      font-weight:900; letter-spacing:-.02em; color:var(--color-primary);
+      text-transform:uppercase; text-align:center;
+      text-shadow:0 2px 4px rgba(0,0,0,.18);
+    }
+    .subtitle{
+      font-size:clamp(1.05rem,1.9vw,1.25rem);
+      color:var(--color-text-secondary);
+      max-width:900px; margin:.9rem auto 0; text-align:center;
+    }
+    .accent{ color:var(--color-accent) }
+    .chip{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.4rem .7rem; border-radius:999px;
+      background:rgba(99,102,241,.08);
+      border:1px solid rgba(0,0,0,.06);
+      font-size:.9rem; font-weight:600; color:var(--color-primary);
+      white-space:nowrap;
+    }
+    .badge{
+      font-weight:700; font-size:.85rem; padding:.2rem .5rem; border-radius:.5rem;
+    }
+    .ok{ background:rgba(16,185,129,.12); color:var(--color-success) }
+    .warn{ background:rgba(245,158,11,.14); color:var(--color-warning) }
+    .no{ background:rgba(239,68,68,.12); color:var(--color-danger) }
 
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
+    /* metric tiles */
+    .metric{
+      text-align:center; padding:1.5rem 1.25rem; position:relative; overflow:hidden;
+      border-radius:var(--radius-md); border:1px solid rgba(0,0,0,.05);
+      background:var(--color-surface); box-shadow:var(--shadow-sm);
+    }
+    .metric::before{
+      content:""; position:absolute; top:0; left:0; right:0; height:4px;
+      background:linear-gradient(90deg,var(--color-accent),var(--color-success));
+    }
+    .metric .value{
+      font-size:clamp(1.4rem,2.6vw,2.1rem);
+      font-weight:800; color:var(--color-accent); line-height:1; margin-bottom:.4rem;
+    }
+    .metric .label{
+      text-transform:uppercase; letter-spacing:.05em;
+      font-size:.85rem; color:var(--color-text-secondary);
+    }
+    .section{ margin:0 auto; max-width:var(--content-max) }
 
-        .main-content {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid #E5E7EB;
-            border-radius: var(--border-radius-lg);
-            padding: 4rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-        }
+    /* pipeline */
+    .pipeline{
+      display:grid; gap:1rem; grid-template-columns:repeat(6,minmax(0,1fr));
+      align-items:stretch;
+    }
+    .stage{
+      padding:1rem .9rem; text-align:center;
+      border-radius:1rem; border:1px solid rgba(0,0,0,.06);
+      background:linear-gradient(180deg,#fff,rgba(255,255,255,.85));
+      position:relative;
+    }
+    .stage h4{ font-weight:800; letter-spacing:.02em; color:var(--color-primary); font-size:1rem; }
+    .stage p{ font-size:.85rem; color:var(--color-text-secondary); margin-top:.35rem }
+    .stage::after{
+      content:"→"; position:absolute; right:-.8rem; top:50%; transform:translateY(-50%);
+      font-weight:900; color:rgba(99,102,241,.6); font-size:1.1rem;
+    }
+    .stage:last-child::after{ content:"" }
 
-        .section-title {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 900;
-            color: var(--color-primary);
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
+    /* pricing */
+    .pricing h3{ font-weight:800; letter-spacing:.05em; text-transform:uppercase; font-size:1.05rem; color:var(--color-primary) }
+    .price{ font-size:2.5rem; font-weight:900; color:var(--color-accent); margin:.25rem 0 1rem }
+    .price small{ font-size:.9rem; color:var(--color-text-secondary); font-weight:600 }
+    .checklist{ list-style:none; padding-left:0 }
+    .checklist li{ position:relative; padding-left:1.6rem; margin:.5rem 0; color:var(--color-text-secondary) }
+    .checklist li::before{
+      content:"✓"; position:absolute; left:0; top:0; color:var(--color-success); font-weight:800
+    }
 
-        .section-subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            font-weight: 600;
-            color: var(--color-text-secondary);
-            max-width: 800px;
-            margin: 1.5rem auto 0;
-            text-align: center;
-            line-height: 1.6;
-        }
-
-        .brand-logo {
-            width: 12rem;
-            height: 12rem;
-            background: transparent;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 2rem;
-        }
-
-        .brand-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid #E5E7EB;
-            border-radius: var(--border-radius-md);
-            padding: 2.5rem;
-            transition: all var(--transition-speed) ease;
-            text-align: left;
-            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.95);
-            border-color: var(--color-accent);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
-        }
-
-        .card h3 {
-            color: var(--color-primary);
-            font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .card p, .card li {
-            color: var(--color-text-secondary);
-            line-height: 1.5;
-            font-size: 1rem;
-        }
-
-        .cta-button {
-            background-color: var(--color-accent);
-            color: white;
-            padding: 1.25rem 3rem;
-            border-radius: var(--border-radius-md);
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all var(--transition-speed) ease;
-            text-decoration: none;
-            display: inline-block;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            box-shadow: 0 10px 30px -15px rgba(109, 40, 217, 0.4);
-        }
-
-        .cta-button:hover {
-            background-color: #5B21B6;
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px -10px rgba(109, 40, 217, 0.6);
-        }
-
-        .pricing-card ul { 
-            list-style: none; 
-            padding: 0;
-            flex-grow: 1;
-        }
-
-        .pricing-card li { 
-            position: relative; 
-            padding-left: 1.75em; 
-            margin-bottom: 0.75em;
-            color: var(--color-text-secondary);
-        }
-
-        .pricing-card li::before { 
-            content: '✓'; 
-            color: var(--color-success); 
-            position: absolute; 
-            left: 0; 
-            font-weight: bold; 
-            font-size: 1.2em;
-        }
-
-        .popular-plan {
-            border: 2px solid var(--color-accent);
-            transform: scale(1.05);
-            position: relative;
-            background: rgba(109, 40, 217, 0.05);
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--color-accent);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 99px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            width: 100%;
-        }
-
-        .accent-text {
-            color: var(--color-accent);
-        }
-
-        .danger-text {
-            color: var(--color-danger);
-        }
-
-        .success-text {
-            color: var(--color-success);
-        }
-
-        @media (max-width: 1024px) {
-            .main-content {
-                padding: 3rem;
-            }
-            
-            .brand-logo {
-                width: 8rem;
-                height: 8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .grid-3 {
-                grid-template-columns: 1fr;
-            }
-            
-            .main-content {
-                padding: 2rem;
-            }
-            
-            .main-container {
-                padding: 2rem 1rem;
-            }
-            
-            .brand-logo {
-                width: 6rem;
-                height: 6rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-content {
-                padding: 1.5rem;
-            }
-            
-            .main-container {
-                padding: 1rem;
-            }
-            
-            .brand-logo {
-                width: 5rem;
-                height: 5rem;
-            }
-        }
-    </style>
+    /* grids */
+    .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem }
+    .grid-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem }
+    @media (max-width:1024px){
+      .pipeline{ grid-template-columns:repeat(3,1fr) }
+      .grid-4{ grid-template-columns:repeat(2,1fr) }
+    }
+    @media (max-width:768px){
+      .pipeline{ grid-template-columns:repeat(2,1fr) }
+      .grid-3{ grid-template-columns:1fr }
+    }
+  </style>
 </head>
 <body>
-    <div class="main-container">
-        <div class="main-content">
-            <!-- Header/Hero Section -->
-            <header class="text-center mb-24">
-                <div class="brand-logo">
-                    <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png" alt="SocialAudits Logo">
-                </div>
-                <h1 class="section-title">SocialAudits</h1>
-                <h2 class="text-2xl md:text-3xl font-bold text-primary mt-4 uppercase tracking-wide">The Premier Influencer Audit & Performance Platform</h2>
-                <p class="section-subtitle">Stop guessing. Start knowing. We replace vanity metrics with verifiable proof of impact.</p>
-            </header>
-
-            <!-- The Problem Section -->
-            <section class="mb-24 text-center">
-                <h2 class="section-title">The Problem: <span class="danger-text">Chaos in KOL Marketing</span></h2>
-                <div class="grid-3 mt-12">
-                    <div class="card items-center text-center">
-                        <h3>The Fear of Fraud</h3>
-                        <p>Your budget is bleeding out on ghost followers and botted engagement. Can you afford to keep guessing?</p>
-                    </div>
-                    <div class="card items-center text-center">
-                        <h3>The Risk of Ruin</h3>
-                        <p>A partnership with the wrong influencer can destroy your brand overnight. Why roll those dice?</p>
-                    </div>
-                    <div class="card items-center text-center">
-                        <h3>The Danger of Deception</h3>
-                        <p>Without verifiable data, you can't prove marketing works. Stakeholders won't wait forever.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- The Solution Section -->
-            <section class="mb-24 text-center">
-                <h2 class="section-title">The Solution: <span class="accent-text">Clarity Over Chaos</span></h2>
-                <p class="section-subtitle">When fraud is everywhere and bots are indistinguishable from fans, you don't need more noise — you need the truth. SocialAudits turns doubt into data.</p>
-                <div class="grid-3 mt-12">
-                    <div class="card">
-                        <h3>Proof Over Promises</h3>
-                        <p>No more trusting screenshots. We expose the real numbers behind every influencer.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Bot‑Free by Design</h3>
-                        <p>Ghost followers and manipulated impressions are filtered out by default.</p>
-                    </div>
-                    <div class="card">
-                        <h3>ROI You Can Defend</h3>
-                        <p>Give your team — and your board — proof of what worked and what to repeat.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Competitive Advantage Section -->
-            <section class="mb-24 text-center">
-                <h2 class="section-title">Your Competitive Advantage</h2>
-                <div class="grid-3 mt-12">
-                    <div class="card">
-                        <h3>Unshakeable Confidence</h3>
-                        <p>Avoid fraud with advanced bot detection and make decisions with verifiable data.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Maximum ROI</h3>
-                        <p>Eliminate wasted spending on ineffective campaigns and optimize your marketing budget with data-driven insights.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Strategic Clarity</h3>
-                        <p>Understand true sentiment and campaign reach to outmaneuver your competitors.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Pricing Section -->
-            <section class="mb-24 text-center">
-                <h2 class="section-title">Simple, Transparent Pricing</h2>
-                <div class="grid-3 mt-12">
-                    <div class="card pricing-card text-center">
-                        <h3>24-Hour Pulse</h3>
-                        <p class="text-5xl font-black text-accent mb-4">$59</p>
-                        <ul class="text-left text-lg space-y-2">
-                            <li>Viral Post Analysis</li>
-                            <li>Immediate Manipulation Insights</li>
-                            <li>Based on Historical Data</li>
-                        </ul>
-                        <p class="text-sm text-text-secondary mt-4">Ideal for a quick check on a specific piece of content.</p>
-                    </div>
-                    <div class="card pricing-card text-center popular-plan">
-                        <div class="popular-badge">Most Popular</div>
-                        <h3>7-Day Breakdown</h3>
-                        <p class="text-5xl font-black text-accent mb-4">$299</p>
-                        <ul class="text-left text-lg space-y-2">
-                            <li>Weekly Performance Summary</li>
-                            <li>Trend Analysis</li>
-                            <li>Based on Historical Data</li>
-                        </ul>
-                        <p class="text-sm text-text-secondary mt-4">Ideal for understanding weekly campaign performance.</p>
-                    </div>
-                    <div class="card pricing-card text-center">
-                        <h3>Official Audit</h3>
-                        <p class="text-5xl font-black text-accent mb-4">$599<span class="text-xl font-semibold text-text-secondary">/mo</span></p>
-                        <ul class="text-left text-lg space-y-2">
-                            <li>Real-Time Tracking (10s intervals)</li>
-                            <li>Deleted Content Capture</li>
-                            <li>Daily & Monthly Reports</li>
-                            <li>"Verified Audit" Status</li>
-                        </ul>
-                        <p class="text-sm text-text-secondary mt-4">Ideal for ongoing due diligence and KOL certification.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- CTA Section -->
-            <section class="text-center mt-24">
-                <h2 class="section-title">Get Started Today</h2>
-                <p class="section-subtitle">Receive your first comprehensive report within 24 hours and get daily updates to track every change during your campaign.</p>
-                <a href="#" class="cta-button mt-8">
-                    Contact Our Team
-                </a>
-            </section>
+  <main class="wrap">
+    <div class="glass p-8 md:p-12 section">
+      <!-- HERO -->
+      <header class="text-center mb-12">
+        <img class="mx-auto w-40 md:w-48 mb-4" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png" alt="SocialAudits Logo"/>
+        <h1 class="title">SocialAudits</h1>
+        <p class="subtitle">
+          The <span class="accent font-bold">Proof-of-Organic™</span> verification layer for influencer marketing.
+          Eliminate synthetic reach, protect payments, and turn spend into <strong>verifiable human impact</strong>.
+        </p>
+        <div class="mt-5 flex flex-wrap items-center justify-center gap-2">
+          <span class="chip">Pre-payment verification</span>
+          <span class="chip">94%+ bot-detection accuracy</span>
+          <span class="chip">100+ languages</span>
+          <span class="chip">5B+ enriched datapoints</span>
         </div>
-    </div>
+      </header>
 
-    <!-- Footer -->
-    <footer class="text-center py-8 mt-16 border-t border-gray-200">
-        <p class="text-text-secondary">&copy; 2025 SocialAudits. All Rights Reserved.</p>
-    </footer>
+      <!-- PROBLEM / OUTCOME -->
+      <section class="mb-12">
+        <div class="grid-3">
+          <div class="metric">
+            <div class="value danger">55%</div>
+            <div class="label">Fake Engagement (Some Platforms)</div>
+            <p class="mt-2 text-sm text-gray-500">Industry spend routinely leaks to bots and paid farms.</p>
+          </div>
+          <div class="metric">
+            <div class="value success">5.78×</div>
+            <div class="label">Avg. ROI</div>
+            <p class="mt-2 text-sm text-gray-500">But ROI collapses when synthetic activity is counted as human.</p>
+          </div>
+          <div class="metric">
+            <div class="value accent">$2B+</div>
+            <div class="label">Annual Fraud Losses</div>
+            <p class="mt-2 text-sm text-gray-500">Brands fund manipulation without pre-payment verification.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS (PIPELINE) -->
+      <section class="mb-12">
+        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">The Reporting Pipeline</h2>
+        <p class="subtitle">A six-stage framework transforms raw signals into <strong>contextual, payment-grade outputs</strong>.</p>
+        <div class="pipeline mt-6">
+          <div class="stage">
+            <h4>Ingest</h4>
+            <p>All major socials + 20,000+ news publishers.</p>
+          </div>
+          <div class="stage">
+            <h4>Normalize</h4>
+            <p>De-duplication, language/charset unification.</p>
+          </div>
+          <div class="stage">
+            <h4>Contextualize</h4>
+            <p>Entity, topic, sentiment & emotion layers.</p>
+          </div>
+          <div class="stage">
+            <h4>Score</h4>
+            <p>Manipulation index + conversion probability.</p>
+          </div>
+          <div class="stage">
+            <h4>Visualize</h4>
+            <p>Forensic dashboards and time-series.</p>
+          </div>
+          <div class="stage">
+            <h4>Deliver</h4>
+            <p>Pre-payment verification & audit PDFs.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- KEY OUTPUTS -->
+      <section class="mb-12">
+        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Verification Outputs</h2>
+        <p class="subtitle">Actionable, standardized measures used to gate spend.</p>
+        <div class="grid-3 mt-6">
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Authentic Reach Index (ARI)</h3>
+            <p>Verified audience authenticity and human-only reach.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Bot Density (%)</h3>
+            <p>Ratio of synthetic audiences across posts & time.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Social Liquidity Score (SLS)</h3>
+            <p>Narrative movement and cross-network propagation.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Propagation Lag (PL-24)</h3>
+            <p>Amplification velocity and decay within 24h windows.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Engagement Entropy</h3>
+            <p>Attention concentration vs. dispersion across cohorts.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Proof-of-Organic™</h3>
+            <p>Payment released only after verification thresholds are met.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- COVERAGE / CAPABILITIES -->
+      <section class="mb-12">
+        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Coverage & Capabilities</h2>
+        <div class="grid-4 mt-6">
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Networks</h3>
+            <p class="text-sm text-gray-600 mt-1">
+              X, TikTok, Instagram, YouTube, Reddit, Telegram, Discord, LinkedIn, Facebook, plus decentralized platforms.
+            </p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Publishers</h3>
+            <p class="text-sm text-gray-600 mt-1">20,000+ global news outlets processed continuously.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Multilingual</h3>
+            <p class="text-sm text-gray-600 mt-1">Real-time sync across 100+ languages & character sets.</p>
+          </div>
+          <div class="card p-5">
+            <h3 class="font-extrabold text-lg">Real-Time</h3>
+            <p class="text-sm text-gray-600 mt-1">10-second ingestion cadence; dashboards refresh continuously.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICING (kept, tightened) -->
+      <section class="mb-10">
+        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Simple, Transparent Pricing</h2>
+        <div class="grid-3 mt-6">
+          <div class="card p-6 pricing">
+            <h3>24-Hour Pulse</h3>
+            <div class="price">$5.99</div>
+            <ul class="checklist">
+              <li>Viral post deep-dive</li>
+              <li>Immediate manipulation signals</li>
+              <li>Historic baseline comparison</li>
+            </ul>
+          </div>
+          <div class="card p-6 pricing" style="border:2px solid var(--color-accent); background:rgba(99,102,241,.05)">
+            <div class="badge ok inline-block mb-2">Most Popular</div>
+            <h3>7-Day Breakdown</h3>
+            <div class="price">$29.99</div>
+            <ul class="checklist">
+              <li>Weekly performance summary</li>
+              <li>Trend & anomaly detection</li>
+              <li>Creator cohort comparison</li>
+            </ul>
+          </div>
+          <div class="card p-6 pricing">
+            <h3>Official Audit</h3>
+            <div class="price">$49.99 <small>/mo</small></div>
+            <ul class="checklist">
+              <li>Real-time tracking (10s)</li>
+              <li>Deleted content capture</li>
+              <li>Daily + monthly reports</li>
+              <li>“Verified Audit” status</li>
+            </ul>
+          </div>
+        </div>
+        <p class="text-center text-sm text-gray-500 mt-3">
+          Enterprise & pay-as-you-save verification available on request.
+        </p>
+      </section>
+
+      <!-- CTA -->
+      <section class="text-center">
+        <h2 class="text-2xl md:text-3xl font-black uppercase tracking-wide">Get Your First Audit</h2>
+        <p class="subtitle">Receive an initial report within 24 hours and enable pre-payment verification on your next campaign.</p>
+        <a href="#" class="inline-block mt-6 px-8 py-3 rounded-xl text-white font-extrabold tracking-wide uppercase"
+           style="background:linear-gradient(90deg,var(--color-accent),var(--color-success)); box-shadow:0 14px 38px rgba(99,102,241,.35)">
+          Contact Our Team
+        </a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="text-center py-8 mt-8 border-t border-gray-200">
+    <p class="text-gray-500 text-sm">&copy; 2025 SocialAudits. All rights reserved.</p>
+  </footer>
 </body>
 </html>
