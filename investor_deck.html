@@ -991,6 +991,28 @@
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.25rem;
         }
+
+        /* Fix for Market Size section */
+#market-size .grid-3 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+#market-size .metric-card {
+  flex: 1 1 280px;
+  max-width: 420px;
+  text-align: center;
+}
+
+#market-size .metric-card:nth-child(3) {
+  flex-basis: 100%;
+  max-width: 500px;
+  margin-top: 0.5rem;
+  align-self: center;
+}
+
     </style>
 </head>
 
@@ -1555,58 +1577,50 @@
             </div>
 
             <!-- Slide 9: Market Size (Consolidated) -->
-            <div class="slide" id="market-size">
-                <h2 class="slide-title animated-item">Market <span class="accent-text">Size</span></h2>
-                <p class="slide-subtitle animated-item">
-                    Consolidated TAM / SAM / SOM with growth trajectory
-                </p>
+<div class="slide" id="market-size">
+  <h2 class="slide-title animated-item">Market <span class="accent-text">Size</span></h2>
+  <p class="slide-subtitle animated-item">Consolidated TAM / SAM / SOM with growth trajectory</p>
 
-                <!-- Top two (side by side) -->
-                <div class="grid-2 animated-item" style="align-items: stretch;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$32.55B</div>
-                        <div class="metric-label">TAM (Global)</div>
-                        <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                            Influencer marketing industry size (2025) — projected to reach
-                            <strong>$121.81B by 2030</strong>.
-                        </p>
-                    </div>
+  <div class="grid-3 animated-item" style="align-items: stretch;">
+    <div class="metric-card">
+      <div class="metric-value" style="color: var(--color-accent);">$32.55B</div>
+      <div class="metric-label">TAM (Global)</div>
+      <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+        Influencer marketing industry size (2025) — projected to reach
+        <strong>$121.81B by 2030</strong>.
+      </p>
+    </div>
 
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$11.97B</div>
-                        <div class="metric-label">SAM (North America 2025)</div>
-                        <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                            ~35–37% of global market; regional base of <strong>$8.41B in 2024</strong>.
-                        </p>
-                    </div>
-                </div>
+    <div class="metric-card">
+      <div class="metric-value" style="color: var(--color-success);">$11.97B</div>
+      <div class="metric-label">SAM (North America 2025)</div>
+      <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+        ~35–37% of global market; regional base of <strong>$8.41B in 2024</strong>.
+      </p>
+    </div>
 
-                <!-- SOM below -->
-                <div class="metric-card animated-item"
-                    style="margin-top: 1rem; max-width: 450px; margin-left: auto; margin-right: auto;">
-                    <div class="metric-value" style="color: var(--color-warning);">$13.4M–20.3M</div>
-                    <div class="metric-label">SOM (Year 1 @ 0.1%)</div>
-                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                        Initial penetration target based on active TAM accounts.
-                    </p>
-                </div>
+    <div class="metric-card">
+      <div class="metric-value" style="color: var(--color-warning);">$13.4M–20.3M</div>
+      <div class="metric-label">SOM (Year 1 @ 0.1%)</div>
+      <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+        Initial penetration target.
+      </p>
+    </div>
+  </div>
 
-                <!-- Growth chart -->
-                <div class="animated-item"
-                    style="margin-top: 1.25rem; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
-                    <div class="metric-card" style="padding: 1rem;">
-                        <h3 style="margin: 0 0 0.5rem 0; color: var(--color-primary);">Trajectory</h3>
-                        <div style="height: 180px;"><canvas id="marketBar"></canvas></div>
-                    </div>
-                </div>
+  <div class="animated-item" style="margin-top: 1.25rem; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div class="metric-card" style="padding: 1rem;">
+      <h3 style="margin: 0 0 0.5rem 0; color: var(--color-primary);">Trajectory</h3>
+      <div style="height: 180px;"><canvas id="marketBar"></canvas></div>
+    </div>
+  </div>
 
-                <p class="slide-description animated-item"
-                    style="margin-top: 2rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                    Sources: Influencer Marketing Hub 2025, Mordor Intelligence 2025, Grand View, Fortune BI,
-                    eMarketer, Statista.
-                </p>
-            </div>
-
+  <p class="slide-description animated-item"
+    style="margin-top: 2rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+    Sources: Influencer Marketing Hub 2025, Mordor Intelligence 2025, Grand View, Fortune BI,
+    eMarketer, Statista
+  </p>
+</div>
 
 
             <!-- Slide: Competition (table-only) -->
@@ -2033,8 +2047,10 @@
                 <p class="slide-description animated-item"
                     style="margin-top: 3rem; font-size: 1.1rem; line-height: 1.6;">
                     <strong class="accent-text">Why This Works:</strong> Every platform in this space helps you find
-                    influencers. None of them stop you from paying bots. We're building the missing layer and our
+                    influencers. None of them stop you from paying bots. 
+                    <br>We're building the missing layer and our
                     revenue model means we win when clients stop waste.
+                    </br>
                 </p>
             </div>
 
