@@ -1,337 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>SocialAudits — One Pager</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-  <style>
-    :root{
-      --color-background:#F8F9FC;
-      --color-surface:#FFFFFF;
-      --color-primary:#1A1A1A;
-      --color-accent:#6366F1; /* Deck accent */
-      --color-text-primary:#111827;
-      --color-text-secondary:#6B7280;
-      --color-success:#10B981;
-      --color-danger:#EF4444;
-      --color-warning:#F59E0B;
-      --radius-lg:2rem;
-      --radius-md:1rem;
-      --shadow-sm:0 1px 2px rgba(0,0,0,.06);
-      --shadow-md:0 8px 24px rgba(0,0,0,.08);
-      --shadow-lg:0 20px 48px rgba(0,0,0,.12);
-      --content-max:1200px;
-    }
-    *{box-sizing:border-box}
-    body{
-      font-family:'Inter',sans-serif;
-      background:linear-gradient(135deg,#FAFAFA 0%,#F3F4F6 100%);
-      color:var(--color-text-primary);
-      line-height:1.6; overflow-x:hidden; position:relative;
-    }
-    /* soft blooms */
-    body::before,body::after{
-      content:""; position:fixed; width:42%; height:42%;
-      filter:blur(120px); z-index:-1; opacity:.45; pointer-events:none;
-    }
-    body::before{ top:-18%; left:-18%;
-      background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%) }
-    body::after{ bottom:-18%; right:-18%;
-      background:radial-gradient(circle,rgba(16,185,129,.10),transparent 70%) }
+<!-- HERO -->
+<header class="text-center mb-14">
+  <img class="mx-auto w-40 md:w-48 mb-4" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png" alt="SocialAudits Logo"/>
+  <h1 class="title">SocialAudits</h1>
+  <p class="subtitle">
+    The <span class="accent font-bold">Proof-of-Organic™</span> verification layer for influencer marketing—pay only for <strong>verifiable human reach</strong>.
+  </p>
+  <div class="mt-5 flex flex-wrap items-center justify-center gap-2">
+    <span class="chip">Pre-payment verification</span>
+    <span class="chip">94%+ bot detection</span>
+    <span class="chip">100+ languages</span>
+    <span class="chip">20,000+ publishers</span>
+  </div>
+</header>
 
-    .wrap{ max-width:1400px; margin:0 auto; padding:4rem 1.5rem }
-    .card{
-      background:rgba(255,255,255,.9);
-      border:1px solid #E5E7EB;
-      border-radius:var(--radius-md);
-      box-shadow:var(--shadow-sm);
-      transition:.25s ease;
-    }
-    .card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-md) }
+<!-- PAIN → VALUE (merged) -->
+<section class="mb-12 grid-3">
+  <div class="metric">
+    <div class="value danger">55%</div>
+    <div class="label">Fake Engagement</div>
+    <p class="mt-2 text-sm text-gray-500">Spend leaks to bots & paid farms.</p>
+  </div>
+  <div class="metric">
+    <div class="value accent">Gate</div>
+    <div class="label">Before You Pay</div>
+    <p class="mt-2 text-sm text-gray-500">Funds released only after verification.</p>
+  </div>
+  <div class="metric">
+    <div class="value success">ROI ↑</div>
+    <div class="label">No Synthetic Reach</div>
+    <p class="mt-2 text-sm text-gray-500">Budget reaches real people only.</p>
+  </div>
+</section>
 
-    .glass{
-      background:rgba(255,255,255,.9);
-      backdrop-filter:blur(8px);
-      border:1px solid #E5E7EB;
-      border-radius:var(--radius-lg);
-      box-shadow:var(--shadow-lg);
-    }
+<!-- PIPELINE (how it works, once) -->
+<section class="mb-12">
+  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Reporting Pipeline</h2>
+  <p class="subtitle">Six stages turn signals into payment-grade verification.</p>
+  <div class="pipeline mt-6">
+    <div class="stage"><h4>Ingest</h4><p>All major socials + 20k publishers.</p></div>
+    <div class="stage"><h4>Normalize</h4><p>De-duplication, language/charset.</p></div>
+    <div class="stage"><h4>Contextualize</h4><p>Entity, topic, sentiment, emotion.</p></div>
+    <div class="stage"><h4>Score</h4><p>Manipulation & conversion likelihood.</p></div>
+    <div class="stage"><h4>Visualize</h4><p>Forensic dashboards & timelines.</p></div>
+    <div class="stage"><h4>Deliver</h4><p>Audit PDFs & payout gating.</p></div>
+  </div>
+</section>
 
-    .title{
-      font-size:clamp(2.4rem,4.8vw,3.6rem);
-      font-weight:900; letter-spacing:-.02em; color:var(--color-primary);
-      text-transform:uppercase; text-align:center;
-      text-shadow:0 2px 4px rgba(0,0,0,.18);
-    }
-    .subtitle{
-      font-size:clamp(1.05rem,1.9vw,1.25rem);
-      color:var(--color-text-secondary);
-      max-width:900px; margin:.9rem auto 0; text-align:center;
-    }
-    .accent{ color:var(--color-accent) }
-    .chip{
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.4rem .7rem; border-radius:999px;
-      background:rgba(99,102,241,.08);
-      border:1px solid rgba(0,0,0,.06);
-      font-size:.9rem; font-weight:600; color:var(--color-primary);
-      white-space:nowrap;
-    }
-    .badge{
-      font-weight:700; font-size:.85rem; padding:.2rem .5rem; border-radius:.5rem;
-    }
-    .ok{ background:rgba(16,185,129,.12); color:var(--color-success) }
-    .warn{ background:rgba(245,158,11,.14); color:var(--color-warning) }
-    .no{ background:rgba(239,68,68,.12); color:var(--color-danger) }
+<!-- VERIFICATION OUTPUTS (tight) -->
+<section class="mb-12">
+  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Verification Outputs</h2>
+  <div class="grid-3 mt-6">
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Authentic Reach Index (ARI)</h3><p>Human-only audience reach.</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Bot Density (%)</h3><p>Share of synthetic audience.</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Social Liquidity Score (SLS)</h3><p>Narrative movement across networks.</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Propagation Lag (PL-24)</h3><p>Amplification velocity (24h).</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Engagement Entropy</h3><p>Attention concentration vs. spread.</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Proof-of-Organic™</h3><p>Payout only after thresholds met.</p></div>
+  </div>
+</section>
 
-    /* metric tiles */
-    .metric{
-      text-align:center; padding:1.5rem 1.25rem; position:relative; overflow:hidden;
-      border-radius:var(--radius-md); border:1px solid rgba(0,0,0,.05);
-      background:var(--color-surface); box-shadow:var(--shadow-sm);
-    }
-    .metric::before{
-      content:""; position:absolute; top:0; left:0; right:0; height:4px;
-      background:linear-gradient(90deg,var(--color-accent),var(--color-success));
-    }
-    .metric .value{
-      font-size:clamp(1.4rem,2.6vw,2.1rem);
-      font-weight:800; color:var(--color-accent); line-height:1; margin-bottom:.4rem;
-    }
-    .metric .label{
-      text-transform:uppercase; letter-spacing:.05em;
-      font-size:.85rem; color:var(--color-text-secondary);
-    }
-    .section{ margin:0 auto; max-width:var(--content-max) }
+<!-- ADVANTAGE + COVERAGE (merged) -->
+<section class="mb-12">
+  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Why We Win</h2>
+  <div class="grid-4 mt-6">
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Pre-Payment Verification</h3><p class="text-sm text-gray-600 mt-1">The missing gating layer—others report after the fact.</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Coverage</h3><p class="text-sm text-gray-600 mt-1">X, TikTok, Instagram, YouTube, Reddit, Telegram, Discord, LinkedIn, Facebook + decentralized.</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Scale & Languages</h3><p class="text-sm text-gray-600 mt-1">20k+ publishers; 100+ languages in real time.</p></div>
+    <div class="card p-5"><h3 class="font-extrabold text-lg">Accuracy & Speed</h3><p class="text-sm text-gray-600 mt-1">94%+ detection; ~10s ingestion cadence.</p></div>
+  </div>
+</section>
 
-    /* pipeline */
-    .pipeline{
-      display:grid; gap:1rem; grid-template-columns:repeat(6,minmax(0,1fr));
-      align-items:stretch;
-    }
-    .stage{
-      padding:1rem .9rem; text-align:center;
-      border-radius:1rem; border:1px solid rgba(0,0,0,.06);
-      background:linear-gradient(180deg,#fff,rgba(255,255,255,.85));
-      position:relative;
-    }
-    .stage h4{ font-weight:800; letter-spacing:.02em; color:var(--color-primary); font-size:1rem; }
-    .stage p{ font-size:.85rem; color:var(--color-text-secondary); margin-top:.35rem }
-    .stage::after{
-      content:"→"; position:absolute; right:-.8rem; top:50%; transform:translateY(-50%);
-      font-weight:900; color:rgba(99,102,241,.6); font-size:1.1rem;
-    }
-    .stage:last-child::after{ content:"" }
-
-    /* pricing */
-    .pricing h3{ font-weight:800; letter-spacing:.05em; text-transform:uppercase; font-size:1.05rem; color:var(--color-primary) }
-    .price{ font-size:2.5rem; font-weight:900; color:var(--color-accent); margin:.25rem 0 1rem }
-    .price small{ font-size:.9rem; color:var(--color-text-secondary); font-weight:600 }
-    .checklist{ list-style:none; padding-left:0 }
-    .checklist li{ position:relative; padding-left:1.6rem; margin:.5rem 0; color:var(--color-text-secondary) }
-    .checklist li::before{
-      content:"✓"; position:absolute; left:0; top:0; color:var(--color-success); font-weight:800
-    }
-
-    /* grids */
-    .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem }
-    .grid-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem }
-    @media (max-width:1024px){
-      .pipeline{ grid-template-columns:repeat(3,1fr) }
-      .grid-4{ grid-template-columns:repeat(2,1fr) }
-    }
-    @media (max-width:768px){
-      .pipeline{ grid-template-columns:repeat(2,1fr) }
-      .grid-3{ grid-template-columns:1fr }
-    }
-  </style>
-</head>
-<body>
-  <main class="wrap">
-    <div class="glass p-8 md:p-12 section">
-      <!-- HERO -->
-      <header class="text-center mb-12">
-        <img class="mx-auto w-40 md:w-48 mb-4" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png" alt="SocialAudits Logo"/>
-        <h1 class="title">SocialAudits</h1>
-        <p class="subtitle">
-          The <span class="accent font-bold">Proof-of-Organic™</span> verification layer for influencer marketing.
-          Eliminate synthetic reach, protect payments, and turn spend into <strong>verifiable human impact</strong>.
-        </p>
-        <div class="mt-5 flex flex-wrap items-center justify-center gap-2">
-          <span class="chip">Pre-payment verification</span>
-          <span class="chip">94%+ bot-detection accuracy</span>
-          <span class="chip">100+ languages</span>
-          <span class="chip">5B+ enriched datapoints</span>
-        </div>
-      </header>
-
-      <!-- PROBLEM / OUTCOME -->
-      <section class="mb-12">
-        <div class="grid-3">
-          <div class="metric">
-            <div class="value danger">55%</div>
-            <div class="label">Fake Engagement (Some Platforms)</div>
-            <p class="mt-2 text-sm text-gray-500">Industry spend routinely leaks to bots and paid farms.</p>
-          </div>
-          <div class="metric">
-            <div class="value success">5.78×</div>
-            <div class="label">Avg. ROI</div>
-            <p class="mt-2 text-sm text-gray-500">But ROI collapses when synthetic activity is counted as human.</p>
-          </div>
-          <div class="metric">
-            <div class="value accent">$2B+</div>
-            <div class="label">Annual Fraud Losses</div>
-            <p class="mt-2 text-sm text-gray-500">Brands fund manipulation without pre-payment verification.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- HOW IT WORKS (PIPELINE) -->
-      <section class="mb-12">
-        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">The Reporting Pipeline</h2>
-        <p class="subtitle">A six-stage framework transforms raw signals into <strong>contextual, payment-grade outputs</strong>.</p>
-        <div class="pipeline mt-6">
-          <div class="stage">
-            <h4>Ingest</h4>
-            <p>All major socials + 20,000+ news publishers.</p>
-          </div>
-          <div class="stage">
-            <h4>Normalize</h4>
-            <p>De-duplication, language/charset unification.</p>
-          </div>
-          <div class="stage">
-            <h4>Contextualize</h4>
-            <p>Entity, topic, sentiment & emotion layers.</p>
-          </div>
-          <div class="stage">
-            <h4>Score</h4>
-            <p>Manipulation index + conversion probability.</p>
-          </div>
-          <div class="stage">
-            <h4>Visualize</h4>
-            <p>Forensic dashboards and time-series.</p>
-          </div>
-          <div class="stage">
-            <h4>Deliver</h4>
-            <p>Pre-payment verification & audit PDFs.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- KEY OUTPUTS -->
-      <section class="mb-12">
-        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Verification Outputs</h2>
-        <p class="subtitle">Actionable, standardized measures used to gate spend.</p>
-        <div class="grid-3 mt-6">
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Authentic Reach Index (ARI)</h3>
-            <p>Verified audience authenticity and human-only reach.</p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Bot Density (%)</h3>
-            <p>Ratio of synthetic audiences across posts & time.</p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Social Liquidity Score (SLS)</h3>
-            <p>Narrative movement and cross-network propagation.</p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Propagation Lag (PL-24)</h3>
-            <p>Amplification velocity and decay within 24h windows.</p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Engagement Entropy</h3>
-            <p>Attention concentration vs. dispersion across cohorts.</p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Proof-of-Organic™</h3>
-            <p>Payment released only after verification thresholds are met.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- COVERAGE / CAPABILITIES -->
-      <section class="mb-12">
-        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Coverage & Capabilities</h2>
-        <div class="grid-4 mt-6">
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Networks</h3>
-            <p class="text-sm text-gray-600 mt-1">
-              X, TikTok, Instagram, YouTube, Reddit, Telegram, Discord, LinkedIn, Facebook, plus decentralized platforms.
-            </p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Publishers</h3>
-            <p class="text-sm text-gray-600 mt-1">20,000+ global news outlets processed continuously.</p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Multilingual</h3>
-            <p class="text-sm text-gray-600 mt-1">Real-time sync across 100+ languages & character sets.</p>
-          </div>
-          <div class="card p-5">
-            <h3 class="font-extrabold text-lg">Real-Time</h3>
-            <p class="text-sm text-gray-600 mt-1">10-second ingestion cadence; dashboards refresh continuously.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- PRICING (kept, tightened) -->
-      <section class="mb-10">
-        <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Simple, Transparent Pricing</h2>
-        <div class="grid-3 mt-6">
-          <div class="card p-6 pricing">
-            <h3>24-Hour Pulse</h3>
-            <div class="price">$5.99</div>
-            <ul class="checklist">
-              <li>Viral post deep-dive</li>
-              <li>Immediate manipulation signals</li>
-              <li>Historic baseline comparison</li>
-            </ul>
-          </div>
-          <div class="card p-6 pricing" style="border:2px solid var(--color-accent); background:rgba(99,102,241,.05)">
-            <div class="badge ok inline-block mb-2">Most Popular</div>
-            <h3>7-Day Breakdown</h3>
-            <div class="price">$29.99</div>
-            <ul class="checklist">
-              <li>Weekly performance summary</li>
-              <li>Trend & anomaly detection</li>
-              <li>Creator cohort comparison</li>
-            </ul>
-          </div>
-          <div class="card p-6 pricing">
-            <h3>Official Audit</h3>
-            <div class="price">$49.99 <small>/mo</small></div>
-            <ul class="checklist">
-              <li>Real-time tracking (10s)</li>
-              <li>Deleted content capture</li>
-              <li>Daily + monthly reports</li>
-              <li>“Verified Audit” status</li>
-            </ul>
-          </div>
-        </div>
-        <p class="text-center text-sm text-gray-500 mt-3">
-          Enterprise & pay-as-you-save verification available on request.
-        </p>
-      </section>
-
-      <!-- CTA -->
-      <section class="text-center">
-        <h2 class="text-2xl md:text-3xl font-black uppercase tracking-wide">Get Your First Audit</h2>
-        <p class="subtitle">Receive an initial report within 24 hours and enable pre-payment verification on your next campaign.</p>
-        <a href="#" class="inline-block mt-6 px-8 py-3 rounded-xl text-white font-extrabold tracking-wide uppercase"
-           style="background:linear-gradient(90deg,var(--color-accent),var(--color-success)); box-shadow:0 14px 38px rgba(99,102,241,.35)">
-          Contact Our Team
-        </a>
-      </section>
+<!-- PRICING (trimmed copy) -->
+<section class="mb-10">
+  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Simple, Transparent Pricing</h2>
+  <div class="grid-3 mt-6">
+    <div class="card p-6 pricing">
+      <h3>24-Hour Pulse</h3>
+      <div class="price">$59</div>
+      <ul class="checklist">
+        <li>Viral post deep-dive</li><li>Manipulation signals</li><li>Historic baseline</li>
+      </ul>
     </div>
-  </main>
+    <div class="card p-6 pricing" style="border:2px solid var(--color-accent); background:rgba(99,102,241,.05)">
+      <div class="badge ok inline-block mb-2">Most Popular</div>
+      <h3>7-Day Breakdown</h3>
+      <div class="price">$299</div>
+      <ul class="checklist">
+        <li>Weekly summary</li><li>Trends & anomalies</li><li>Cohort comparison</li>
+      </ul>
+    </div>
+    <div class="card p-6 pricing">
+      <h3>Official Audit</h3>
+      <div class="price">$599 <small>/mo</small></div>
+      <ul class="checklist">
+        <li>Real-time tracking (10s)</li><li>Deleted content capture</li><li>Daily & monthly reports</li><li>“Verified Audit” status</li>
+      </ul>
+    </div>
+  </div>
+  <p class="text-center text-sm text-gray-500 mt-3">Enterprise & pay-as-you-save verification available on request.</p>
+</section>
 
-  <footer class="text-center py-8 mt-8 border-t border-gray-200">
-    <p class="text-gray-500 text-sm">&copy; 2025 SocialAudits. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+<!-- CTA -->
+<section class="text-center">
+  <h2 class="text-2xl md:text-3xl font-black uppercase tracking-wide">Get Your First Audit</h2>
+  <p class="subtitle">Initial report in 24 hours. Enable payout gating on your next campaign.</p>
+  <a href="#" class="inline-block mt-6 px-8 py-3 rounded-xl text-white font-extrabold tracking-wide uppercase"
+     style="background:linear-gradient(90deg,var(--color-accent),var(--color-success)); box-shadow:0 14px 38px rgba(99,102,241,.35)">
+    Contact Our Team
+  </a>
+</section>
