@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialAudits Presentation</title>
+    <title>SocialAudits Presentation - V14</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
@@ -1154,105 +1154,187 @@
             color: var(--color-accent);
             font-weight: 900;
         }
-    
-        /* --- Advanced Modules slide polish --- */
-        #modules .grid-3 { gap: 1rem; max-width: 1100px; margin-left: auto; margin-right: auto; }
-        #modules .metric-card { padding: 1rem 1rem; }
-        #modules h3 { font-weight: 700; font-size: 1.05rem; color: var(--color-primary); margin-bottom: .25rem; }
-        #modules p { font-size: .9rem; line-height: 1.45; color: var(--color-text-secondary); margin: .15rem 0; }
-        #modules .tag { font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; font-weight: 800; opacity: .9; display: inline-block; margin-bottom: .25rem; }
 
-    
-        /* --- Comparison matrix tables --- */
-        .matrix-wrap {
-            width: min(100%, 1200px);
-            margin: 0 auto;
+        /* Competition slide container uses your global .slide-title/.slide-subtitle */
+        #competition .slide-inner {
+            padding: 60px 48px;
         }
-        .matrix-table {
+
+        /* Table wrapper to prevent layout shift and flashing */
+        #competition .table-wrapper {
             width: 100%;
-            table-layout: fixed;
-            border-collapse: separate;
-            border-spacing: 0;
-            border: 1px solid rgba(0,0,0,.06);
-            border-radius: var(--border-radius-md);
-            background: var(--color-surface);
-            box-shadow: var(--shadow-sm);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Clean table */
+        .competition-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            font-size: 0.92rem;
         }
-        .matrix-table th, .matrix-table td {
-            padding: .8rem .75rem;
-            font-size: clamp(.78rem, .95vw, .92rem);
-            line-height: 1.35;
-            color: var(--color-text-secondary);
-            vertical-align: top;
-            word-break: break-word;
-            border-bottom: 1px solid rgba(0,0,0,.05);
+
+        /* Single-tone header (no full gradient) */
+        .competition-table thead {
+            background: #eef1f8;
+            /* soft neutral to match deck */
+            border-bottom: 1px solid #e4e7ee;
         }
-        .matrix-table thead th {
-            background: rgba(99,102,241,.06);
-            color: var(--color-primary);
+
+        .competition-table th {
+            text-align: left;
+            padding: 14px 16px;
+            color: #1f2937;
+            /* near-black */
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: .03em;
+            letter-spacing: .035em;
+            font-size: .82rem;
+        }
+
+        /* Body cells */
+        .competition-table td {
+            padding: 16px;
+            color: #111827;
+            vertical-align: top;
+            border-bottom: 1px solid #edf0f5;
+            line-height: 1.45;
+        }
+
+        /* Zebra rows for readability */
+        .competition-table tbody tr:nth-child(even) {
+            background: #fafbfe;
+        }
+
+        /* Last row: SocialAudits highlight */
+        .competition-table .sa-row {
+            background: #f4f7ff;
+            border-top: 2px solid #9aa7ff;
+            border-bottom: 2px solid #9aa7ff;
+        }
+
+        .competition-table .sa-row td {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* Small helper text */
+        .competition-table .small {
+            font-size: .78rem;
+            color: #6b7280;
+        }
+
+        /* Make sure it fits on one slide */
+        @media (max-width: 1280px) {
+            .competition-table {
+                font-size: 0.88rem;
+            }
+
+            .competition-table th {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Sticky header (optional; remove if not desired) */
+        @supports (position: sticky) {
+            .competition-table thead th {
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+        }
+
+
+        /* Target Markets Slide */
+        .target-markets {
+            text-align: center;
+            padding: 80px 60px;
+        }
+
+        .target-markets .slide-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .target-markets .highlight {
+            color: #6c63ff;
+        }
+
+        .target-markets .slide-subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 3rem;
+        }
+
+        /* Market cards row layout */
+        .market-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 3rem;
+        }
+
+        .market-card {
+            flex: 1 1 260px;
+            max-width: 300px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.8rem 1.2rem;
+            text-align: center;
+            border-top: 3px solid #6c63ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .market-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-card h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 0.4rem;
+        }
+
+        .market-card .market-category {
+            text-transform: uppercase;
+            color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
             font-weight: 600;
         }
-        .matrix-table thead th:first-child {
-            position: relative;
-        }
-        .matrix-table thead th:first-child::before {
-            content: '';
-            position: absolute;
-            left: 0; right: 0; top: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
-        }
-        .matrix-table th:first-child, .matrix-table td:first-child {
-            text-align: left;
-            color: var(--color-primary);
-        }
-        .matrix-caption {
-            max-width: 1200px;
-            margin: .5rem auto 0;
-            color: var(--color-text-secondary);
-            font-size: .8rem;
-            text-align: left;
+
+        .market-card .market-sub {
+            color: #777;
+            font-size: 0.85rem;
         }
 
-    
-        /* --- Comparison matrix tables (scoped) --- */
-        .matrix-wrap { width: min(100%, 1200px); margin: 0 auto; }
-        .matrix-table { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0;
-            border: 1px solid rgba(0,0,0,.06); border-radius: var(--border-radius-md); background: var(--color-surface);
-            box-shadow: var(--shadow-sm); overflow: hidden; }
-        .matrix-table thead th { background: rgba(99,102,241,.06); color: var(--color-primary); text-transform: uppercase;
-            letter-spacing: .03em; font-weight: 600; }
-        .matrix-table th, .matrix-table td { padding: .85rem .75rem; font-size: clamp(.78rem, .95vw, .92rem);
-            line-height: 1.35; color: var(--color-text-secondary); vertical-align: top; word-break: break-word;
-            border-bottom: 1px solid rgba(0,0,0,.05); }
-        .matrix-table th:first-child, .matrix-table td:first-child { text-align: left; color: var(--color-primary); }
-        .matrix-caption { max-width: 1200px; margin: .5rem auto 0; color: var(--color-text-secondary); font-size: .8rem; text-align: left; }
-
-    
-        /* --- Matrix table polish --- */
-        .matrix-table { border-radius: 12px; overflow: hidden; }
-        .matrix-table thead th { position: sticky; top: 0; z-index: 1; box-shadow: inset 0 -1px 0 rgba(0,0,0,.06); }
-        .matrix-table tbody tr:nth-child(odd) { background: rgba(0,0,0,.02); }
-        .matrix-table tbody tr:hover { background: rgba(99,102,241,.07); transition: background .18s ease; }
-        .matrix-table td .muted { color: var(--color-text-secondary); opacity: .9; font-size: .86em; }
-        .matrix-table td .badge { display:inline-block; padding:.15rem .45rem; border-radius: 999px; font-size:.72rem; font-weight:700; }
-        .badge-accent { background: rgba(99,102,241,.12); color: var(--color-primary); }
-        .badge-success { background: rgba(16,185,129,.12); color: var(--color-success); }
-        .sa-row { background: linear-gradient(0deg, rgba(16,185,129,.10), rgba(16,185,129,.10)); }
-        .sa-row td, .sa-row th { color: var(--color-text); }
-        .nowrap { white-space: nowrap; }
-        @media (max-width: 820px) {
-            .matrix-table, .matrix-table thead, .matrix-table tbody, .matrix-table th, .matrix-table td, .matrix-table tr { display: block; }
-            .matrix-table thead { display:none; }
-            .matrix-table tr { border-bottom: 1px solid rgba(0,0,0,.06); margin-bottom:.5rem; }
-            .matrix-table td { border: 0; padding: .5rem .75rem; position: relative; }
-            .matrix-table td::before { content: attr(data-label); font-weight: 700; color: var(--color-primary); display:block; margin-bottom:.15rem; }
+        /* Sources styling */
+        .sources {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #555;
         }
 
+        .sources p {
+            margin: 0.4rem 0;
+            font-style: italic;
+        }
+
+        .sources strong {
+            font-style: normal;
+            font-weight: 700;
+        }
     </style>
+
 </head>
 
 <body>
@@ -1264,11 +1346,11 @@
                     src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png"
                     alt="SocialAudits logo" />
                 <h1 class="slide-title animated-item">SocialAudits</h1>
-                <p class="slide-subtitle animated-item"> The World's First Influencer Forensics Platform</p>
+                <p class="slide-subtitle animated-item">The World's First Influencer Forensics Platform</p>
             </div>
 
             <!-- Slide 2: The Problem -->
-            <div class="slide" id="problem">
+            <div class="slide" data-comp="long" id="problem">
                 <h2 class="slide-title animated-item">The <span class="danger-text">Problem</span></h2>
                 <p class="slide-subtitle animated-item">
                     $32.55B industry faces pervasive manipulation across platforms and tiers
@@ -1365,93 +1447,98 @@
                 </div>
             </div>
 
-            <!-- Slide 5: Target Markets (cleaned) -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Target <span class="accent-text">Markets</span></h2>
-                <p class="slide-subtitle animated-item">High-stakes verticals with catastrophic manipulation costs</p>
+            <section class="slide target-markets">
+                <h1 class="slide-title">
+                    TARGET <span class="highlight">MARKETS</span>
+                </h1>
+                <p class="slide-subtitle">
+                    High-stakes verticals with catastrophic manipulation costs
+                </p>
 
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$9.6B–12.8B</div>
-                        <div class="metric-label">Health & Beauty</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                            $5.3B–7.0B wasted annually
-                        </p>
+                <div class="market-cards">
+                    <div class="market-card">
+                        <h2>$9.6B–12.8B</h2>
+                        <p class="market-category">HEALTH & BEAUTY</p>
+                        <p class="market-sub">$5.3B–7.0B wasted annually</p>
                     </div>
 
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$2.0B–5.0B</div>
-                        <div class="metric-label">Finance & Crypto</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                            $1.1B–2.8B wasted annually
-                        </p>
+                    <div class="market-card">
+                        <h2>$2.0B–5.0B</h2>
+                        <p class="market-category">FINANCE & CRYPTO</p>
+                        <p class="market-sub">$1.1B–2.8B wasted annually</p>
                     </div>
 
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$1.8B–2.5B</div>
-                        <div class="metric-label">Fitness & Wellness</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                            $1.0B–1.4B wasted annually
-                        </p>
+                    <div class="market-card">
+                        <h2>$1.8B–2.5B</h2>
+                        <p class="market-category">FITNESS & WELLNESS</p>
+                        <p class="market-sub">$1.0B–1.4B wasted annually</p>
+                    </div>
+
+                    <div class="market-card">
+                        <h2>$13.4B–20.3B</h2>
+                        <p class="market-category">TOTAL ADDRESSABLE MARKET</p>
+                        <p class="market-sub">$7.4B–11.2B in annual waste across these verticals</p>
                     </div>
                 </div>
 
-                <div class="metric-card animated-item"
-                    style="margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <div class="metric-value" style="color: var(--color-success);">$13.4B–20.3B</div>
-                    <div class="metric-label">Total Addressable Market</div>
-                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                        $7.4B–11.2B in annual waste across these verticals
+                <div class="sources">
+                    <p>
+                        <strong>Sources:</strong> Influencer Marketing Hub 2024; Statista 2024;
+                        Grand View Research 2024.
+                    </p>
+                    <p>
+                        Each dataset connects into the same multilingual, synchronized, and
+                        compliant reporting ecosystem.
                     </p>
                 </div>
-            </div>
-
+            </section>
 
             <!-- Slide: Reporting Pipeline -->
             <div class="slide" id="pipeline">
                 <h2 class="slide-title animated-item">
                     THE <span class="text-accent">REPORTING PIPELINE</span>
                 </h2>
-                <p class="slide-subtitle animated-item">
-                    A six-stage framework that transforms raw signals into contextual, decision-ready outputs.
-                </p>
+                <p class="slide-subtitle animated-item">We start with already‑enriched data from Koat API & partners →
+                    normalize → identity resolution → analyze → verify → deliver.</p>
 
                 <div class="animated-item pipeline-rail">
                     <div class="pipe-stage">
                         <div class="pipe-top">
-                            <h3>01 Ingest</h3>
+                            <h3>01 Ingest (Enriched)</h3>
                         </div>
-                        <p>Streaming social, web, and news data — multi-network, multilingual, continuous.</p>
+                        <p>Authorized ingestion of already‑enriched audience & interaction data via Koat API & partners.
+                        </p>
                     </div>
                     <div class="pipe-stage">
                         <div class="pipe-top">
                             <h3>02 Normalize</h3>
                         </div>
-                        <p>De-dupe, unify schemas, timezone alignment, and language harmonization.</p>
+                        <p>Unify schemas, dedupe, harmonize languages/timezones.</p>
                     </div>
                     <div class="pipe-stage">
                         <div class="pipe-top">
-                            <h3>03 Contextualize</h3>
+                            <h3>03 Identity Resolution</h3>
                         </div>
-                        <p>Entity & link extraction, sentiment & emotion, topic/narrative mapping.</p>
+                        <p>Deterministic + probabilistic stitching to map cross‑platform identities and networks.</p>
                     </div>
                     <div class="pipe-stage">
                         <div class="pipe-top">
-                            <h3>04 Score</h3>
+                            <h3>04 Analyze</h3>
                         </div>
-                        <p>Manipulation index, authenticity, conversion probability, cohort quality.</p>
+                        <p>Graph analytics & risk scoring (bot rings, engagement entropy); narrative/stance tracking.
+                        </p>
                     </div>
                     <div class="pipe-stage">
                         <div class="pipe-top">
-                            <h3>05 Visualize</h3>
+                            <h3>05 Verify</h3>
                         </div>
-                        <p>Human-readable dashboards and forensic summaries for fast insights.</p>
+                        <p>Cross‑source corroboration + light human QA on high‑impact flags.</p>
                     </div>
                     <div class="pipe-stage">
                         <div class="pipe-top">
                             <h3>06 Deliver</h3>
                         </div>
-                        <p>APIs, reports, and automated checks for verified payouts.</p>
+                        <p>Dashboards & reports (ARI, SLS, authenticity) with PDF/CSV export & API hooks.</p>
                     </div>
                 </div>
 
@@ -1488,37 +1575,8 @@
                 </div>
             </div>
 
-            
-            <!-- Slide: Advanced Modules (What/How/Why) -->
-            <div class="slide" id="modules">
-                <h2 class="slide-title animated-item">Advanced <span class="accent-text">Modules</span></h2>
-                <p class="slide-subtitle animated-item">Compact add‑ons layered onto the pipeline.</p>
-                <div class="grid-3 animated-item" style="margin-top:1rem;">
-                    <div class="metric-card" style="text-align:left;">
-                        <div class="tag text-warning">Financial Manipulation</div>
-                        <h3>Coordinated Asset Pumping</h3>
-                        <p><strong>What:</strong> Flags artificial spikes around tokens/stocks/NFTs.</p>
-                        <p><strong>How:</strong> Link wallet flows + CEX/DEX volume + social surges.</p>
-                        <p><strong>Why:</strong> Exposes pump‑and‑dump / wash‑trading ops.</p>
-                    </div>
-                    <div class="metric-card" style="text-align:left;">
-                        <div class="tag text-accent">Narratives</div>
-                        <h3>Narrative Injection Mapping</h3>
-                        <p><strong>What:</strong> Detects rapid spread of talking points.</p>
-                        <p><strong>How:</strong> NLP clustering + first‑seen → amplification timeline.</p>
-                        <p><strong>Why:</strong> Early warning for coordinated PR/influence.</p>
-                    </div>
-                    <div class="metric-card" style="text-align:left;">
-                        <div class="tag text-success">Authenticity</div>
-                        <h3>AI‑Generated Comments/Reviews</h3>
-                        <p><strong>What:</strong> Finds AI‑written UGC that looks human.</p>
-                        <p><strong>How:</strong> Style/entropy features + cross‑post patterns.</p>
-                        <p><strong>Why:</strong> Reduces synthetic engagement & testimonial fraud.</p>
-                    </div>
-                </div>
-            </div>
-</div>
-    
+
+
 
             <!-- Slide 4: The SocialAudits Report (cleaned up) -->
             <div class="slide" id="s6">
@@ -1581,91 +1639,99 @@
             </div>
 
 
-            
-            <!-- Slide: Competitor Analysis Matrix (added) -->
-            <div class="slide" id="comp-matrix">
-                <h2 class="slide-title animated-item">🧠 Competitor Analysis — <span class="accent-text">SocialAudits.ai</span> vs Market</h2>
-                <p class="slide-subtitle animated-item">Methodology and pricing context across leading vendors.</p>
-                <div class="animated-item matrix-wrap">
-                    <table class="matrix-table">
-                        <thead>
-                            <tr>
-                                <th>Competitor</th>
-                                <th>Target Segment</th>
-                                <th>Tech Approach</th>
-                                <th>% of Followers Analyzed</th>
-                                <th>Pricing Model</th>
-                                <th class="nowrap">Indicative Pricing (USD)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-label="Competitor">HypeAuditor</td>
-                                <td data-label="Target Segment">SMBs, agencies</td>
-                                <td data-label="Tech Approach">Aggregated social APIs + follower sampling</td>
-                                <td data-label="% of Followers Analyzed">1–5% (typically ~200–1000 followers sampled)</td>
-                                <td data-label="Pricing Model">Subscription (monthly/annual)</td>
-                                <td data-label="Indicative Pricing (USD)">$299–$499/month</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Competitor">Modash</td>
-                                <td data-label="Target Segment">DTC brands, startups</td>
-                                <td data-label="Tech Approach">Public API access + limited scraping</td>
-                                <td data-label="% of Followers Analyzed">1–5%</td>
-                                <td data-label="Pricing Model">Subscription</td>
-                                <td data-label="Indicative Pricing (USD)">$199–$499/month</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Competitor">Upfluence</td>
-                                <td data-label="Target Segment">Enterprise agencies &amp; brands</td>
-                                <td data-label="Tech Approach">API aggregation + probabilistic modeling</td>
-                                <td data-label="% of Followers Analyzed">1–5% (aggregated + inferred)</td>
-                                <td data-label="Pricing Model">Subscription (annual/enterprise)</td>
-                                <td data-label="Indicative Pricing (USD)">$800–$2,000/month (custom enterprise tiers)</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Competitor">CreatorIQ</td>
-                                <td data-label="Target Segment">Large agencies, Fortune 500</td>
-                                <td data-label="Tech Approach">Partnered platform APIs + data enrichment</td>
-                                <td data-label="% of Followers Analyzed">~5% (partial)</td>
-                                <td data-label="Pricing Model">Subscription (enterprise)</td>
-                                <td data-label="Indicative Pricing (USD)">$20K–$50K/year</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Competitor">AspireIQ</td>
-                                <td data-label="Target Segment">Mid-sized consumer brands</td>
-                                <td data-label="Tech Approach">Influencer marketplace + API data</td>
-                                <td data-label="% of Followers Analyzed">&lt;5%</td>
-                                <td data-label="Pricing Model">Subscription</td>
-                                <td data-label="Indicative Pricing (USD)">$299–$999/month</td>
-                            </tr>
-                            <tr class="sa-row">
-                                <td data-label="Competitor">🙊 SocialAudits.ai (via Koat.ai)</td>
-                                <td data-label="Target Segment">Agencies, exchanges, brands, funds</td>
-                                <td data-label="Tech Approach"><strong>Full-graph, multi-pipeline ingestion and enrichment</strong></td>
-                                <td data-label="% of Followers Analyzed"><strong>100% (full follower + interaction graph)</strong></td>
-                                <td data-label="Pricing Model"><strong>Per-Report (Pay-as-you-go)</strong></td>
-                                <td data-label="Indicative Pricing (USD)"><strong>$250/report</strong> (custom tiers for volume)</td>
-                            </tr>
-                        
-                            <tr><td data-label="Indicative Pricing (USD)">$299–$499/month</td><td data-label="Key Limitations vs. SocialAudits.ai">Uses small samples to extrapolate audience quality; lacks real-time updates; no full follower or engagement graph; limited bot/sentiment detection.</td></tr>
-                            <tr><td data-label="Indicative Pricing (USD)">$199–$499/month</td><td data-label="Key Limitations vs. SocialAudits.ai">Incomplete datasets; no cross-platform linkage; limited authenticity metrics; static insights only.</td></tr>
-                            <tr><td data-label="Indicative Pricing (USD)">$800–$2,000/month (custom enterprise tiers)</td><td data-label="Key Limitations vs. SocialAudits.ai">Uses extrapolated audience data, not full graphs; cannot verify bot networks; relies on predictive models; no behavior or temporal data.</td></tr>
-                            <tr><td data-label="Indicative Pricing (USD)">$20K–$50K/year</td><td data-label="Key Limitations vs. SocialAudits.ai">Works on summarized platform insights; no follower-level data; can’t map engagement rings or synthetic propagation.</td></tr>
-                            <tr><td data-label="Indicative Pricing (USD)">$299–$999/month</td><td data-label="Key Limitations vs. SocialAudits.ai">Shallow analytics; relies on creator self-reported metrics; limited fraud detection; no emotion/stance analysis.</td></tr>
-                            <tr><td data-label="Indicative Pricing (USD)"><strong>$250/report</strong> (custom tiers for volume)</td><td data-label="Key Limitations vs. SocialAudits.ai"><strong>Real-time verified authenticity; analyzes entire follower networks; cross-platform identity resolution; advanced bot taxonomy; emotion + stance extraction; compliance-safe data pipelines.</strong></td></tr>
-                        
-</tbody>
-                    </table>
+            <!-- COMPETITION -->
+            <div class="slide" id="competition">
+                <div class="slide-inner competition-slide">
+                    <h1 class="slide-title">COMPETITION</h1>
+                    <p class="slide-subtitle">SocialAudits.ai vs Market</p>
+
+                    <div class="table-wrapper">
+                        <table class="competition-table">
+                            <thead>
+                                <tr>
+                                    <th>Competitor</th>
+                                    <th>Target Segment</th>
+                                    <th>Tech Approach</th>
+                                    <th>% of Followers Analyzed</th>
+                                    <th>Pricing Model</th>
+                                    <th>Indicative Pricing (USD)</th>
+                                    <th>Key Limitations vs. SocialAudits.ai</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>HypeAuditor</td>
+                                    <td>SMBs, agencies</td>
+                                    <td>Aggregated social APIs + follower sampling</td>
+                                    <td>1–5% (typically ~200–1000 followers sampled)</td>
+                                    <td>Subscription (monthly/annual)</td>
+                                    <td>$299–$499/month</td>
+                                    <td>Uses small samples; lacks real-time updates; no full follower or engagement
+                                        graph; limited bot/sentiment detection.</td>
+                                </tr>
+                                <tr>
+                                    <td>Modash</td>
+                                    <td>DTC brands, startups</td>
+                                    <td>Public API access + limited scraping</td>
+                                    <td>1–5%</td>
+                                    <td>Subscription</td>
+                                    <td>$199–$499/month</td>
+                                    <td>Incomplete datasets; no cross-platform linkage; limited authenticity metrics;
+                                        static insights only.</td>
+                                </tr>
+                                <tr>
+                                    <td>Upfluence</td>
+                                    <td>Enterprise agencies & brands</td>
+                                    <td>API aggregation + probabilistic modeling</td>
+                                    <td>1–5% (aggregated + inferred)</td>
+                                    <td>Subscription (annual/enterprise)</td>
+                                    <td>$800–$2,000/month <span class="small">(custom enterprise tiers)</span></td>
+                                    <td>Uses extrapolated audience data, not full graphs; cannot verify bot networks;
+                                        relies on predictive models; no behavior or temporal data.</td>
+                                </tr>
+                                <tr>
+                                    <td>CreatorIQ</td>
+                                    <td>Large agencies, Fortune 500</td>
+                                    <td>Partnered platform APIs + data enrichment</td>
+                                    <td>~5% (partial)</td>
+                                    <td>Subscription (enterprise)</td>
+                                    <td>$20K–$50K/year</td>
+                                    <td>Summarized insights only; no follower-level data; can’t map engagement rings or
+                                        synthetic propagation.</td>
+                                </tr>
+                                <tr>
+                                    <td>AspireIQ</td>
+                                    <td>Mid-sized consumer brands</td>
+                                    <td>Influencer marketplace + API data</td>
+                                    <td>&lt;5%</td>
+                                    <td>Subscription</td>
+                                    <td>$299–$999/month</td>
+                                    <td>Shallow analytics; relies on self-reported metrics; limited fraud detection; no
+                                        emotion/stance analysis.</td>
+                                </tr>
+                                <tr class="sa-row">
+                                    <td><strong>🦾 SocialAudits.ai <span class="small">(via Koat.ai)</span></strong>
+                                    </td>
+                                    <td>Agencies, exchanges, brands, funds</td>
+                                    <td><strong>Full-graph, multi-pipeline ingestion and enrichment</strong></td>
+                                    <td><strong>100% (full follower + interaction graph)</strong></td>
+                                    <td>Per-report (Pay-as-you-go)</td>
+                                    <td>$250/report <span class="small">(custom tiers for volume)</span></td>
+                                    <td><strong>Real-time verified authenticity;</strong> cross-platform identity
+                                        resolution; advanced bot taxonomy; emotion + stance extraction; compliance-safe
+                                        data pipelines.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
 
-            <!-- Slide: Pricing vs Limitations (added) -->
-            </div>
 
-<div class="slide" id="advantage">
-                <h2 class="slide-title animated-item">Our <span class="accent-text">Competitive Advantage</span></h2>
+            <!-- Slide: Our Unfair Advantage -->
+            <div class="slide" id="advantage">
+                <h2 class="slide-title animated-item">Our <span class="accent-text">Unfair Advantage</span></h2>
                 <p class="slide-subtitle animated-item">Exclusive pricing &amp; partnership with koat.ai</p>
 
                 <div class="grid-6 animated-item">
@@ -1696,7 +1762,7 @@
                     <div class="metric-card">
                         <div class="metric-value success-text">Exclusive</div>
                         <div class="metric-label">Contract terms</div>
-                        <p class="card-subtext">Priority access; data ~25% above provider cost under exclusive contract</p>
+                        <p class="card-subtext">Priority access; data at ~25% above cost</p>
                     </div>
 
                     <div class="metric-card">
@@ -1718,10 +1784,10 @@
 
                 <!-- Channel Mix -->
                 <div class="grid-3 animated-item gtm-grid">
-                    <!-- Solvent / Solvent.gg Partnership -->
+                    <!-- Solvent / Solana Partnership -->
                     <div class="metric-card">
                         <div class="metric-value text-accent">20%</div>
-                        <div class="metric-label">Solvent.gg Partnership</div>
+                        <div class="metric-label">Solana Partnership</div>
                         <p class="kpi-line">CAC $2K–$4K · 35% close rate</p>
                         <p class="kpi-caption"><strong>12+</strong> integrated projects via Solvent ecosystem</p>
                     </div>
@@ -1748,15 +1814,16 @@
                     <div class="metric-card">
                         <div class="metric-value text-accent">$10B+</div>
                         <div class="metric-label">Partner Ecosystem Market Cap</div>
-                        <p class="kpi-line">Solvent.gg and ecosystem partners</p>
+                        <p class="kpi-line">Solvent Labs, Backpack, Bonk communities</p>
                         <p class="kpi-caption">3M+ games & campaigns tracked across network</p>
                     </div>
 
                     <div class="metric-card">
                         <div class="metric-value text-success">Exclusive Integration</div>
-                        <div class="metric-label">Solvent.gg Integration</div>
+                        <div class="metric-label">Solvent Labs × Solana Phone</div>
                         <p class="kpi-line">
-                            Official verification & ads partner powering influencer transparency across the Solvent.gg ecosystem
+                            Official verification & ads partner powering influencer transparency for Solana Mobile
+                            ecosystem
                         </p>
                     </div>
                 </div>
@@ -1782,8 +1849,8 @@
                     </div>
 
                     <div class="metric-card exp-card">
-                        <div class="metric-value accent-text">Deepfake Analysis</div>
-                        <div class="metric-label">Detect AI‑generated media across platforms; credentialed media verification.
+                        <div class="metric-value accent-text">Financial &amp; Market Intelligence</div>
+                        <div class="metric-label">Token, equity, and market indicators linked to audience behavior.
                         </div>
                     </div>
 
@@ -1841,7 +1908,7 @@
                     <div class="metric-label">Own the Data Layer</div>
                     <ul
                         style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
-                        <li><strong>Acquire koat.ai</strong> in the next raise (planned; not this round)</li>
+                        <li><strong>Acquire koat.ai</strong> in the next raise (not this round)</li>
                         <li>Full data ownership eliminates vendor risk</li>
                         <li>Lower COGS, higher margins; expanded data products</li>
                     </ul>
@@ -1948,6 +2015,9 @@
                     <div class="metric-value" style="color: var(--color-warning);">$13.4M–20.3M</div>
                     <div class="metric-label">SOM (Year 1 @ 0.1%)</div>
                     <p>Initial penetration target.</p>
+
+                    <div class="sources">Sources: Influencer Marketing Hub 2024; Statista 2024; Grand View Research
+                        2024.</div>
                 </div>
             </div>
 
@@ -2227,7 +2297,7 @@
             </p>
         </div>
 
-           <!-- Slide 13: Team -->
+        <!-- Slide 13: Team -->
         <div class="slide">
             <h2 class="slide-title animated-item">Our <span class="accent-text">Team</span></h2>
             <p class="slide-subtitle animated-item">Capital-efficient, domain-expert team with proven track
@@ -2512,4 +2582,5 @@
     </script>
 </body>
 
+</html>
 </html>
