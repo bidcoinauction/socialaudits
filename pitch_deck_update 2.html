@@ -1,1289 +1,653 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialAudits Presentation - V14</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-background: #FAFAFA;
-            --color-surface: #FFFFFF;
-            --color-primary: #1A1A1A;
-            --color-accent: #6366F1;
-            --color-text-primary: #1A1A1A;
-            --color-text-secondary: #6B7280;
-            --color-success: #10B981;
-            --color-danger: #EF4444;
-            --color-warning: #F59E0B;
-            --border-radius-lg: 2rem;
-            --border-radius-md: 1rem;
-            --border-radius-sm: 0.5rem;
-            --transition-speed: 0.3s;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-        
-        html, body {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            background: linear-gradient(135deg, #FAFAFA 0%, #F3F4F6 100%);
-            font-family: 'Inter', sans-serif;
-            color: var(--color-text-primary);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialAudits — Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 
-        /* --- Clean Background Elements --- */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-            z-index: -1;
-        }
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --bg-2: #F8F9FC;
+      --card: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(17, 24, 39, 0.08);
+      --text: #111827;
+      /* body text */
+      --muted: #4B5563;
+      /* secondary text */
+      --accent: #6D28D9;
+      /* purple */
+      --accent-2: #06B6D4;
+      /* light blue */
+      --danger: #EF4444;
+      --radius-lg: 22px;
+      --radius-md: 14px;
+      --blur: 14px;
+      --shadow-1: 0 10px 24px rgba(17, 24, 39, .08);
+      --shadow-2: 0 22px 54px rgba(17, 24, 39, .12);
+      --ring: 0 0 0 1px rgba(17, 24, 39, .06) inset;
+    }
 
-        #deck-container {
-            width: 100%;
-            height: 100%;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
+    html,
+    body {
+      height: 100%;
+      background: var(--bg-2);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+    }
 
-        #deck {
-            flex-grow: 1;
-            position: relative;
-        }
-        
-        /* --- Clean Modern Slide Styles --- */
-        .slide {
-            position: absolute;
-            inset: 0;
-            padding: 3rem 4rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: var(--color-surface);
-            border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-xl);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(30px) scale(0.95);
-            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-        }
+    /* Subtle animated light glows on white */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      background:
+        radial-gradient(60vw 60vw at -10% 0%, rgba(109, 40, 217, .10), transparent 60%),
+        radial-gradient(60vw 60vw at 110% 110%, rgba(6, 182, 212, .12), transparent 60%),
+        radial-gradient(80vw 80vw at 50% 120%, rgba(236, 72, 153, .08), transparent 60%);
+      animation: float 28s ease-in-out infinite alternate;
+      filter: saturate(110%) contrast(102%);
+    }
 
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
+    @keyframes float {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
 
-        /* --- Animation --- */
-        .animated-item {
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
+      50% {
+        transform: translate3d(0, -1.5%, 0) scale(1.015);
+      }
 
-        .slide.active .animated-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      100% {
+        transform: translate3d(0, 1%, 0) scale(1.02);
+      }
+    }
 
-        /* Staggered animation delays */
-        .slide.active .animated-item:nth-child(1) { transition-delay: 0.2s; }
-        .slide.active .animated-item:nth-child(2) { transition-delay: 0.35s; }
-        .slide.active .animated-item:nth-child(3) { transition-delay: 0.5s; }
-        .slide.active .animated-item:nth-child(4) { transition-delay: 0.65s; }
-        .slide.active .animated-item:nth-child(5) { transition-delay: 0.8s; }
+    /* Deck shell */
+    #deck-shell {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+    }
 
-        /* --- Typography --- */
-        .slide-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 700;
-            color: var(--color-primary);
-            line-height: 1.1;
-            letter-spacing: -0.025em;
-            margin-bottom: 1.5rem;
-        }
-        .text-accent { color: var(--color-accent); }
+    #stage {
+      position: relative;
+      flex: 1;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-2);
+      background: var(--bg);
+    }
 
-        .slide-subtitle {
-            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-            font-weight: 500; 
-            color: var(--color-text-secondary);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            line-height: 1.5;
-        }
+    /* Slides */
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(24px, 5vw, 56px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.55));
+      border: 1px solid var(--card-border);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px) scale(.985);
+      transition: opacity .45s ease, transform .45s ease, visibility .45s ease;
+    }
 
-        .slide-logo {
-            max-width: 180px;
-            margin-bottom: 0.5rem; 
-        }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
 
-        /* --- Clean Modern Components --- */
-        .card {
-            background: var(--color-surface);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: var(--border-radius-md);
-            padding: 2rem;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            text-align: left;
-            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-sm);
-        }
+    /* TITLES: gradient on ALL slides */
+    .title {
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: clamp(32px, 5.5vw, 64px);
+      margin: 0 0 12px 0;
+    }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--color-accent);
-        }
-        
-        .card h3 { 
-            color: var(--color-primary); 
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .card p, .card li, .card span, .card blockquote { 
-            color: var(--color-text-secondary); 
-            line-height: 1.6; 
-            font-size: 0.95rem;
-        }
-        
-        .card .card-subtext {
-            font-size: 0.875rem;
-            color: var(--color-text-secondary);
-            opacity: 0.8;
-            margin-top: 0.5rem;
-        }
+    .subtitle {
+      color: var(--muted);
+      font-weight: 600;
+      max-width: 920px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+      font-size: clamp(18px, 2.4vw, 22px);
+    }
 
-        /* --- UI Controls & Accessibility --- */
-        #controls-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1.5rem;
-            padding: 0 0.5rem;
-        }
-        
-        #progress-container {
-            flex-grow: 1;
-            background-color: rgba(0, 0, 0, 0.05);
-            border-radius: 99px;
-            height: 6px;
-            overflow: hidden;
-        }
-        #progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
-            border-radius: 99px;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        #nav-controls {
-            display: flex;
-            gap: 0.5rem;
-            margin-left: 1rem;
-        }
-        .nav-button {
-            background: var(--color-surface);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-text-secondary);
-            cursor: pointer;
-            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-sm);
-        }
-        .nav-button:hover {
-            background: var(--color-accent);
-            border-color: var(--color-accent);
-            color: white;
-            transform: scale(1.05);
-            box-shadow: var(--shadow-md);
-        }
-        .nav-button:focus-visible {
-            outline: 3px solid var(--color-accent);
-            outline-offset: 3px;
-        }
-        .nav-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .aria-live-region {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
+    .nowrap {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-        .animated-item {
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
+    /* Cards */
+    .grid {
+      display: grid;
+      gap: 22px;
+      width: 100%;
+      max-width: 1200px;
+    }
 
-        .slide.active .animated-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
-        .slide.active .animated-item:nth-child(1) { transition-delay: 0.1s; }
-        .slide.active .animated-item:nth-child(2) { transition-delay: 0.2s; }
-        .slide.active .animated-item:nth-child(3) { transition-delay: 0.3s; }
-        .slide.active .animated-item:nth-child(4) { transition-delay: 0.4s; }
-        .slide.active .animated-item:nth-child(5) { transition-delay: 0.5s; }
-        .slide.active .animated-item:nth-child(6) { transition-delay: 0.6s; }
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-        .slide-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 900;
-            color: var(--color-primary);
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
+    @media (max-width: 980px) {
+      .grid.cols-3 {
+        grid-template-columns: 1fr;
+      }
 
-        .slide-subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            font-weight: 600;
-            color: var(--color-text-secondary);
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            letter-spacing: 0.02em;
-        }
+      .grid.cols-2 {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .slide-description {
-            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
-            color: var(--color-text-secondary);
-            max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
+    .card {
+      text-align: left;
+      padding: 24px 24px 22px;
+      border-radius: var(--radius-md);
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-1);
+      backdrop-filter: blur(calc(var(--blur) * .7));
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    }
 
-        .slide-logo {
-            max-width: 120px;
-            margin-bottom: 2rem;
-            filter: brightness(1.2);
-        }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(109, 40, 217, .35);
+      box-shadow: 0 16px 44px rgba(17, 24, 39, .14);
+      background: rgba(255, 255, 255, 0.92);
+    }
 
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: var(--border-radius-md);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            text-align: left;
-            height: 100%;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
+    .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      font-weight: 800;
+      color: #0F172A;
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.95);
-            border-color: var(--color-accent);
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.2);
-        }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.6;
+    }
 
-        .card h3 {
-            color: var(--color-primary);
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.02em;
-        }
+    /* Buttons */
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      box-shadow: 0 12px 28px rgba(109, 40, 217, .22);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+    }
 
-        .card p, .card li {
-            color: var(--color-text-secondary);
-            line-height: 1.5;
-            font-size: 0.9rem;
-        }
+    .btn:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.05);
+      box-shadow: 0 16px 42px rgba(109, 40, 217, .32);
+    }
 
-        .card strong {
-            color: var(--color-accent);
-        }
+    .btn.alt {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      box-shadow: none;
+    }
 
-        .metric-card {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: var(--border-radius-md);
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
+    .btn.alt:hover {
+      border-color: rgba(109, 40, 217, .35);
+    }
 
-        .metric-card:hover {
-            background: rgba(255, 255, 255, 0.95);
-            border-color: var(--color-accent);
-            transform: scale(1.05);
-        }
+    /* Video */
+    .video-wrap {
+      width: 100%;
+      max-width: 980px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-2);
+      background: #000;
+    }
 
-        .metric-value {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--color-accent);
-            line-height: 1;
-            margin-bottom: 0.75rem;
-            display: block;
-        }
+    .video-wrap video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-        .metric-label {
-            color: var(--color-text-secondary);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
+    /* Progress + nav dots */
+    .hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+    }
 
-        /* --- Modern Visual Elements --- */
-        .metric-card {
-            background: var(--color-surface);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: var(--border-radius-md);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-sm);
-            position: relative;
-            overflow: hidden;
-        }
+    .progress {
+      flex: 1;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, .08);
+      box-shadow: var(--ring);
+      overflow: hidden;
+    }
 
-        .metric-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
-        }
+    .bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width .3s ease;
+    }
 
-        .metric-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
+    .dots {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
-        .accent-text {
-            color: var(--color-accent);
-        }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, .20);
+      border: 1px solid var(--card-border);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
 
-        .danger-text {
-            color: var(--color-danger);
-        }
+    .dot.active {
+      background: var(--accent);
+      border-color: rgba(109, 40, 217, .45);
+      transform: scale(1.25);
+    }
 
-        .warning-text {
-            color: var(--color-warning);
-        }
+    /* Toolbar */
+    .toolbar {
+      position: absolute;
+      inset-inline: 16px;
+      top: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
 
-        .success-text {
-            color: var(--color-success);
-        }
+    .toolbar>* {
+      pointer-events: auto;
+    }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem;
-            width: 100%;
-            max-width: 1000px;
-        }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+      backdrop-filter: blur(calc(var(--blur) * .6));
+    }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .grid-5 {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1.25rem;
-            width: 100%;
-            max-width: 1400px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            background-color: rgba(59, 130, 246, 0.1);
-            border-radius: 99px;
-            height: 6px;
-            margin-top: 2rem;
-        }
-
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--color-accent), #60A5FA);
-            border-radius: 99px;
-            transition: width 0.3s ease-out;
-        }
-
-        .slide-number {
-            position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            font-size: 1rem;
-            color: var(--color-text-secondary);
-            opacity: 0.7;
-            font-weight: 600;
-        }
-
-        .brand-logo {
-            width: 3rem;
-            height: 3rem;
-            background: var(--color-accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            color: white;
-            font-size: 1.5rem;
-            margin: 0 auto 1rem;
-        }
-
-        .partnership-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .partnership-logo {
-            background: rgba(241, 245, 249, 0.9);
-            border: 1px solid rgba(203, 213, 225, 0.3);
-            border-radius: var(--border-radius-md);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            min-height: 80px;
-            min-width: 120px;
-            box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .partnership-logo:hover {
-            background: rgba(241, 245, 249, 1);
-            border-color: var(--color-accent);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
-        }
-
-        .partnership-name {
-            color: var(--color-surface);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.9rem;
-        }
-
-        .revenue-table {
-            background: var(--color-surface);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: var(--border-radius-md);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .revenue-table th {
-            background: rgba(99, 102, 241, 0.05);
-            color: var(--color-primary);
-            padding: 1.25rem 1rem;
-            font-weight: 600;
-            letter-spacing: 0.025em;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-        }
-
-        .revenue-table td {
-            padding: 1.25rem 1rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            color: var(--color-text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .revenue-table .revenue-number {
-            color: var(--color-accent);
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .revenue-table .total-row {
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .revenue-table .total-row .revenue-number {
-            color: var(--color-success);
-            font-size: 1.1rem;
-        }
-
-        .video-container {
-            width: 100%;
-            max-width: 800px;
-            aspect-ratio: 16/9;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--border-radius-md);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: var(--color-text-secondary);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2, .grid-3, .grid-4, .grid-5 {
-                grid-template-columns: 1fr;
-            }
-            
-            .slide {
-                padding: 2rem;
-            }
-
-            .partnership-logos {
-                gap: 1rem;
-            }
-        }
-    </style>
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+      opacity: .8;
+    }
+  </style>
 </head>
+
 <body>
-    <div id="deck-container">
-        <div id="deck">
-            <!-- Slide 1: Cover -->
-            <div class="slide active">
-                <div class="brand-logo animated-item">SA</div>
-                <h1 class="slide-title animated-item">SocialAudits</h1>
-                <p class="slide-subtitle animated-item">The First Proof-of-Organic™ Verification Layer for Influencer Marketing</p>
-                <p class="slide-description animated-item" style="margin-top: 2rem;">
-                    We detect, analyze, and prevent fraud and manipulation across every major social platform—before it costs you money.
-                </p>
-                <p class="slide-description animated-item" style="margin-top: 1rem; font-style: italic; color: var(--color-accent);">
-                    One-liner: Every platform helps you find influencers. We stop you from paying bots.
-                </p>
-            </div>
+  <div class="backdrop" aria-hidden="true"></div>
 
-            <!-- Slide 2: The Problem -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">The <span class="danger-text">Problem</span></h2>
-                <p class="slide-subtitle animated-item">The $32.55B influencer marketing industry is built on fake engagement</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">55%</div>
-                        <div class="metric-label">Fake Engagement Rate</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">of influencer engagement is fake (conservative)</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">5.78x</div>
-                        <div class="metric-label">Industry Average ROI</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">but 55% of spend goes to bots</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">$7.4B-11.2B</div>
-                        <div class="metric-label">Annual Waste</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">across Finance, Health & Beauty, Fitness</p>
-                    </div>
-                </div>
-                <div class="metric-card animated-item" style="margin-top: 2rem; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <div class="metric-value" style="color: var(--color-danger); font-size: 1.5rem;">[VISUAL]</div>
-                    <div class="metric-label">Bot Swarm vs. Real Users</div>
-                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Graphic showing fake engagement patterns</p>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 2rem;">
-                    <strong class="danger-text">Influencer marketing delivers 5.78x ROI on average—but 55% of that spend is on bots. We help brands eliminate that waste and push ROI to 10x+ by ensuring every dollar reaches real humans.</strong>
-                </p>
-                <p class="slide-description animated-item" style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                    Sources: Influencer Marketing Hub 2025, HypeAuditor 2024, Statista 2024, inBeat Agency ROI Studies
-                </p>
-            </div>
+  <div id="deck-shell">
+    <div id="stage" class="relative">
+      <!-- Toolbar: brand -->
+      <div class="toolbar">
+        <div class="badge">SocialAudits • Pitch</div>
+        <div class="badge">Use ⬅️ ➡️ or tap to advance</div>
+      </div>
 
+      <!-- Slide 1 -->
+      <section id="s1" class="slide active" role="group" aria-label="Title">
+        <img alt="SocialAudits"
+          src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png"
+          style="width:120px;height:120px;object-fit:contain;margin-bottom:18px;filter: drop-shadow(0 8px 16px rgba(17,24,39,.12));" />
+        <h1 class="title">SocialAudits</h1>
+        <p class="subtitle">The World’s First Influencer Forensics Platform</p>
 
-            <!-- Slide 3: How It Works -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">How It <span class="accent-text">Works</span></h2>
-                <p class="slide-subtitle animated-item">Exclusive data pipeline powered by koat.ai partnership</p>
-                <div class="grid-5 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">1</div>
-                        <div class="metric-label">Ingest</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">40,000+ news outlets + social platforms</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">2</div>
-                        <div class="metric-label">Filter</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Advanced bot detection removes fake activity</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">3</div>
-                        <div class="metric-label">Enrich</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Sentiment, emotion, and topic analysis</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">4</div>
-                        <div class="metric-label">Score</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Manipulation index + conversion probability</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">5</div>
-                        <div class="metric-label">Report</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Forensic-grade audit in 24-48 hours</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4: The Report -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">The <span class="accent-text">Report</span></h2>
-                <p class="slide-subtitle animated-item">What brands get</p>
-                <div class="grid-2 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">63.19%</div>
-                        <div class="metric-label">Manipulation Index</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">How much engagement is fake</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">0.0011%</div>
-                        <div class="metric-label">Conversion Rate</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Actual business outcomes</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 1.5rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">20.04/100</div>
-                        <div class="metric-label">Organic Sentiment</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Real audience opinion</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">13 of 1.16M</div>
-                        <div class="metric-label">Unique Authors</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">True reach vs. bots</p>
-                    </div>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 2rem;">
-                    <strong class="accent-text">Bottom line:</strong> We show the $1M influencer with 10M followers actually reaches 50K real people with 0% conversion potential.
-                </p>
-            </div>
-
-            <!-- Slide 5: Target Markets -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Target <span class="accent-text">Markets</span></h2>
-                <p class="slide-subtitle animated-item">High-stakes verticals with catastrophic manipulation costs</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$9.6B-12.8B</div>
-                        <div class="metric-label">Health & Beauty</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">$5.3B-7.0B wasted annually (55% fake)</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$2.0B-5.0B</div>
-                        <div class="metric-label">Finance & Crypto</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">$1.1B-2.8B wasted annually (55% fake)</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$1.8B-2.5B</div>
-                        <div class="metric-label">Fitness & Wellness</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">$1.0B-1.4B wasted annually (55% fake)</p>
-                    </div>
-                </div>
-                <div class="metric-card animated-item" style="margin-top: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    <div class="metric-value" style="color: var(--color-success);">$13.4B-20.3B</div>
-                    <div class="metric-label">Total Addressable Market</div>
-                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">$7.4B-11.2B in annual waste across these verticals</p>
-                </div>
-            </div>
-
-            <!-- Slide 6: Business Model -->
-            <div class="slide">
-                <h2 class="slide-title animated-item"><span class="accent-text">Business</span> Model</h2>
-                <p class="slide-subtitle animated-item">Our revenue scales directly with client savings—the only company whose growth is tied to stopping waste</p>
-                <div class="grid-4 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">60%</div>
-                        <div class="metric-label">White Glove</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">5-10% of marketing budgets</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">$100K-500K avg contract</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">20%</div>
-                        <div class="metric-label">SaaS</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Monthly subscriptions</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">$5K-50K/month</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">10%</div>
-                        <div class="metric-label">Marketplace</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Transaction fees</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">10% of deals</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">10%</div>
-                        <div class="metric-label">One-Off Audits</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Campaign-specific reports</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Due diligence</p>
-                    </div>
-                </div>
-                <div class="grid-4 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">Aligned</div>
-                        <div class="metric-label">Incentives</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">We only succeed when clients protect budgets</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">Recurring</div>
-                        <div class="metric-label">Revenue</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Every campaign needs verification</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">Network</div>
-                        <div class="metric-label">Effects</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">More verified = more valuable marketplace</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">Scalable</div>
-                        <div class="metric-label">Growth</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Revenue grows with industry, not just customers</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 7: Go-To-Market Strategy -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Go-To-<span class="accent-text">Market</span> Strategy</h2>
-                <p class="slide-subtitle animated-item">Multi-channel approach with exclusive Solana partnership</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">20%</div>
-                        <div class="metric-label">Solana Partnership</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">$2K-4K CAC, 35% close rate</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">40%</div>
-                        <div class="metric-label">Direct Sales (SDR)</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">$6K-8K CAC, 20% close rate</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">25%</div>
-                        <div class="metric-label">Content/Inbound</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">$2K-3K CAC, 30% close rate</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$5K-7K</div>
-                        <div class="metric-label">Blended CAC Target</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">6-8 month payback period</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$270K</div>
-                        <div class="metric-label">Customer LTV</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">3-year average contract</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 8: Market Size -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Market <span class="accent-text">Size</span></h2>
-                <p class="slide-subtitle animated-item">Massive market opportunity with clear path to dominance</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$32.55B</div>
-                        <div class="metric-label">TAM - Influencer Marketing</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Growing 35.6% YoY</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$12.88B</div>
-                        <div class="metric-label">SAM - Ad Fraud Detection</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Digital fraud detection market (2024)</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">$13.4B-20.3B</div>
-                        <div class="metric-label">SOM - Our Initial Wedge</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Finance, Health & Beauty, Fitness</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$13.4M-20.3M</div>
-                        <div class="metric-label">Year 1 Target (0.1% penetration)</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$174.2M-263.9M</div>
-                        <div class="metric-label">Year 3 Target (1.3% penetration)</div>
-                    </div>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 2rem; font-size: 0.9rem; color: var(--color-text-secondary);">
-                    Sources: Influencer Marketing Hub 2025, Fortune Business Insights 2024, Mordor Intelligence 2024
-                </p>
-            </div>
-
-            <!-- Slide 9: Financial Projections -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Financial <span class="success-text">Projections</span></h2>
-                <p class="slide-subtitle animated-item">Clear path to $174M+ ARR with strong unit economics</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$13.4M-20.3M</div>
-                        <div class="metric-label">Year 1 ARR</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">134-203 customers @ $100K avg</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$53.6M-81.2M</div>
-                        <div class="metric-label">Year 2 ARR</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">300% YoY growth</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">$174.2M-263.9M</div>
-                        <div class="metric-label">Year 3 ARR</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">1.3% market penetration</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$402M-609M</div>
-                        <div class="metric-label">5-Year Upside (3% penetration)</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$1.3B-2.0B+</div>
-                        <div class="metric-label">10-Year Potential (10% penetration)</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 10: Our Unfair Advantage -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Our <span class="accent-text">Unfair Advantage</span></h2>
-                <p class="slide-subtitle animated-item">Exclusive 5-Year Data Partnership with koat.ai</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$20-50M</div>
-                        <div class="metric-label">Cost to Rebuild</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">5 years of historical data</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">40,000+</div>
-                        <div class="metric-label">News Outlet Integrations</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Massive data pipeline</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">1B+</div>
-                        <div class="metric-label">Enriched Data Points</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Proprietary algorithms</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">3-5 Years</div>
-                        <div class="metric-label">Barrier to Entry</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Deep technical expertise + capital required</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">Exclusive</div>
-                        <div class="metric-label">Contract Terms</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Priority access, discount pricing locked in</p>
-                    </div>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 2rem;">
-                    <strong class="accent-text">Bottom Line:</strong> This isn't just a SaaS wrapper—it's essential infrastructure that would take $50M+ and 5 years to replicate. We have it today through our partnership.
-                </p>
-            </div>
-
-            <!-- Slide 11: Competition -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Competition</h2>
-                <p class="slide-subtitle animated-item">Every platform in this space helps you find influencers. None of them stop you from paying bots.</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">Discovery</div>
-                        <div class="metric-label">Platforms</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">HypeAuditor, Traackr, AspireIQ</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-danger);">Problem: Fake metrics</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">Analytics</div>
-                        <div class="metric-label">Platforms</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Brandwatch, Sprout Social</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-danger);">Problem: Count bots as real</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">94%</div>
-                        <div class="metric-label">SocialAudits - Verification Layer</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Proof-of-Organic™ + Payment Protection</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-success);">Stops money flowing to bots</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">3 Key</div>
-                        <div class="metric-label">Differentiators</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">✓ Verification Before Payment</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">✓ 5-10% budget saved pricing</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">✓ Academic validation (ASU)</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">Blue Ocean</div>
-                        <div class="metric-label">Opportunity</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Creating the audit layer every discovery platform needs but can't build</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 13: Team -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Our <span class="accent-text">Team</span></h2>
-                <p class="slide-subtitle animated-item">Capital-efficient, domain-expert team with proven track records</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">Alistair Ewart</div>
-                        <div class="metric-label">Founder & CEO</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Co-founder of koat.ai, 5+ years in data intelligence</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Deep expertise in fraud detection & data pipelines</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">Tyler Lockley</div>
-                        <div class="metric-label">Head of Sales</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Proven B2B SaaS revenue track record</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Enterprise sales & customer success</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">Sang Lee</div>
-                        <div class="metric-label">COO</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Scaling specialist & operations expert</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Process optimization & team building</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">Peter Danihel</div>
-                        <div class="metric-label">Technical Advisor</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">CEO, Danihel Group - Enterprise technical architecture</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">koat.ai Team</div>
-                        <div class="metric-label">Development Partner</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">5+ years executing data pipelines at scale</p>
-                    </div>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 2rem;">
-                    <strong class="accent-text">Why we'll win:</strong> Deep domain expertise in data intelligence, proven B2B SaaS sales experience, and technical infrastructure already built through our koat.ai partnership. Capital-efficient approach with no engineering rebuild needed.
-                </p>
-            </div>
-
-            <!-- Slide 14: Why Now? -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Why <span class="accent-text">Now?</span></h2>
-                <p class="slide-subtitle animated-item">Perfect storm of market conditions</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$8-13B</div>
-                        <div class="metric-label">Annual Waste Validated</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">63% manipulation + 0.0011% conversions</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">First</div>
-                        <div class="metric-label">Proof-of-Organic™ Layer</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">No one else protects payments</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">94%</div>
-                        <div class="metric-label">Accuracy + 5-Year Moat</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Technology ready, proven, scalable</p>
-                    </div>
-                </div>
-                <div class="grid-2 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">First-Mover</div>
-                        <div class="metric-label">Competitive Advantage</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Discovery platforms need verification but can't build it</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">Exclusive</div>
-                        <div class="metric-label">Solana Partnership</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Immediate access to highest-value vertical</p>
-                    </div>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 2rem;">
-                    <strong class="accent-text">The Insight:</strong> Discovery platforms list influencers. Analytics platforms measure engagement. We're the missing layer that verifies authenticity before payment flows. This is infrastructure, not features.
-                </p>
-                <p class="slide-description animated-item" style="margin-top: 1rem;">
-                    <strong class="accent-text">This is the Bloomberg Terminal moment for influencer marketing—except we're building the clearing house, not the terminal.</strong>
-                </p>
-            </div>
-
-            <!-- Slide 15: Path to Profitability -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Path to <span class="success-text">Profitability</span></h2>
-                <p class="slide-subtitle animated-item">Clear milestones with conservative assumptions</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$8M - $12M</div>
-                        <div class="metric-label">Month 12: Break-Even</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">80-120 customers @ $100K avg</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-success);">Status: Profitable</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$13.4M - $20.3M</div>
-                        <div class="metric-label">Month 18: Scale</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">150-200 customers, 30-40% EBITDA</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-accent);">Series A ready @ $150-200M</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">$25M - $35M</div>
-                        <div class="metric-label">Month 24: Market Leader</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">250-350+ customers</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-warning);">Self-sustaining growth</p>
-                    </div>
-                </div>
-                <div class="grid-4 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$5K-8K</div>
-                        <div class="metric-label">CAC</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Enterprise acquisition cost</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$300K-500K</div>
-                        <div class="metric-label">LTV</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">3-5 year contracts</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">40-60x</div>
-                        <div class="metric-label">LTV/CAC</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Strong unit economics</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">6-8 months</div>
-                        <div class="metric-label">Payback Period</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Fast ROI for customers</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 16: Exit Strategy -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Exit <span class="accent-text">Strategy</span></h2>
-                <p class="slide-subtitle animated-item">Multiple paths to 10x+ return</p>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$2-5B</div>
-                        <div class="metric-label">Strategic Buyers</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Meta, Google, TikTok - Platform integrity</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Salesforce, HubSpot, Adobe - Martech</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">WPP, Omnicom, Publicis - Agencies</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$500M-1B</div>
-                        <div class="metric-label">Private Equity</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Rule of 40+ SaaS metrics</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Predictable enterprise revenue</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Market leadership position</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">$200M+ ARR</div>
-                        <div class="metric-label">IPO Potential</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Category-defining company</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Essential infrastructure for $100B+ economy</p>
-                        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Comps: ZoomInfo ($10B+), HubSpot ($25B+)</p>
-                    </div>
-                </div>
-                <div class="grid-4 animated-item" style="margin-top: 2rem;">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">$5B+</div>
-                        <div class="metric-label">Gaming & Esports</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">High engagement, fraud-prone</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">$8B+</div>
-                        <div class="metric-label">Fashion & Luxury</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Premium brands, high stakes</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-danger);">$4B+</div>
-                        <div class="metric-label">Travel & Hospitality</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Experience-based marketing</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$10B+</div>
-                        <div class="metric-label">B2B & Professional</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Thought leadership verification</p>
-                    </div>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 2rem;">
-                    <strong class="accent-text">TAM Expansion:</strong> Currently targeting 40% of $32.55B influencer market. Full addressable market exceeds <strong class="accent-text">$100B+</strong> with expansion into these verticals.
-                </p>
-            </div>
-
-            <!-- Slide 17: Closing -->
-            <div class="slide">
-                <h2 class="slide-title animated-item">Join us in building the <span class="accent-text">verification layer</span> for the $50B creator economy</h2>
-                <div class="grid-3 animated-item">
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-accent);">$32.55B</div>
-                        <div class="metric-label">Market Opportunity</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">63% of payments go to bots</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-success);">Proof-of-Organic™</div>
-                        <div class="metric-label">What We're Building</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Essential infrastructure between brands and payments</p>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" style="color: var(--color-warning);">$10M</div>
-                        <div class="metric-label">Investment</div>
-                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Gets you 20% of category-defining company</p>
-                    </div>
-                </div>
-                <p class="slide-description animated-item" style="margin-top: 3rem; font-size: 1.1rem; line-height: 1.6;">
-                    <strong class="accent-text">Why This Works:</strong> Every platform in this space helps you find influencers. None of them stop you from paying bots. We're building the missing layer—and our revenue model means we only win when clients stop waste.
-                </p>
-                <p class="slide-description animated-item" style="margin-top: 2rem; font-style: italic; font-size: 1.2rem;">
-                    <strong class="accent-text">SocialAudits: Turning a $50B black hole into verifiable human reach.</strong>
-                </p>
-            </div>
-
-
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+          <button class="btn">Book a Live Demo</button>
+          <button class="btn alt">Start Your First Audit</button>
         </div>
+        <div class="hint">Press Space/Right to go next</div>
+      </section>
 
-        <!-- NEW Controls Container -->
-        <div id="controls-container">
-            <div id="progress-container">
-                <div id="progress-bar"></div>
-            </div>
-            <div id="nav-controls">
-                <button id="prev-btn" class="nav-button" aria-label="Previous Slide">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
-                    </svg>
-                </button>
-                <button id="next-btn" class="nav-button" aria-label="Next Slide">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                </button>
-            </div>
+      <!-- Slide 2: Problem -->
+      <section id="s2" class="slide" role="group" aria-label="The Problem">
+        <h2 class="title">The Problem</h2>
+        <p class="subtitle">Over half of all online engagement is fake — and influencer budgets are paying for it.</p>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Expose Manipulation</h3>
+            <p>Bot networks manipulate billions in influencer campaigns every year.</p>
+          </div>
+          <div class="card">
+            <h3>Prevent Brand Damage</h3>
+            <p>Fake partnerships and inflated metrics put reputation and ROI at risk.</p>
+          </div>
+          <div class="card">
+            <h3>Reveal the Truth</h3>
+            <p>Without verifiable data, decision-makers are flying blind in a market ruled by illusion.</p>
+          </div>
         </div>
-        <div id="aria-live-region" class="aria-live-region" aria-live="polite" aria-atomic="true"></div>
+      </section>
+
+      <!-- Slide 3: Solution -->
+      <section id="s3" class="slide" role="group" aria-label="The Solution">
+        <h2 class="title">The Solution</h2>
+        <p class="subtitle">We bring forensic-grade influencer audits that turn manipulated metrics into verifiable
+          proof of impact.</p>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Verify Authenticity</h3>
+            <p>Instant detection of fake followers, AI-generated content, and inorganic activity.</p>
+          </div>
+          <div class="card">
+            <h3>Deliver Forensic Reports</h3>
+            <p>Comprehensive, auditable influencer profiles built from real-time signals.</p>
+          </div>
+          <div class="card">
+            <h3>Protect Every Dollar</h3>
+            <p>Replace guesswork with verified performance and provable ROI.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Reporting Pipeline -->
+      <section id="s4" class="slide" role="group" aria-label="Reporting Pipeline">
+        <h2 class="title">THE REPORTING PIPELINE</h2>
+        <p class="subtitle nowrap">Built on enriched Koat data — unified, verified, and delivered with proof.</p>
+
+        <div class="grid" style="grid-template-columns: repeat(6,minmax(0,1fr)); gap:18px; max-width:1180px;">
+          <div class="card">
+            <h3>01 Ingest (Enriched)</h3>
+            <p>Authorized ingestion of already-enriched audience & interaction data via Koat API & partners.</p>
+          </div>
+          <div class="card">
+            <h3>02 Normalize</h3>
+            <p>Unify schemas, dedupe, harmonize languages/timezones.</p>
+          </div>
+          <div class="card">
+            <h3>03 Identity Resolution</h3>
+            <p>Deterministic + probabilistic stitching to map cross-platform identities and networks.</p>
+          </div>
+          <div class="card">
+            <h3>04 Analyze</h3>
+            <p>Graph analytics & risk scoring (bot rings, engagement entropy); narrative/stance tracking.</p>
+          </div>
+          <div class="card">
+            <h3>05 Verify</h3>
+            <p>Cross-source corroboration + light human QA on high-impact flags.</p>
+          </div>
+          <div class="card">
+            <h3>06 Deliver</h3>
+            <p>Dashboards & reports (ARI, SLS, authenticity) with PDF/CSV export & API hooks.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Buy Influence (Video) -->
+      <section id="s5" class="slide" role="group" aria-label="Buy Influence">
+        <h2 class="title">See How Easy It Is to Buy Influence</h2>
+        <p class="subtitle">Watch how easily fake influence is purchased online.</p>
+        <div class="video-wrap">
+          <video controls playsinline preload="metadata"
+            poster="https://placehold.co/1280x720/FFFFFF/111827?text=Click+to+Play">
+            <source src="https://updatedcardscript.standard.us-east-1.oortstorages.com/anotherinfluencer%20(1).mov"
+              type="video/quicktime">
+            <source src="https://updatedcardscript.standard.us-east-1.oortstorages.com/anotherinfluencer%20(1).mov"
+              type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
+      <!-- Slide 6: Competitive Advantage -->
+      <section id="s6" class="slide" role="group" aria-label="Competitive Advantage">
+        <h2 class="title">Gain Competitive Advantage</h2>
+        <div class="grid cols-3" style="margin-top:6px;">
+          <div class="card">
+            <h3>Optimize Spend</h3>
+            <p>Identify creators who drive authentic engagement at fair value — eliminate waste.</p>
+          </div>
+          <div class="card">
+            <h3>Build Data-Driven Trust</h3>
+            <p>Every number is verified, every claim auditable — no more gray areas.</p>
+          </div>
+          <div class="card">
+            <h3>Gain Market Clarity</h3>
+            <p>Benchmark influencer integrity and ROI with enterprise-grade analytics.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Turn Proof into Pricing Power -->
+      <section id="s6" class="slide" role="group" aria-label="Turn Proof into Pricing Power">
+        <h2 class="title">Turn Proof into Pricing Power</h2>
+        <p class="subtitle">Better data to renegotiate, optimize, and make smarter influencer investments.</p>
+
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Renegotiate with Proof</h3>
+            <p>Use verified data to justify rates, adjust contracts, and ensure you only pay for real influence.</p>
+          </div>
+          <div class="card">
+            <h3>Buy Smarter</h3>
+            <p>Compare authenticity scores and engagement quality before every partnership decision.</p>
+          </div>
+          <div class="card">
+            <h3>Protect Every Dollar</h3>
+            <p>Shift from guesswork to evidence-based influencer buying with forensic-grade reports.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Why SA -->
+      <section id="s7" class="slide" role="group" aria-label="Why SocialAudits">
+        <h2 class="title">Why SocialAudits?</h2>
+        <p class="subtitle">We’re redefining influencer analytics — from vanity metrics to verifiable influence.</p>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>Ensure Data Integrity</h3>
+            <p>Forensic-grade verification replaces surface metrics with auditable truth.</p>
+          </div>
+          <div class="card">
+            <h3>Drive Strategic ROI</h3>
+            <p>Optimize every partnership and prove marketing impact with measurable clarity.</p>
+          </div>
+          <div class="card">
+            <h3>Access Real Market Intelligence</h3>
+            <p>Gain deeper, differentiated insights beyond engagement rates.</p>
+          </div>
+          <div class="card">
+            <h3>Earn the Gold Standard of Trust</h3>
+            <p>Trusted by funds, exchanges, and brands who demand proof — not promises.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Trust Ecosystem -->
+      <section id="s8" class="slide" role="group" aria-label="Trust Ecosystem">
+        <h2 class="title">Connect with the world’s only network built on verified influence.</h2>
+        <p class="subtitle">Join a transparent ecosystem where verified creators and brands grow together.</p>
+        <div class="grid cols-3">
+          <div class="card">
+            <h3>Prove True Influence</h3>
+            <p>Demonstrate authentic engagement and unlock premium brand opportunities.</p>
+          </div>
+          <div class="card">
+            <h3>Access Verified KOLs</h3>
+            <p>Discover pre-audited creators with full performance transparency and trust metrics.</p>
+          </div>
+          <div class="card">
+            <h3>Make Informed Decisions</h3>
+            <p>See through hype, compare verified data, and invest where authenticity wins.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Results -->
+      <section id="s9" class="slide" role="group" aria-label="Results and Testimonials">
+        <h2 class="title">Results and Testimonials</h2>
+        <div class="grid cols-2">
+          <blockquote class="card">“SocialAudits helped us identify the real impact of our KOL campaigns and saved
+            thousands in wasted spend.” — Bitlayer Labs</blockquote>
+          <blockquote class="card">“The only report that gave us true, actionable data on influencer performance.” —
+            Agency Client</blockquote>
+        </div>
+      </section>
+
+
+      <!-- Slide 10: Pricing -->
+      <section id="s10" class="slide" role="group" aria-label="Pricing">
+        <h2 class="title">Transparent Pricing, Proven Value</h2>
+        <p class="subtitle">Flexible reports designed to fit every campaign — from a quick pulse to full-scale audits.
+        </p>
+
+        <div class="grid cols-3">
+          <!-- Tier 1 -->
+          <div class="card" style="text-align:center;">
+            <h3>24-Hour Pulse</h3>
+            <p>Instant post analysis. Identify manipulation fast and establish your performance baseline.</p>
+            <p
+              style="font-size:2rem; font-weight:900; margin:1rem 0; background:linear-gradient(90deg, #6D28D9, #06B6D4); -webkit-background-clip:text; color:transparent;">
+              $29.99
+            </p>
+            <button class="btn" style="padding:0.9rem 1.8rem; font-size:0.9rem;">Get 24-Hour Report</button>
+          </div>
+
+          <!-- Tier 2 -->
+          <div class="card" style="text-align:center;">
+            <h3>7-Day Breakdown</h3>
+            <p>Track trends, engagement quality, and audience changes across an entire week of data.</p>
+            <p
+              style="font-size:2rem; font-weight:900; margin:1rem 0; background:linear-gradient(90deg, #6D28D9, #06B6D4); -webkit-background-clip:text; color:transparent;">
+              $159.99
+            </p>
+            <button class="btn" style="padding:0.9rem 1.8rem; font-size:0.9rem;">Get Weekly Report</button>
+          </div>
+
+          <!-- Tier 3 -->
+          <div class="card" style="text-align:center;">
+            <h3>30-Day Official Audit</h3>
+            <p>Full forensic tracking, daily updates, and verified proof with the <strong>Verified Audit Badge</strong>.
+            </p>
+            <p
+              style="font-size:2rem; font-weight:900; margin:1rem 0; background:linear-gradient(90deg, #6D28D9, #06B6D4); -webkit-background-clip:text; color:transparent;">
+              $349.99
+            </p>
+            <button class="btn" style="padding:0.9rem 1.8rem; font-size:0.9rem;">Book Full Audit</button>
+          </div>
+        </div>
+      </section>
+
+
+
+      <!-- Slide 11: CTA -->
+      <section id="s11" class="slide" role="group" aria-label="Call to Action">
+        <h2 class="title">Ready to Bring Clarity to Your Campaigns?</h2>
+        <p class="subtitle">Stop guessing. Start knowing. Get your first comprehensive report in just 24 hours.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn">Book a Live Demo</button>
+          <button class="btn alt">Start Your First Audit</button>
+        </div>
+      </section>
+
+      <!-- HUD -->
+      <div class="hud">
+        <div class="progress">
+          <div class="bar" id="bar"></div>
+        </div>
+        <div class="dots" id="dots" aria-label="Slide navigation dots"></div>
+      </div>
     </div>
+  </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const slides = Array.from(document.querySelectorAll('.slide'));
-        const progressBar = document.getElementById('progress-bar');
-        const ariaLiveRegion = document.getElementById('aria-live-region');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        let currentSlideIndex = 0;
-        const totalSlides = slides.length;
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const bar = document.getElementById('bar');
+    const dotsWrap = document.getElementById('dots');
 
-        function updateControls() {
-            prevBtn.disabled = currentSlideIndex === 0;
-            nextBtn.disabled = currentSlideIndex === totalSlides - 1;
-        }
-
-        function goToSlide(index) {
-            if (index < 0 || index >= totalSlides) return;
-            
-            slides[currentSlideIndex].classList.remove('active');
-            
-            currentSlideIndex = index;
-            slides[currentSlideIndex].classList.add('active');
-
-            progressBar.style.width = `${((currentSlideIndex + 1) / totalSlides) * 100}%`;
-
-            const titleEl = slides[currentSlideIndex].querySelector('h1, h2');
-            if (titleEl) {
-                ariaLiveRegion.textContent = `Now showing slide ${currentSlideIndex + 1} of ${totalSlides}: ${titleEl.textContent.trim()}`;
-            }
-            
-            updateControls();
-        }
-
-        const nextSlide = () => goToSlide(currentSlideIndex + 1);
-        const prevSlide = () => goToSlide(currentSlideIndex - 1);
-
-        // Event Listeners
-        prevBtn.addEventListener('click', prevSlide);
-        nextBtn.addEventListener('click', nextSlide);
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') { 
-                e.preventDefault(); 
-                if (currentSlideIndex < totalSlides - 1) nextSlide(); 
-            }
-            if (e.key === 'ArrowLeft') { 
-                e.preventDefault(); 
-                if (currentSlideIndex > 0) prevSlide();
-            }
-        });
-
-        document.getElementById('deck').addEventListener('click', (e) => {
-            if (!e.target.closest('a, button, input, textarea, canvas, video')) {
-                nextSlide();
-            }
-        });
-
-        // Initial setup
-        goToSlide(0);
+    let idx = 0;
+    function go(i) {
+      if (i < 0) i = slides.length - 1;
+      if (i >= slides.length) i = 0;
+      slides.forEach(s => s.classList.remove('active'));
+      slides[i].classList.add('active');
+      bar.style.width = ((i + 1) / slides.length * 100).toFixed(2) + '%';
+      Array.from(dotsWrap.children).forEach((d, k) => d.classList.toggle('active', k === i));
+      idx = i;
+    }
+    // Build dots
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      d.addEventListener('click', () => go(i));
+      dotsWrap.appendChild(d);
     });
-</script>
+
+    // Input
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(idx + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx - 1); }
+    });
+    document.getElementById('stage').addEventListener('click', e => {
+      const tag = e.target.tagName;
+      if (['A', 'BUTTON', 'VIDEO', 'INPUT', 'TEXTAREA', 'SELECT', 'LABEL'].includes(tag)) return;
+      go(idx + 1);
+    });
+
+    // Init
+    go(0);
+  </script>
 </body>
-</html>
-</html>
-</html>
+
 </html>
