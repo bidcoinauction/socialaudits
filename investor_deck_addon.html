@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SocialAudits — Investor Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F5F7;
+    color: #1E1E1E;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  section {
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 4rem;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  section.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  h1, h2, h3 {
+    color: #1E1E1E;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+  }
+
+  h1 { font-size: 4rem; color: #1E1E1E; border-bottom: 4px solid #7A42F4; padding-bottom: 0.5rem; }
+  h2 { font-size: 2.6rem; color: #7A42F4; }
+  h3 { font-size: 1.6rem; color: #7A42F4; margin-top: 1rem; }
+
+  p { font-size: 1.4rem; max-width: 900px; line-height: 1.8; margin-bottom: 1rem; }
+  ul { list-style: none; padding: 0; margin-top: 1rem; }
+  li { font-size: 1.3rem; margin: 0.5rem 0; }
+  .highlight { color: #7A42F4; font-weight: 600; }
+
+  .controls {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.2rem;
+    z-index: 10;
+  }
+
+  button {
+    background-color: #7A42F4;
+    border: none;
+    color: white;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  button:hover {
+    background-color: #5D2FCB;
+    transform: translateY(-2px);
+  }
+
+  .progress {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(122, 66, 244, 0.3);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  .dot.active {
+    background: #7A42F4;
+    transform: scale(1.2);
+  }
+</style>
+</head>
+<body>
+
+<section class="active">
+  <h1>SocialAudits</h1>
+  <h2>Revenue, Valuation & Competitive Intelligence Report</h2>
+  <p>The first influencer intelligence platform to move beyond measurement — into prediction.</p>
+</section>
+
+<section>
+  <h2>Company Overview</h2>
+  <ul>
+    <li>✅ Proprietary social analytics ingestion + visualization engine</li>
+    <li>✅ Indexes influencer–brand interactions at scale</li>
+    <li>✅ Reconstructs virality, narrative adoption, and audience movement</li>
+    <li>✅ Monetized intelligence product generating live revenue</li>
+  </ul>
+  <p><span class="highlight">Next:</span> <strong>IBIS — Influencer Brand Impact Simulation</strong>. Predicts audience adoption and cultural inevitability before it happens.</p>
+</section>
+
+<section>
+  <h2>Market Gap</h2>
+  <h3>Industry Today</h3>
+  <ul>
+    <li>Measures what happened</li>
+    <li>Tracks likes, followers, impressions</li>
+    <li>Optimizes creator selection</li>
+  </ul>
+  <h3>SocialAudits Tomorrow</h3>
+  <ul>
+    <li>Predicts what will happen</li>
+    <li>Analyzes virality triggers + narrative loops</li>
+    <li>Forecasts cultural adoption + belief momentum</li>
+  </ul>
+  <p>Competitors analyze &lt;1% of impact signals — we analyze <span class="highlight">100% of virality drivers</span>.</p>
+</section>
+
+<section>
+  <h2>Live Product & Pricing</h2>
+  <h3>Indexed Reports (Live)</h3>
+  <ul>
+    <li>24-Hour Influencer Index — $59.99</li>
+    <li>7-Day Trend Index — $189.99</li>
+    <li>30-Day Narrative Index — $399.99</li>
+  </ul>
+  <h3>White-Glove Intelligence</h3>
+  <ul>
+    <li>$3,000 / 1M data → <strong>5×</strong> ($15,000 / 1M)</li>
+    <li>$3,000 / 1M data → <strong>7.5×</strong> ($22,500 / 1M)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Revenue Forecast</h2>
+  <ul>
+    <li>Q1: $85K–$315K</li>
+    <li>Q2: $320K–$705K</li>
+    <li>Q3: $688K–$1.41M</li>
+    <li>Q4: $1.42M–$2.62M</li>
+  </ul>
+  <p><strong>Total Year 1 Revenue:</strong> <span class="highlight">$2.5M – $5.05M</span></p>
+</section>
+
+<section>
+  <h2>Prediction Engine Rollout</h2>
+  <ul>
+    <li>0–3 months: Expand white-glove clients</li>
+    <li>3–6 months: Train & deploy predictive engine</li>
+    <li>Month 6: First prediction clients onboarded</li>
+    <li>Q4: 10–15 predictive clients @ 3M data each</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Competitive Benchmarking</h2>
+  <ul>
+    <li>Traackr — $6M raised — analytics</li>
+    <li>CreatorIQ — $3M+ — demographics</li>
+    <li>Upfluence — $3M — CRM tools</li>
+    <li>HypeAuditor — $3.5M+ — fraud detection</li>
+    <li>Tagger Media — $5M — dashboards</li>
+  </ul>
+  <p>None forecast influence outcomes or simulate narrative inevitability. <span class="highlight">SocialAudits does.</span></p>
+</section>
+
+<section>
+  <h2>Investment & Valuation</h2>
+  <ul>
+    <li><strong>Round:</strong> Seed</li>
+    <li><strong>Raising:</strong> $3.5M USD</li>
+    <li><strong>Pre-Money:</strong> $25M</li>
+    <li><strong>Post-Money:</strong> $28.5M</li>
+  </ul>
+  <p>Comparable seed rounds: $3M–$6M without predictive capability. SocialAudits has live revenue, enterprise pricing, and predictive tech.</p>
+</section>
+
+<section>
+  <h2>Investment Thesis</h2>
+  <p><strong>SocialAudits</strong> is creating a new category — predictive brand-influencer intelligence. Our platform forecasts viral adoption before it happens.</p>
+  <p><span class="highlight">Influence is no longer measured — it’s predicted.</span></p>
+</section>
+
+<div class="controls">
+  <button id="prev">◀ Prev</button>
+  <button id="next">Next ▶</button>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<script>
+  const slides = document.querySelectorAll('section');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  slides.forEach(() => {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    progress.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll('.dot');
+
+  function showSlide(index) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+  }
+
+  document.getElementById('next').addEventListener('click', () => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  });
+
+  document.getElementById('prev').addEventListener('click', () => {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    } else if (e.key === 'ArrowLeft') {
+      current = (current - 1 + slides.length) % slides.length;
+      showSlide(current);
+    }
+  });
+
+  showSlide(current);
+</script>
+
+</body>
+</html>
