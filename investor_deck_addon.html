@@ -22,7 +22,7 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
-    padding: 4rem;
+    padding: 3rem;
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
@@ -38,7 +38,7 @@
     font-weight: 700;
   }
 
-  h1 { font-size: 4rem; color: #1E1E1E; border-bottom: 4px solid #7A42F4; padding-bottom: 0.5rem; }
+  h1 { font-size: 4rem; border-bottom: 4px solid #7A42F4; padding-bottom: 0.5rem; }
   h2 { font-size: 2.6rem; color: #7A42F4; }
   h3 { font-size: 1.6rem; color: #7A42F4; margin-top: 1rem; }
 
@@ -46,6 +46,43 @@
   ul { list-style: none; padding: 0; margin-top: 1rem; }
   li { font-size: 1.3rem; margin: 0.5rem 0; }
   .highlight { color: #7A42F4; font-weight: 600; }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  th, td {
+    border: 1px solid #DDD;
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  th {
+    background-color: #F4EEFF;
+    color: #7A42F4;
+    font-weight: 600;
+  }
+
+  .forecast-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    max-width: 1100px;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .table-box {
+    flex: 1;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 1rem;
+  }
 
   .controls {
     position: fixed;
@@ -133,28 +170,30 @@
 </section>
 
 <section>
-  <h2>Live Product & Pricing</h2>
-  <h3>Indexed Reports (Live)</h3>
-  <ul>
-    <li>24-Hour Influencer Index — $59.99</li>
-    <li>7-Day Trend Index — $189.99</li>
-    <li>30-Day Narrative Index — $399.99</li>
-  </ul>
-  <h3>White-Glove Intelligence</h3>
-  <ul>
-    <li>$3,000 / 1M data → <strong>5×</strong> ($15,000 / 1M)</li>
-    <li>$3,000 / 1M data → <strong>7.5×</strong> ($22,500 / 1M)</li>
-  </ul>
-</section>
+  <h2>Quarterly Revenue Forecast</h2>
+  <div class="forecast-container">
+    <div class="table-box">
+      <h3>Enterprise White-Glove Client Volume</h3>
+      <table>
+        <tr><th>Quarter</th><th>Clients</th><th>Avg Data Size</th><th>Revenue Range</th></tr>
+        <tr><td>Q1</td><td>5–10</td><td>1–2M each</td><td>$75K – $300K</td></tr>
+        <tr><td>Q2</td><td>10–15</td><td>2–3M each</td><td>$300K – $675K</td></tr>
+        <tr><td>Q3<br><span style='font-size:0.9rem;color:#777;'>(Prediction Launch)</span></td><td>15–20</td><td>2–3M each</td><td>$650K – $1.35M</td></tr>
+        <tr><td>Q4<br><span style='font-size:0.9rem;color:#777;'>(Prediction Scaling)</span></td><td>20–30</td><td>3M each</td><td>$1.35M – $2.49M</td></tr>
+      </table>
+    </div>
 
-<section>
-  <h2>Revenue Forecast</h2>
-  <ul>
-    <li>Q1: $85K–$315K</li>
-    <li>Q2: $320K–$705K</li>
-    <li>Q3: $688K–$1.41M</li>
-    <li>Q4: $1.42M–$2.62M</li>
-  </ul>
+    <div class="table-box">
+      <h3>Indexed Report Sales Forecast</h3>
+      <table>
+        <tr><th>Quarter</th><th>Reports Sold</th><th>Revenue</th></tr>
+        <tr><td>Q1</td><td>40–60</td><td>$10K – $15K</td></tr>
+        <tr><td>Q2</td><td>80–120</td><td>$20K – $30K</td></tr>
+        <tr><td>Q3</td><td>150–250</td><td>$38K – $63K</td></tr>
+        <tr><td>Q4</td><td>300–500</td><td>$75K – $125K</td></tr>
+      </table>
+    </div>
+  </div>
   <p><strong>Total Year 1 Revenue:</strong> <span class="highlight">$2.5M – $5.05M</span></p>
 </section>
 
