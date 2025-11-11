@@ -1,385 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SocialAudits • 13-Section Report Hotspots</title>
+  <meta charset="UTF-8">
+  <title>Koat.ai KOL Report – Annotated Legend</title>
   <style>
-    :root{
-      --bg:#0b1020; --text:#e8eefc; --muted:#8fa0c5;
-      --border:#1a2442; --card:#0f1530; --accent:#7c5cff;
-      --img-max-w:1400px; --zoom:1;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:linear-gradient(180deg,#0a0e1d 0%,#0c1430 100%);color:var(--text);
-      font:14px/1.45 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial,sans-serif}
-
-    .wrap{max-width:1500px;margin:0 auto;padding:24px;display:grid;gap:16px;grid-template-columns:360px 1fr}
-    @media (max-width:1080px){.wrap{grid-template-columns:1fr}}
-
-    /* Sidebar */
-    .sidebar{position:sticky;top:16px;background:#0f1530aa;border:1px solid var(--border);
-      border-radius:16px;padding:14px 10px;backdrop-filter:blur(6px)}
-    .title{display:flex;align-items:center;gap:10px;padding:8px 12px 4px;color:#b8c2df;font-weight:800}
-    .list{margin:6px 6px 10px;display:flex;flex-direction:column;gap:6px}
-    .item{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;
-      border:1px solid #202a4c;background:#0d1636;cursor:pointer;transition:.2s}
-    .item:hover{border-color:#2b3764;background:#121c44}
-    .item.active{border-color:var(--accent);box-shadow:0 0 0 2px #7c5cff25 inset}
-    .num{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#06212a;
-      background:radial-gradient(circle at 40% 35%,#2af4ff 10%,#18c7ff 65%,#11a4ff 100%);box-shadow:0 0 0 2px #07303b}
-    .label{font-weight:700}
-    .muted{color:var(--muted);font-size:12px}
-
-    /* Stage */
-    .stage{background:#0c1430aa;border:1px solid var(--border);border-radius:16px;overflow:hidden}
-    .toolbar{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid var(--border)}
-    .btn{border:1px solid #243054;background:#121a2f;color:#cfe0ff;padding:8px 10px;border-radius:10px;font-weight:700;cursor:pointer}
-    .btn:hover{background:#132046;border-color:#2d3a63}
-    .zoom-readout{color:#b8c2df;font-weight:800}
-    .canvas{position:relative;overflow:auto;background:#0b122b;max-height:calc(100vh - 160px)}
-    .img-wrap{position:relative;margin:0 auto;width:min(100%,var(--img-max-w));transform-origin:top left;transform:scale(var(--zoom))}
-    .dash{display:block;width:100%;height:auto;user-select:none;pointer-events:none}
-
-    /* Hotspots */
-    .hotspot{--x:50%;--y:50%;position:absolute;left:var(--x);top:var(--y);transform:translate(-50%,-50%);
-      width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:900;
-      color:#06212a;cursor:pointer;z-index:2;transition:transform .15s;
-      background:radial-gradient(circle at 40% 35%,#2af4ff 10%,#18c7ff 65%,#11a4ff 100%);
-      box-shadow:0 0 0 3px #001f29,0 8px 26px #00e3ff45}
-    .hotspot:hover{transform:translate(-50%,-50%) scale(1.06)}
-    .hotspot.active{background:radial-gradient(circle at 40% 35%,#ffb6a8 10%,#ff7a6e 65%,#ff5a4f 100%);
-      box-shadow:0 0 0 3px #2b0a0a,0 10px 30px #ff665540}
-    .pop{position:absolute;left:calc(var(--x) + 18px);top:calc(var(--y) + 18px);
-      max-width:min(280px,38vw);background:#0f1634;border:1px solid #243054;border-radius:12px;padding:10px 12px;
-      color:#cfe0ff;font-size:12px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:none;z-index:3}
-    .pop .pop-title{font-weight:800;margin-bottom:6px}
-    .hotspot.active + .pop{display:block}
-
-    /* Drawer */
-    .drawer{position:fixed;inset:auto 0 0 auto;width:min(480px,100%);max-height:70vh;border-top-left-radius:16px;border-top-right-radius:16px;
-      border-left:1px solid #253158;background:#0f1534;box-shadow:0 -8px 40px rgba(0,0,0,.45),-6px 0 30px #00000040;
-      transform:translateX(100%);transition:transform .25s;overflow:auto;z-index:50}
-    .drawer.open{transform:translateX(0)}
-    .drawer .hd{position:sticky;top:0;background:#0e1431;padding:14px 16px;border-bottom:1px solid #253158}
-    .drawer h3{margin:0 0 6px}
-    .drawer .purpose{color:#a1b2e6;padding:0 16px 10px;font-style:italic}
-    .drawer .q{padding:12px 16px;border-bottom:1px dashed #20305d}
-    .chip{display:inline-block;padding:4px 8px;border-radius:999px;border:1px solid #2a3968;background:#0e1a3e;color:#9fb6ff;font-size:12px;margin:0 6px 6px 0}
-
-    @media (max-width:1080px){
-      .drawer{inset:auto 0 0 0;width:100%;transform:translateY(100%)}
-      .drawer.open{transform:translateY(0)}
+    body { 
+      font-family: Arial, Helvetica, sans-serif; 
+      margin: 0; 
+      color: #111; 
+      background: #fff;
     }
 
-    /* Seed coordinates (you’ll fine-tune in Edit Mode) */
-    .hs-1 { --x: 17.0%; --y: 14.5%; }  /* 1 Executive Summary (paragraph) */
-    .hs-2 { --x: 23.5%; --y: 56.2%; }  /* 2 Sentiment line */
-    .hs-3 { --x: 63.0%; --y: 56.2%; }  /* 3 Emotions line */
-    .hs-4 { --x: 55.9%; --y: 31.0%; }  /* 4 Avg Sentiment Manipulation (KPI) */
-    .hs-5 { --x: 39.0%; --y: 31.0%; }  /* 5 Avg Sentiment Organic (KPI) */
-    .hs-6 { --x: 24.0%; --y: 74.0%; }  /* 6 Impressions bars */
-    .hs-7 { --x: 56.5%; --y: 90.2%; }  /* 7 Impact donut (left) */
-    .hs-8 { --x: 31.0%; --y: 84.0%; }  /* 8 NER People treemap */
-    .hs-9 { --x: 75.0%; --y: 74.0%; }  /* 9 Unique Engagement bars */
-    .hs-10{ --x: 95.2%; --y: 31.2%; }  /* 10 Conversion Rate % (top right) */
-    .hs-11{ --x: 10.5%; --y: 31.0%; }  /* 11 Mentions (placeholder if not shown) */
-    .hs-12{ --x: 14.0%; --y: 91.5%; }  /* 12 Top 10 Authors table */
-    .hs-13{ --x: 88.8%; --y: 74.0%; }  /* 13 Public Engagement Data (right column area) */
+    /* --- PAGE 1 (Image) --- */
+    .page {
+      page-break-after: always;
+      text-align: center;
+    }
+
+    .report-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* --- PAGE 2 (Legend) --- */
+    .legend {
+      padding: 60px 80px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 28px;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #2563eb;
+      color: #fff;
+    }
+
+    tr:nth-child(even) { background-color: #f9fafb; }
+
+    @media print {
+      .page { page-break-after: always; }
+      body { background: #fff; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- SIDEBAR (auto-built from JS) -->
-    <aside class="sidebar">
-      <div class="title">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M4 6h16M4 18h12" stroke="#88a2ff" stroke-width="2" stroke-linecap="round"/></svg>
-        Sections
-      </div>
-      <div class="list" id="list"></div>
-    </aside>
 
-    <!-- STAGE -->
-    <section class="stage">
-      <div class="toolbar">
-        <div class="muted">Social Audits Report — 13 Hotspots</div>
-        <div style="display:flex;gap:8px;align-items:center;">
-          <button class="btn" id="fit">Fit</button>
-          <button class="btn" id="minus">−</button>
-          <span class="zoom-readout" id="zoom">100%</span>
-          <button class="btn" id="plus">+</button>
-        </div>
-      </div>
-
-      <div class="canvas" id="canvas">
-        <div class="img-wrap" id="imgWrap" style="--zoom:1">
-          <img class="dash" id="dash" alt="Social Audits Report" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Social%20Audits%20Report.png" />
-          <!-- Hotspots are injected by JS -->
-        </div>
-      </div>
-    </section>
+  <!-- PAGE 1: Report Image -->
+  <div class="page">
+    <img
+      src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Koat.ai%20-%20KOL%20Report1%20%281%29.png"
+      alt="Koat.ai KOL Report"
+      class="report-img"
+    />
   </div>
 
-  <!-- DRAWER -->
-  <aside class="drawer" id="drawer" aria-hidden="true">
-    <div class="hd">
-      <button class="btn" id="closeDrawer" style="float:right">Close</button>
-      <h3 id="drawerTitle">Section</h3>
-      <div id="chips"></div>
-    </div>
-    <div id="purpose" class="purpose"></div>
-    <div id="drawerBody"></div>
-  </aside>
+  <!-- PAGE 2: Explanations -->
+  <div class="legend">
+    <h1>Koat.ai – KOL Report Section Explanations (1–16)</h1>
+    <table>
+      <tr><th>No.</th><th>Section</th><th>Description</th></tr>
+      <tr><td>1</td><td>Header / Logo</td><td>Koat.ai branding and author identification (“healthy_pockets”).</td></tr>
+      <tr><td>2</td><td>Overview</td><td>Summary of recent cryptocurrency market volatility, key narratives, and institutional participation.</td></tr>
+      <tr><td>3</td><td>Conversion Rate %</td><td>Engagement-to-action ratio measuring how impressions convert into meaningful actions.</td></tr>
+      <tr><td>4</td><td>Sentiment</td><td>Average tone across Public, Media, and Manipulation categories (−100 to +100 scale).</td></tr>
+      <tr><td>5</td><td>Emotions</td><td>Shows fluctuations in 11 emotions (anger, joy, fear, trust, etc.) to indicate narrative shifts.</td></tr>
+      <tr><td>6</td><td>Impressions</td><td>Total reach or readership of analyzed content segmented by source type.</td></tr>
+      <tr><td>7</td><td>Unique Engagement Data</td><td>Number of distinct posts split by author type (Public, Media, Manipulation).</td></tr>
+      <tr><td>8</td><td>Summary Metrics</td><td>Totals for posts (4211), impressions (212M), and average sentiment per source.</td></tr>
+      <tr><td>9</td><td>Public Sentiment Value</td><td>Average sentiment among organic posts (6.16).</td></tr>
+      <tr><td>10</td><td>Manipulation Sentiment Value</td><td>Higher positivity (10.03) among coordinated or manipulated content.</td></tr>
+      <tr><td>11</td><td>Public Engagement Count</td><td>Total number of unique public authors (2114).</td></tr>
+      <tr><td>12</td><td>Conversion Ratio (Repeat Metric)</td><td>Same 0.001% conversion repeated for validation consistency.</td></tr>
+      <tr><td>13</td><td>NER (People)</td><td>List of top entities mentioned: Trump, JPMorgan, Coinbase, Charles Hoskinson, etc.</td></tr>
+      <tr><td>14</td><td>Top Authors Table</td><td>Leaderboard of key opinion leaders by post impact (e.g., grok, healthy_pockets).</td></tr>
+      <tr><td>15</td><td>Top Social Posts</td><td>Most influential tweets driving sentiment peaks (e.g., Trump, gold discovery, Coinbase One Card).</td></tr>
+      <tr><td>16</td><td>References / Links</td><td>Source tweet links and citation list used for analysis.</td></tr>
+    </table>
+  </div>
 
-  <script>
-    /* ============ DATA (13 sections) ============ */
-    const SECTIONS = [
-      { id:1,  title:'Executive Summary', chips:['Context','Narrative'],
-        purpose:'Context & narrative understanding',
-        qs:[
-          'What are the dominant themes or narratives across posts?',
-          'Which projects or personalities are driving the conversation?',
-          'Is sentiment broadly positive, defensive, or promotional?',
-          'Are new communities or influencers entering the dialogue?'
-        ]},
-      { id:2,  title:'Sentiment (Line Chart)', chips:['Tone','Bias'],
-        purpose:'Evaluate tone and bias',
-        qs:[
-          'Are public and media sentiment aligned or diverging?',
-          'Do manipulation-linked accounts track with negative or positive spikes?',
-          'What events correspond to sudden sentiment changes?',
-          'How stable is sentiment week over week?'
-        ]},
-      { id:3,  title:'Emotions (Line Chart)', chips:['Signals','Shifts'],
-        purpose:'Detect emotional signals & narrative shifts',
-        qs:[
-          'Which emotions dominate — trust, fear, joy, anticipation?',
-          'Are emotional peaks tied to marketing pushes or organic discussion?',
-          'Do positive emotions cluster around specific influencers?',
-          'Are negative emotions growing in volume or intensity?'
-        ]},
-      { id:4,  title:'Avg. Sentiment Manipulation', chips:['Inorganic','Pressure'],
-        purpose:'Measure inorganic narrative pressure',
-        qs:[
-          'Is manipulation sentiment trending up or down?',
-          'Which campaigns or creators drive manipulation?',
-          'Are manipulation scores concentrated in few authors or widespread?',
-          'How does manipulation sentiment correlate with impressions?'
-        ]},
-      { id:5,  title:'Avg. Sentiment (Organic)', chips:['Community','Baseline'],
-        purpose:'Track real community mood',
-        qs:[
-          'What’s the underlying organic perception of the project?',
-          'Do paid campaigns shift this baseline sentiment?',
-          'Are positive shifts sustained after promotions end?',
-          'How does organic sentiment compare to manipulation levels?'
-        ]},
-      { id:6,  title:'Impressions (Bars)', chips:['Reach','Authenticity'],
-        purpose:'Quantify reach & authenticity',
-        qs:[
-          'Which author types (public vs manipulation) generate most reach?',
-          'Are impression spikes organic or linked to a small set of boosted accounts?',
-          'Are there anomalies—high reach but low engagement?',
-          'Does reach correspond with credible communities?'
-        ]},
-      { id:7,  title:'Impact (Pie Chart)', chips:['Distribution','Quality'],
-        purpose:'Show influence distribution',
-        qs:[
-          'What share of impact is authentic vs manipulation?',
-          'Is the manipulation wedge shrinking or expanding?',
-          'Do “Media” contributions support or distort the narrative?',
-          'How balanced is visibility across creator types?'
-        ]},
-      { id:8,  title:'NER People (Treemap)', chips:['Entities','Players'],
-        purpose:'Identify key players & recurring entities',
-        qs:[
-          'Which names appear most often with the project?',
-          'Are they organic supporters, paid influencers, or detractors?',
-          'Do new entities appear during major narrative shifts?',
-          'Are any suspicious networks repeating across reports?'
-        ]},
-      { id:9,  title:'Unique Engagement Data (Bars)', chips:['Breadth','Diversity'],
-        purpose:'Measure breadth of participation',
-        qs:[
-          'How many unique voices engage per time period?',
-          'Do engagement spikes align with authentic posts or artificial amplification?',
-          'Is the pool of contributors growing (healthy) or shrinking (stagnant)?',
-          'What’s the diversity of engagement sources?'
-        ]},
-      { id:10, title:'Conversion Rate (%)', chips:['Action','Sustainability'],
-        purpose:'Connect visibility to real action',
-        qs:[
-          'Which posts or campaigns produced measurable conversions?',
-          'Are high-CR events organic or tied to manipulative spikes?',
-          'Is conversion growth sustainable after the campaign window?',
-          'Does CR correlate with positive sentiment?'
-        ]},
-      { id:11, title:'Mentions (Pie Chart)', chips:['Channel Mix','Health'],
-        purpose:'Evaluate channel mix & source health',
-        qs:[
-          'Which platforms or sources dominate mentions?',
-          'Are new sources emerging or old ones fading?',
-          'Do inorganic channels (bots/forums) inflate the narrative?',
-          'How does source diversity affect trust signals?'
-        ]},
-      { id:12, title:'Top 10 Authors (Table)', chips:['Influence','Credibility'],
-        purpose:'Identify outsized influence',
-        qs:[
-          'Who are the top-performing authors by impact?',
-          'Are they credible voices or repetitive manipulators?',
-          'Do new high-impact accounts appear abruptly (potential paid activity)?',
-          'Are verified/public figures underrepresented?'
-        ]},
-      { id:13, title:'Public Engagement Data', chips:['Authenticity','Timing'],
-        purpose:'Measure audience authenticity & timing',
-        qs:[
-          'Which dates show genuine organic engagement?',
-          'Do these align with sentiment/emotion spikes?',
-          'Are engagements concentrated in specific sub-communities?',
-          'How many public engagements result in conversions?'
-        ]},
-    ];
-
-    /* seed coordinates map to class names .hs-{id} (editable later) */
-    const COORDS = {
-      1:[17.0,14.5], 2:[23.5,56.2], 3:[63.0,56.2], 4:[55.9,31.0], 5:[39.0,31.0],
-      6:[24.0,74.0], 7:[56.5,90.2], 8:[31.0,84.0], 9:[75.0,74.0], 10:[95.2,31.2],
-      11:[10.5,31.0], 12:[14.0,91.5], 13:[88.8,74.0],
-    };
-
-    /* ---------- Build UI from data ---------- */
-    const list = document.getElementById('list');
-    const imgWrap = document.getElementById('imgWrap');
-
-    // Restore saved positions if present
-    const saved = JSON.parse(localStorage.getItem('sa_hotspots_coords')||'{}');
-
-    SECTIONS.forEach(sec=>{
-      // sidebar item
-      const it = document.createElement('div');
-      it.className = 'item';
-      it.dataset.id = sec.id;
-      it.innerHTML = `<div class="num">${sec.id}</div><div><div class="label">${sec.title}</div><div class="muted">${sec.purpose}</div></div>`;
-      list.appendChild(it);
-
-      // hotspot + popover
-      const [dx,dy] = saved[sec.id] || COORDS[sec.id] || [50,50];
-      const hs = document.createElement('button');
-      hs.className = `hotspot hs-${sec.id}`;
-      hs.dataset.id = sec.id;
-      hs.textContent = sec.id;
-      hs.style.setProperty('--x', dx+'%');
-      hs.style.setProperty('--y', dy+'%');
-
-      const pop = document.createElement('div');
-      pop.className = 'pop';
-      pop.innerHTML = `<div class="pop-title">${sec.title}</div><div>${sec.qs[0]}</div>`;
-
-      imgWrap.appendChild(hs);
-      imgWrap.appendChild(pop);
-    });
-
-    const hotspots = [...document.querySelectorAll('.hotspot')];
-    const items = [...document.querySelectorAll('.item')];
-
-    /* ---------- Drawer logic ---------- */
-    const drawer = document.getElementById('drawer');
-    const drawerTitle = document.getElementById('drawerTitle');
-    const chips = document.getElementById('chips');
-    const purpose = document.getElementById('purpose');
-    const drawerBody = document.getElementById('drawerBody');
-
-    function setActive(id){
-      hotspots.forEach(h => h.classList.toggle('active', h.dataset.id===id));
-      items.forEach(it => it.classList.toggle('active', it.dataset.id===id));
-    }
-    function openDrawer(id){
-      const sec = SECTIONS.find(s=>s.id==id); if(!sec) return;
-      drawerTitle.textContent = `${sec.id}. ${sec.title}`;
-      chips.innerHTML = sec.chips.map(c=>`<span class="chip">${c}</span>`).join('');
-      purpose.textContent = `Purpose: ${sec.purpose}`;
-      drawerBody.innerHTML = sec.qs.map(q=>`<div class="q">${q}</div>`).join('');
-      drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false');
-    }
-    function closeDrawer(){
-      drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); setActive('');
-    }
-    document.getElementById('closeDrawer').addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDrawer(); });
-
-    hotspots.forEach(h=>{
-      const id = h.dataset.id;
-      h.addEventListener('mouseenter', ()=> setActive(id));
-      h.addEventListener('mouseleave', ()=> setActive(''));
-      h.addEventListener('click', ()=> { setActive(id); openDrawer(id); });
-    });
-    items.forEach(it=>{
-      const id = it.dataset.id;
-      it.addEventListener('mouseenter', ()=> setActive(id));
-      it.addEventListener('mouseleave', ()=> setActive(''));
-      it.addEventListener('click', ()=> { setActive(id); openDrawer(id); });
-    });
-
-    /* ---------- Zoom ---------- */
-    const zr = document.getElementById('zoom');
-    const plus = document.getElementById('plus');
-    const minus = document.getElementById('minus');
-    const fit = document.getElementById('fit');
-    let zoom = 1;
-    const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
-    function applyZoom(z){ zoom = clamp(z,0.75,2.0); imgWrap.style.setProperty('--zoom', zoom); zr.textContent = Math.round(zoom*100)+'%'; }
-    plus.addEventListener('click', ()=> applyZoom(zoom+0.1));
-    minus.addEventListener('click',()=> applyZoom(zoom-0.1));
-    fit.addEventListener('click', ()=>{
-      const img = document.getElementById('dash');
-      const canvas = document.getElementById('canvas');
-      const base = Math.min(canvas.clientWidth / img.naturalWidth, 1);
-      applyZoom(clamp(base,0.75,2.0));
-    });
-    document.getElementById('dash').addEventListener('load', ()=> setTimeout(()=>fit.click(), 60));
-    window.addEventListener('resize', ()=> applyZoom(zoom));
-
-    /* ---------- Edit Mode (drag + save) ---------- */
-    let editMode = false, startOffset=[0,0];
-    const toggle = document.createElement("button");
-    toggle.textContent = "🛠 Edit Mode";
-    toggle.style.cssText = "position:fixed;bottom:20px;right:20px;z-index:9999;background:#00e3ff;color:#001a2d;font-weight:800;border:none;border-radius:12px;padding:10px 16px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.35)";
-    document.body.appendChild(toggle);
-
-    function setDraggable(on){
-      hotspots.forEach(h=>{ h.style.cursor = on ? "move" : "pointer"; h.draggable = on; });
-    }
-    toggle.onclick = ()=>{
-      editMode = !editMode;
-      toggle.style.background = editMode ? "#ff6b6b" : "#00e3ff";
-      toggle.textContent = editMode ? "💾 Save / Exit Edit Mode" : "🛠 Edit Mode";
-      setDraggable(editMode);
-      if(!editMode){ localStorage.setItem('sa_hotspots_coords', JSON.stringify(saved)); }
-    };
-
-    hotspots.forEach(h=>{
-      h.addEventListener('dragstart', e=>{
-        if(!editMode) return;
-        const rect = h.getBoundingClientRect();
-        startOffset=[e.clientX-rect.left, e.clientY-rect.top];
-      });
-      h.addEventListener('dragend', e=>{
-        if(!editMode) return;
-        const img = document.getElementById('dash');
-        const r = img.getBoundingClientRect();
-        const id = h.dataset.id;
-        const x = ((e.clientX - r.left - startOffset[0] + h.offsetWidth/2) / r.width) * 100;
-        const y = ((e.clientY - r.top  - startOffset[1] + h.offsetHeight/2) / r.height) * 100;
-        const xx = Math.max(0, Math.min(100, x));
-        const yy = Math.max(0, Math.min(100, y));
-        h.style.setProperty('--x', `${xx.toFixed(1)}%`);
-        h.style.setProperty('--y', `${yy.toFixed(1)}%`);
-        saved[id] = [Number(xx.toFixed(1)), Number(yy.toFixed(1))];
-        console.log(`/* paste into CSS */ .hs-${id} { --x: ${xx.toFixed(1)}%; --y: ${yy.toFixed(1)}%; }`);
-      });
-    });
-  </script>
 </body>
 </html>
-
