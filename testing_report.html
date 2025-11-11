@@ -1,99 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Koat.ai KOL Report – Annotated Legend</title>
-  <style>
-    body { 
-      font-family: Arial, Helvetica, sans-serif; 
-      margin: 0; 
-      color: #111; 
-      background: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SocialAudits KOL Report – Explainer (Matched to PDF)</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: #f8f9fb;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-    /* --- PAGE 1 (Image) --- */
-    .page {
-      page-break-after: always;
-      text-align: center;
-    }
+  /* Left panel: report image */
+  .report-pane {
+    flex: 1.3;
+    overflow-y: scroll;
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+  }
 
-    .report-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
+  .report-pane img {
+    width: 100%;
+    max-width: 950px;
+    height: auto;
+    border-radius: 6px;
+  }
 
-    /* --- PAGE 2 (Legend) --- */
-    .legend {
-      padding: 60px 80px;
-    }
+  /* Right panel: explanations */
+  .legend-pane {
+    flex: 0.7;
+    background: #fff;
+    overflow-y: scroll;
+    border-left: 1px solid #ddd;
+    padding: 40px 45px;
+  }
 
-    h1 {
-      text-align: center;
-      font-size: 28px;
-      margin-bottom: 25px;
-    }
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #111;
+  }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 15px;
-    }
+  h2 {
+    font-size: 17px;
+    color: #4b4b4b;
+    margin: 20px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px 12px;
-      vertical-align: top;
-    }
+  h2::before {
+    content: "🟣";
+    font-size: 18px;
+  }
 
-    th {
-      background-color: #2563eb;
-      color: #fff;
-    }
+  p {
+    margin: 0 0 18px;
+    line-height: 1.5em;
+    color: #333;
+    font-size: 15px;
+  }
 
-    tr:nth-child(even) { background-color: #f9fafb; }
+  .section {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+  }
 
-    @media print {
-      .page { page-break-after: always; }
-      body { background: #fff; }
-    }
-  </style>
+  /* Scrollbar styling */
+  .report-pane::-webkit-scrollbar,
+  .legend-pane::-webkit-scrollbar {
+    width: 8px;
+  }
+  .report-pane::-webkit-scrollbar-thumb,
+  .legend-pane::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+</style>
 </head>
 <body>
 
-  <!-- PAGE 1: Report Image -->
-  <div class="page">
+  <!-- LEFT: Report -->
+  <div class="report-pane">
     <img
-      src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Koat.ai%20-%20KOL%20Report1%20%281%29.png"
-      alt="Koat.ai KOL Report"
-      class="report-img"
+      src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Koat.ai%20-%20KOL%20Report1%20(1).png"
+      alt="SocialAudits KOL Report"
     />
   </div>
 
-  <!-- PAGE 2: Explanations -->
-  <div class="legend">
-    <h1>Koat.ai – KOL Report Section Explanations (1–16)</h1>
-    <table>
-      <tr><th>No.</th><th>Section</th><th>Description</th></tr>
-      <tr><td>1</td><td>Header / Logo</td><td>Koat.ai branding and author identification (“healthy_pockets”).</td></tr>
-      <tr><td>2</td><td>Overview</td><td>Summary of recent cryptocurrency market volatility, key narratives, and institutional participation.</td></tr>
-      <tr><td>3</td><td>Conversion Rate %</td><td>Engagement-to-action ratio measuring how impressions convert into meaningful actions.</td></tr>
-      <tr><td>4</td><td>Sentiment</td><td>Average tone across Public, Media, and Manipulation categories (−100 to +100 scale).</td></tr>
-      <tr><td>5</td><td>Emotions</td><td>Shows fluctuations in 11 emotions (anger, joy, fear, trust, etc.) to indicate narrative shifts.</td></tr>
-      <tr><td>6</td><td>Impressions</td><td>Total reach or readership of analyzed content segmented by source type.</td></tr>
-      <tr><td>7</td><td>Unique Engagement Data</td><td>Number of distinct posts split by author type (Public, Media, Manipulation).</td></tr>
-      <tr><td>8</td><td>Summary Metrics</td><td>Totals for posts (4211), impressions (212M), and average sentiment per source.</td></tr>
-      <tr><td>9</td><td>Public Sentiment Value</td><td>Average sentiment among organic posts (6.16).</td></tr>
-      <tr><td>10</td><td>Manipulation Sentiment Value</td><td>Higher positivity (10.03) among coordinated or manipulated content.</td></tr>
-      <tr><td>11</td><td>Public Engagement Count</td><td>Total number of unique public authors (2114).</td></tr>
-      <tr><td>12</td><td>Conversion Ratio (Repeat Metric)</td><td>Same 0.001% conversion repeated for validation consistency.</td></tr>
-      <tr><td>13</td><td>NER (People)</td><td>List of top entities mentioned: Trump, JPMorgan, Coinbase, Charles Hoskinson, etc.</td></tr>
-      <tr><td>14</td><td>Top Authors Table</td><td>Leaderboard of key opinion leaders by post impact (e.g., grok, healthy_pockets).</td></tr>
-      <tr><td>15</td><td>Top Social Posts</td><td>Most influential tweets driving sentiment peaks (e.g., Trump, gold discovery, Coinbase One Card).</td></tr>
-      <tr><td>16</td><td>References / Links</td><td>Source tweet links and citation list used for analysis.</td></tr>
-    </table>
+  <!-- RIGHT: Explainer (Matched to PDF numbering) -->
+  <div class="legend-pane">
+    <h1>SocialAudits – KOL Report Explainer (Matched to PDF Labels 1–16)</h1>
+
+    <div class="section">
+      <h2>1. Executive Summary</h2>
+      <p><strong>What this shows:</strong> A high-level overview of the conversation landscape. It identifies dominant narratives, leading voices, and overall tone across media, public, and manipulation-linked sources — providing immediate context before diving into metrics.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Conversion Rate (%)</h2>
+      <p><strong>What this shows:</strong> Tracks the percentage of total impressions that translate into measurable action (clicks, signups, or other conversions). It’s your signal of efficiency — not just visibility, but meaningful audience response.</p>
+    </div>
+
+    <div class="section">
+      <h2>3. Sentiment (Line Chart)</h2>
+      <p><strong>What this shows:</strong> Tracks changes in positive, neutral, and negative tone over time across public, media, and manipulation accounts. Use it to spot when mood shifts occur and whether they align or diverge across audience types.</p>
+    </div>
+
+    <div class="section">
+      <h2>4. Emotions (Line Chart)</h2>
+      <p><strong>What this shows:</strong> Measures emotional depth and diversity — showing how trust, anticipation, joy, fear, and other signals fluctuate daily. This helps detect when emotional intensity rises (like hype cycles or fear reactions).</p>
+    </div>
+
+    <div class="section">
+      <h2>5. Impressions (Bars)</h2>
+      <p><strong>What this shows:</strong> The total reach generated by each author type (public, media, manipulation). It reveals where the audience is actually seeing content — and whether reach comes from organic credibility or manufactured amplification.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Unique Engagement Data (Bars)</h2>
+      <p><strong>What this shows:</strong> The number of distinct users or authors engaging each day. A healthy ecosystem shows steady or rising participation; sudden drops or sharp spikes can reveal inorganic bursts or fatigue.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Posts (Metric)</h2>
+      <p><strong>What this shows:</strong> Total number of posts analyzed in the data set. Helps understand scale and overall activity level in the conversation.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Impressions (Metric)</h2>
+      <p><strong>What this shows:</strong> The overall visibility — total reach of all analyzed posts. Larger numbers indicate broader exposure across the monitored time range.</p>
+    </div>
+
+    <div class="section">
+      <h2>9. Avg. Sentiment (Organic)</h2>
+      <p><strong>What this shows:</strong> The underlying sentiment among authentic communities. This is the true “baseline mood” once bot and paid activity are filtered out — ideal for tracking real audience trust and support.</p>
+    </div>
+
+    <div class="section">
+      <h2>10. Avg. Sentiment (Manipulation)</h2>
+      <p><strong>What this shows:</strong> A gauge of inorganic narrative pressure — showing whether manipulation-linked actors are trending toward positivity or negativity. High values suggest coordinated promotion or pushback.</p>
+    </div>
+
+    <div class="section">
+      <h2>11. Public Engagement Data</h2>
+      <p><strong>What this shows:</strong> Quantifies organic audience interaction (likes, comments, shares, replies). High public engagement alongside consistent sentiment suggests genuine community resonance.</p>
+    </div>
+
+    <div class="section">
+      <h2>12. Conversion Ratio</h2>
+      <p><strong>What this shows:</strong> Repeat metric confirming consistency in engagement-to-action behavior (validation for Conversion Rate %).</p>
+    </div>
+
+    <div class="section">
+      <h2>13. NER People (Treemap)</h2>
+      <p><strong>What this shows:</strong> Top recurring entities — people, projects, brands — extracted from text mentions. Larger boxes indicate higher frequency. Useful for mapping which names dominate the narrative ecosystem.</p>
+    </div>
+
+    <div class="section">
+      <h2>14. Top 10 Authors (Table)</h2>
+      <p><strong>What this shows:</strong> Ranks the most influential authors by measurable impact. Great for spotting repeat contributors, sudden new entrants, or creators whose content drives disproportionate visibility.</p>
+    </div>
+
+    <div class="section">
+      <h2>15. Mentions / Impact (Pie Charts)</h2>
+      <p><strong>What this shows:</strong> Shows the distribution of measurable influence and mentions across public, media, and manipulation actors. Helps assess how much of the conversation is organic vs. synthetic.</p>
+    </div>
+
+    <div class="section">
+      <h2>16. Top Social Posts / Timeline Anomalies</h2>
+      <p><strong>What this shows:</strong> Displays the most influential posts and event-driven spikes in conversation metrics. Use these to correlate sentiment or engagement surges with real-world events and narratives.</p>
+    </div>
+
   </div>
+</body>
+</html>
 
 </body>
 </html>
