@@ -1333,6 +1333,10 @@
             font-style: normal;
             font-weight: 700;
         }
+       
+        .check {font-weight:600;color:#0f7a23;}
+        .dash {color:#9ca3af;}
+
     </style>
 
 </head>
@@ -1557,169 +1561,99 @@
     </div>
 </div>
 
-            <!-- Slide 4: The SocialAudits Report (cleaned up) -->
-            <div class="slide" id="s6">
-                <h2 class="slide-title animated-item">
-                    The SocialAudits <span class="accent-text">Report</span>
-                </h2>
-                <p class="slide-subtitle animated-item">
-                    From raw data to actionable intelligence. Our reports provide a forensic-level view of an
-                    influencer's true impact.
-                    <a href="https://updatedcardscript.standard.us-east-1.oortstorages.com/Social%20Audits%20Report.png"
-                        style="color: var(--color-accent); text-decoration: underline;">Open full report</a>
-                </p>
+<table class="competition-table">
+    <thead>
+        <tr>
+            <th>Competitor</th>
+            <th>Target Segment</th>
+            <th>Tech Approach</th>
+            <th>Full Graph</th>
+            <th>Real-Time</th>
+            <th>Cross-Platform</th>
+            <th>Bot / Manipulation Detection</th>
+            <th>Pricing Model</th>
+        </tr>
+    </thead>
+    <tbody>
 
-                <div class="animated-item report-wrap"
-                    style="width: 100%; max-width: 80rem; margin-top: 1rem; text-align: left;">
-                    <!-- Key Metrics Row (5 only, removed 5B+ block) -->
-                    <div class="grid grid-cols-3 lg:grid-cols-5 gap-4 text-center mb-6 animated-item">
-                        <div class="report-card p-3">
-                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">24</p>
-                            <p class="text-xs" style="color: var(--color-text-secondary);">Posts</p>
-                        </div>
-                        <div class="report-card p-3">
-                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">1.16M</p>
-                            <p class="text-xs" style="color: var(--color-text-secondary);">Impressions</p>
-                        </div>
-                        <div class="report-card p-3">
-                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">20.04</p>
-                            <p class="text-xs" style="color: var(--color-text-secondary);">Avg. Sentiment</p>
-                        </div>
-                        <div class="report-card p-3">
-                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">63.19</p>
-                            <p class="text-xs" style="color: var(--color-text-secondary);">Manipulation</p>
-                        </div>
-                        <div class="report-card p-3">
-                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">13</p>
-                            <p class="text-xs" style="color: var(--color-text-secondary);">Eng. Date</p>
-                        </div>
-                    </div>
+        <!-- Competitors: checkmarks and dashes only -->
+        <tr>
+            <td>HypeAuditor</td>
+            <td>SMBs, agencies</td>
+            <td>Sampling</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>Basic</td>
+            <td>$299–$499/mo</td>
+        </tr>
 
-                    <!-- Charts Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 animated-item">
-                        <div class="report-card p-3">
-                            <h3>Sentiment</h3>
-                            <div style="height: 9rem;"><canvas id="sentimentChart"></canvas></div>
-                        </div>
-                        <div class="report-card p-3">
-                            <h3>Emotions</h3>
-                            <div style="height: 9rem;"><canvas id="emotionsChart"></canvas></div>
-                        </div>
-                        <div class="report-card p-3">
-                            <h3>Impressions</h3>
-                            <div style="height: 9rem;"><canvas id="impressionsChart"></canvas></div>
-                        </div>
-                        <div class="report-card p-3">
-                            <h3>Unique Engagement</h3>
-                            <div style="height: 9rem;"><canvas id="engagementChart"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <tr>
+            <td>Modash</td>
+            <td>DTC + startups</td>
+            <td>Limited Scraping</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>Limited</td>
+            <td>$199–$499/mo</td>
+        </tr>
 
+        <tr>
+            <td>Upfluence</td>
+            <td>Enterprise Agencies</td>
+            <td>Aggregation</td>
+            <td>Partial</td>
+            <td>—</td>
+            <td>Partial</td>
+            <td>Predictive</td>
+            <td>$800–$2,000/mo</td>
+        </tr>
 
-           <!-- COMPETITION -->
-<div class="slide" id="competition">
-    <div class="slide-inner competition-slide">
-        <h1 class="slide-title">COMPETITION</h1>
-        <p class="slide-subtitle">SocialAudits.ai vs Market</p>
+        <tr>
+            <td>CreatorIQ</td>
+            <td>Large Agencies, F500</td>
+            <td>Partner Enrichment</td>
+            <td>Partial</td>
+            <td>—</td>
+            <td>Siloed</td>
+            <td>Surface-Level</td>
+            <td>$20K–$50K/yr</td>
+        </tr>
 
-        <div class="table-wrapper">
-            <table class="competition-table">
-                <thead>
-                    <tr>
-                        <th>Competitor</th>
-                        <th>Target Segment</th>
-                        <th>Tech Approach</th>
-                        <th>Full Graph</th>
-                        <th>Real-Time</th>
-                        <th>Cross-Platform</th>
-                        <th>Bot / Manipulation Detection</th>
-                        <th>Pricing Model</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <tr>
+            <td>AspireIQ</td>
+            <td>Mid-size brands</td>
+            <td>Marketplace</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>Minimal</td>
+            <td>$299–$999/mo</td>
+        </tr>
 
-                    <!-- Competitors (Simplified Check Format) -->
-                    <tr>
-                        <td>HypeAuditor</td>
-                        <td>SMBs, agencies</td>
-                        <td>API + Sampling</td>
-                        <td>✗</td>
-                        <td>✗</td>
-                        <td>✗</td>
-                        <td>– (Basic)</td>
-                        <td>$299–$499/mo</td>
-                    </tr>
+        <!-- SocialAudits.ai Detailed Row -->
+        <tr class="sa-row">
+            <td><strong>SocialAudits.ai <span class="small">(via Koat.ai)</span></strong></td>
+            <td>Agencies, exchanges, brands, funds</td>
+            <td><strong>Full-graph, multi-pipeline enrichment & identity resolution</strong></td>
+            <td><strong>100% Full Graph</strong></td>
+            <td><strong>Yes — Real-Time</strong></td>
+            <td><strong>Yes — Multi-Platform Identity Resolution</strong></td>
+            <td><strong>Advanced bot taxonomy, forensic attribution, network mapping, stance + narrative analysis</strong></td>
+            <td>$250/report <span class="small">(volume tiers)</span></td>
+        </tr>
 
-                    <tr>
-                        <td>Modash</td>
-                        <td>DTC + startups</td>
-                        <td>API + Limited Scraping</td>
-                        <td>✗</td>
-                        <td>✗</td>
-                        <td>✗</td>
-                        <td>– (Limited)</td>
-                        <td>$199–$499/mo</td>
-                    </tr>
+    </tbody>
+</table>
 
-                    <tr>
-                        <td>Upfluence</td>
-                        <td>Enterprise Agencies</td>
-                        <td>API Aggregation</td>
-                        <td>✗</td>
-                        <td>✗</td>
-                        <td>– (Partial)</td>
-                        <td>– (Predictive)</td>
-                        <td>$800–$2,000/mo</td>
-                    </tr>
-
-                    <tr>
-                        <td>CreatorIQ</td>
-                        <td>Large Agencies, F500</td>
-                        <td>API Partner + Enrichment</td>
-                        <td>– (Partial)</td>
-                        <td>✗</td>
-                        <td>– (Siloed)</td>
-                        <td>– (Surface-Level)</td>
-                        <td>$20K–$50K/yr</td>
-                    </tr>
-
-                    <tr>
-                        <td>AspireIQ</td>
-                        <td>Mid-size brands</td>
-                        <td>Marketplace + API</td>
-                        <td>✗</td>
-                        <td>✗</td>
-                        <td>✗</td>
-                        <td>– (Minimal)</td>
-                        <td>$299–$999/mo</td>
-                    </tr>
-
-                    <!-- SocialAudits.ai (Detailed Row) -->
-                    <tr class="sa-row">
-                        <td><strong>SocialAudits.ai <span class="small">(via Koat.ai)</span></strong></td>
-                        <td>Agencies, exchanges, brands, funds</td>
-                        <td><strong>Full-graph, multi-pipeline ingestion + enrichment</strong></td>
-                        <td><strong>100% Full Graph</strong></td>
-                        <td><strong>Yes — Real-Time</strong></td>
-                        <td><strong>Yes — Multi-Platform Identity Resolution</strong></td>
-                        <td><strong>Advanced bot taxonomy, influence forensics, network mapping, intent + stance analysis</strong></td>
-                        <td>$250/report <span class="small">(volume tiers)</span></td>
-                    </tr>
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 
 
             <!-- Slide: Our Advantage -->
             <div class="slide" id="advantage">
-                <h2 class="slide-title animated-item">Our <span class="accent-text">Unfair Advantage</span></h2>
-                <p class="slide-subtitle animated-item">Exclusive pricing &amp; partnership with koat.ai</p>
+                <h2 class="slide-title animated-item">Our <span class="accent-text">Advantage</span></h2>
+                <p class="slide-subtitle animated-item">Exclusive pricing </p>
 
                 <div class="grid-6 animated-item">
                     <div class="metric-card">
