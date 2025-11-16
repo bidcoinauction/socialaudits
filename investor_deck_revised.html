@@ -1343,22 +1343,39 @@
             color: #9ca3af;
         }
 
-        .competition-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+        /* Prevent global nav styles from affecting table headers */
+.competition-table.no-nav-reset th,
+.competition-table.no-nav-reset td {
+    all: revert;
+}
 
-        .competition-table th,
-        .competition-table td {
-            white-space: nowrap;
-            padding: 12px 16px;
-            vertical-align: middle;
-        }
+/* Force slide layout */
+#competition {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 3rem;
+}
 
-        .table-wrapper {
-            overflow-x: auto;
-            overflow-y: visible;
-        }
+/* Ensure table stays clean + centered */
+.competition-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.competition-table th,
+.competition-table td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: left;
+}
+
+.competition-table .sa-row {
+    background: rgba(255,255,255,0.08);
+    font-weight: 700;
+}
+
     </style>
 
 </head>
@@ -1590,7 +1607,7 @@
                 </div>
             </div>
 
-           <!-- COMPETITION (Standalone Slide) -->
+<!-- COMPETITION (Standalone Slide) -->
 <div class="slide" id="competition">
     <div class="slide-inner competition-slide">
         <h1 class="slide-title">COMPETITION</h1>
@@ -1669,6 +1686,7 @@
         </div>
     </div>
 </div>
+
 
 
 
