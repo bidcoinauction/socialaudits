@@ -1,0 +1,2573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialAudits Presentation - V14</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-background: #FAFAFA;
+            --color-surface: #FFFFFF;
+            --color-primary: #1A1A1A;
+            --color-accent: #6366F1;
+            --color-text-primary: #1A1A1A;
+            --color-text-secondary: #6B7280;
+            --color-success: #10B981;
+            --color-danger: #EF4444;
+            --color-warning: #F59E0B;
+            --border-radius-lg: 2rem;
+            --border-radius-md: 1rem;
+            --border-radius-sm: 0.5rem;
+            --transition-speed: 0.3s;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FAFAFA 0%, #F3F4F6 100%);
+            font-family: 'Inter', sans-serif;
+            color: var(--color-text-primary);
+        }
+
+        /* subtle background bloom */
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(99, 102, 241, .05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, .05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        #deck-container {
+            width: 100%;
+            height: 100%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        #deck {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        /* slides */
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 2.5rem 3.5rem 4.5rem;
+            /* bottom padding keeps content clear of controls */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--color-surface);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(30px) scale(0.95);
+            transition: transform var(--transition-speed) cubic-bezier(.4, 0, .2, 1),
+                opacity var(--transition-speed) cubic-bezier(.4, 0, .2, 1),
+                visibility var(--transition-speed) cubic-bezier(.4, 0, .2, 1);
+            box-sizing: border-box;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        /* animations */
+        .animated-item {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity .5s ease-out, transform .5s ease-out;
+        }
+
+        .slide.active .animated-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide.active .animated-item:nth-child(1) {
+            transition-delay: .2s
+        }
+
+        .slide.active .animated-item:nth-child(2) {
+            transition-delay: .35s
+        }
+
+        .slide.active .animated-item:nth-child(3) {
+            transition-delay: .5s
+        }
+
+        .slide.active .animated-item:nth-child(4) {
+            transition-delay: .65s
+        }
+
+        .slide.active .animated-item:nth-child(5) {
+            transition-delay: .8s
+        }
+
+        /* type */
+        .slide-title {
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
+            color: var(--color-primary);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+        }
+
+        .text-accent {
+            color: var(--color-accent);
+        }
+
+        .slide-subtitle {
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            font-weight: 500;
+            color: var(--color-text-secondary);
+            max-width: 700px;
+            margin: 0 auto 1.25rem;
+            line-height: 1.5;
+        }
+
+        .slide-logo {
+            max-width: 180px;
+            margin-bottom: .5rem;
+        }
+
+        /* generic card + metric styles */
+        .card {
+            background: var(--color-surface);
+            border: 1px solid rgba(0, 0, 0, .05);
+            border-radius: var(--border-radius-md);
+            padding: 2rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            transition: all var(--transition-speed) cubic-bezier(.4, 0, .2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-accent);
+        }
+
+        .card h3 {
+            color: var(--color-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .card p,
+        .card li,
+        .card span,
+        .card blockquote {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            font-size: .95rem;
+        }
+
+        .card .card-subtext {
+            font-size: .875rem;
+            color: var(--color-text-secondary);
+            opacity: .8;
+            margin-top: .5rem;
+        }
+
+        .metric-card {
+            background: var(--color-surface);
+            border: 1px solid rgba(0, 0, 0, .05);
+            border-radius: var(--border-radius-md);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: all var(--transition-speed) cubic-bezier(.4, 0, .2, 1);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .metric-value {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--color-accent);
+            line-height: 1;
+            margin-bottom: .75rem;
+            display: block;
+        }
+
+        .metric-label {
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            font-size: .875rem;
+            opacity: .8;
+        }
+
+        .accent-text {
+            color: var(--color-accent);
+        }
+
+        .danger-text {
+            color: var(--color-danger);
+        }
+
+        .warning-text {
+            color: var(--color-warning);
+        }
+
+        .success-text {
+            color: var(--color-success);
+        }
+
+        /* grid helpers */
+        .grid {
+            display: grid;
+            width: 100%;
+        }
+
+        .grid-2 {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            max-width: 1000px;
+        }
+
+        .grid-3 {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1200px;
+        }
+
+        .grid-4 {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 1200px;
+        }
+
+        .grid-5 {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            max-width: 1400px;
+        }
+
+        /* controls */
+        #controls-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding: 0 .5rem;
+        }
+
+        #progress-container {
+            flex-grow: 1;
+            background-color: rgba(0, 0, 0, .05);
+            border-radius: 99px;
+            height: 6px;
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
+            border-radius: 99px;
+            transition: width .4s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        #nav-controls {
+            display: flex;
+            gap: .5rem;
+            margin-left: 1rem;
+        }
+
+        .nav-button {
+            background: var(--color-surface);
+            border: 1px solid rgba(0, 0, 0, .1);
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-speed) cubic-bezier(.4, 0, .2, 1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-button:hover {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+            color: #fff;
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-button:focus-visible {
+            outline: 3px solid var(--color-accent);
+            outline-offset: 3px;
+        }
+
+        .nav-button:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        .aria-live-region {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* tables */
+        .revenue-table {
+            background: var(--color-surface);
+            border: 1px solid rgba(0, 0, 0, .05);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .revenue-table th {
+            background: rgba(99, 102, 241, .05);
+            color: var(--color-primary);
+            padding: 1.25rem 1rem;
+            font-weight: 600;
+            letter-spacing: .025em;
+            font-size: .875rem;
+            text-transform: uppercase;
+        }
+
+        .revenue-table td {
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, .05);
+            color: var(--color-text-secondary);
+            font-size: .95rem;
+        }
+
+        .revenue-table .revenue-number {
+            color: var(--color-accent);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .revenue-table .total-row {
+            background: rgba(59, 130, 246, .1);
+        }
+
+        .revenue-table .total-row .revenue-number {
+            color: var(--color-success);
+            font-size: 1.1rem;
+        }
+
+        /* misc components */
+        .video-container {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            background: rgba(255, 255, 255, .9);
+            border-radius: var(--border-radius-md);
+            border: 1px solid rgba(59, 130, 246, .2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--color-text-secondary);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* --- Use of Funds (compact) --- */
+        #use-funds .slide-title {
+            font-size: clamp(1.8rem, 4vw, 3.2rem);
+        }
+
+        #use-funds .slide-subtitle {
+            margin-bottom: .75rem;
+            max-width: 900px;
+        }
+
+        #use-funds .metric-card {
+            padding: 1rem;
+        }
+
+        #use-funds .metric-value {
+            font-size: 2rem;
+        }
+
+        #use-funds .metric-label {
+            font-size: .8rem;
+        }
+
+        #use-funds ul {
+            font-size: .8rem;
+            line-height: 1.4;
+            margin-top: .4rem;
+        }
+
+        #use-funds .grid-2 {
+            gap: .75rem;
+        }
+
+        #use-funds .grid-2+.grid-2 {
+            margin-top: .75rem !important;
+        }
+
+        #use-funds-chart .slide-title {
+            font-size: clamp(1.8rem, 4vw, 3.2rem);
+        }
+
+        #use-funds-chart .funds-chart-wrap {
+            height: 26rem;
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            overflow: visible;
+        }
+
+        #use-funds-chart canvas {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        /* --- Report slide (#s6) --- */
+        #s6 {
+            background-color: rgba(255, 255, 255, .65);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, .5);
+        }
+
+        #s6 .slide-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: -.02em;
+            line-height: 1.2;
+            text-transform: none;
+            text-shadow: none;
+        }
+
+        #s6 .slide-subtitle {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 400;
+            color: var(--color-text-secondary);
+            max-width: 800px;
+            margin: .75rem auto 0;
+            line-height: 1.6;
+        }
+
+        #s6 .report-wrap {
+            background: rgba(248, 249, 252, .8);
+            border: 1px solid #E5E7EB;
+            border-radius: var(--border-radius-md);
+            padding: 1rem;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, .08);
+        }
+
+        #s6 .report-card {
+            background: rgba(255, 255, 255, .9);
+            border: 1px solid #E5E7EB;
+            border-radius: .5rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+        }
+
+        #s6 .report-card p {
+            color: var(--color-text-secondary);
+        }
+
+        #s6 .report-card p.font-bold {
+            color: var(--color-primary);
+        }
+
+        #s6 h3 {
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: .875rem;
+            margin-bottom: .25rem;
+        }
+
+        #s6 canvas {
+            display: block;
+            width: 100%;
+            height: 9rem;
+        }
+
+        /* --- Expansion slide (fixed 3×2 grid) --- */
+        #expansion .slide-title {
+            font-size: clamp(1.9rem, 4vw, 3rem);
+        }
+
+        #expansion .slide-subtitle {
+            max-width: 900px;
+        }
+
+        #expansion .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+            max-width: 1100px;
+            margin: 1rem auto 0;
+            align-items: stretch;
+            justify-items: stretch;
+        }
+
+        #expansion .metric-card {
+            height: 100%;
+            padding: 1.25rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: center;
+            hyphens: auto;
+            word-break: normal;
+        }
+
+        #expansion .metric-value {
+            font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+            line-height: 1.1;
+            margin-bottom: .35rem;
+            font-weight: 800;
+        }
+
+        #expansion .metric-label {
+            font-size: clamp(.85rem, 1.2vw, .95rem);
+            line-height: 1.4;
+        }
+
+        /* --- Unfair Advantage slide (fixed 3×2 grid) --- */
+        #advantage .slide-title {
+            font-size: clamp(2rem, 4.2vw, 3.1rem);
+        }
+
+        #advantage .slide-subtitle {
+            max-width: 900px;
+        }
+
+        #advantage .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+            max-width: 1100px;
+            margin: 1rem auto 0;
+            align-items: stretch;
+        }
+
+        #advantage .metric-card {
+            height: 100%;
+            padding: 1.25rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: center;
+        }
+
+        #advantage .metric-value {
+            font-size: clamp(1.4rem, 2.4vw, 2rem);
+            line-height: 1.1;
+            margin-bottom: .35rem;
+            font-weight: 900;
+        }
+
+        #advantage .metric-label {
+            font-size: clamp(.85rem, 1.2vw, .95rem);
+            line-height: 1.4;
+        }
+
+        /* responsive tweaks */
+        @media (max-width: 1024px) {
+
+            #expansion .grid-6,
+            #advantage .grid-6 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            html,
+            body {
+                overflow: auto;
+            }
+
+            /* allow scroll on smaller screens */
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 1.5rem 1.5rem 6rem;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .grid-5 {
+                grid-template-columns: 1fr !important;
+            }
+
+            #s6 canvas {
+                height: 7rem;
+            }
+
+            #s6 .report-wrap {
+                padding: .75rem;
+            }
+
+            #s6 .grid {
+                gap: .75rem;
+            }
+
+            canvas {
+                max-width: 100% !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+
+            #expansion .grid-6,
+            #advantage .grid-6 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- Competition slide (full-width, no horizontal scroll on desktop) --- */
+
+        /* slightly tighter sides only for this slide so the table can breathe */
+        #competition.slide {
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        /* wider wrapper that still respects the slide */
+        .competition-wrap {
+            width: min(100%, 1320px);
+            /* expands past 1100px but never overflows the slide */
+            margin: 0 auto;
+        }
+
+        /* table fills wrapper; fixed layout prevents column wobble */
+        #competition-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, .05);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-sm);
+            background: var(--color-surface);
+        }
+
+        /* header tint + top accent line like metric cards */
+        #competition-table thead th {
+            position: relative;
+            background: rgba(99, 102, 241, 0.06);
+            color: var(--color-primary);
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            font-weight: 600;
+        }
+
+        #competition-table thead th:first-child::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
+        }
+
+        /* sizing and readability */
+        #competition-table th,
+        #competition-table td {
+            padding: .85rem .75rem;
+            /* a hair tighter */
+            font-size: clamp(.74rem, .95vw, .9rem);
+            line-height: 1.35;
+            color: var(--color-text-secondary);
+            vertical-align: top;
+            word-break: break-word;
+        }
+
+        /* first column a bit wider, left aligned; others centered */
+        #competition-table th:first-child,
+        #competition-table td:first-child {
+            width: 26%;
+            text-align: left;
+            color: var(--color-primary);
+        }
+
+        #competition-table th:not(:first-child),
+        #competition-table td:not(:first-child) {
+            width: calc(74% / 4);
+            text-align: center;
+        }
+
+        /* soft row dividers */
+        #competition-table tbody tr td {
+            border-bottom: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        /* mobile: fall back to swipe */
+        @media (max-width: 1000px) {
+            .competition-scroll {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                border-radius: var(--border-radius-md);
+                box-shadow: var(--shadow-sm);
+                background: var(--color-surface);
+            }
+
+            #competition-table {
+                min-width: 860px;
+            }
+        }
+
+        /* --- Reporting Pipeline slide --- */
+        #pipeline .pipeline-rail {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 1.25rem;
+            margin: 2rem auto;
+            max-width: 1250px;
+        }
+
+        #pipeline .pipe-stage {
+            flex: 1 1 0;
+            background: var(--color-surface);
+            border: 1px solid rgba(0, 0, 0, .05);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem 1.25rem;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: all var(--transition-speed) ease;
+            text-align: left;
+        }
+
+        #pipeline .pipe-stage::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent), var(--color-success));
+        }
+
+        #pipeline .pipe-stage:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-accent);
+        }
+
+        #pipeline .pipe-stage h3 {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: .4rem;
+            color: var(--color-primary);
+        }
+
+        #pipeline .pipe-stage p {
+            font-size: .95rem;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Arrows between stages */
+        #pipeline .pipe-stage:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: rgba(99, 102, 241, 0.3);
+        }
+
+        /* Metrics below pipeline */
+        #pipeline .pipeline-metrics {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 2rem auto 0;
+        }
+
+        #pipeline .metric-block {
+            background: var(--color-surface);
+            border: 1px solid rgba(0, 0, 0, .05);
+            border-radius: var(--border-radius-md);
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+            transition: all var(--transition-speed) ease;
+        }
+
+        #pipeline .metric-block:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-success);
+        }
+
+        #pipeline .metric-block h4 {
+            margin: 0 0 .3rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+
+        #pipeline .metric-block p {
+            font-size: .85rem;
+            color: var(--color-text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Responsive tweaks */
+        @media (max-width: 1100px) {
+            #pipeline .pipeline-rail {
+                flex-wrap: wrap;
+            }
+
+            #pipeline .pipe-stage {
+                flex: 1 1 calc(50% - 1rem);
+            }
+
+            #pipeline .pipe-stage:not(:last-child)::after {
+                display: none;
+            }
+
+            #pipeline .pipeline-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            #pipeline .pipeline-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* small uppercase tag above metric value */
+        .metric-tag {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            opacity: .9;
+            margin-bottom: .35rem;
+        }
+
+        /* --- GTM slide polish --- */
+        #gtm .gtm-grid {
+            gap: 1.25rem;
+        }
+
+        #gtm .gtm-lower {
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .text-accent {
+            color: var(--color-accent);
+        }
+
+        .text-success {
+            color: var(--color-success);
+        }
+
+        .text-warning {
+            color: var(--color-warning);
+        }
+
+        #gtm .kpi-line {
+            margin-top: 0.9rem;
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            line-height: 1.4;
+        }
+
+        #gtm .kpi-caption {
+            margin-top: 0.4rem;
+            font-size: 0.82rem;
+            color: var(--color-text-secondary);
+            opacity: 0.9;
+        }
+
+        /* keep metric-value sizing consistent on this slide */
+        #gtm .metric-value {
+            font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* responsive tweaks */
+        @media (max-width: 1024px) {
+
+            #gtm .gtm-grid,
+            #gtm .gtm-lower {
+                gap: 0.75rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #gtm .gtm-lower {
+                margin-top: 1.5rem;
+            }
+
+            #gtm .metric-value {
+                font-size: clamp(1.4rem, 4.2vw, 1.9rem);
+            }
+        }
+
+        #market-size .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+        }
+
+
+        /* small screens: stack nicely */
+        @media (max-width: 940px) {
+            #market-size .top-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* =========================
+   Expansion / Multi-Pipeline
+   ========================= */
+
+        #expansion .slide-title {
+            font-size: clamp(1.9rem, 4vw, 3rem);
+        }
+
+        /* Subtitle: normal weight + line break already added in HTML */
+        #expansion .slide-subtitle {
+            max-width: 980px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        /* 3×2 grid on desktop, responsive down */
+        #expansion .grid-6 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.25rem;
+            max-width: 1100px;
+            margin: 1rem auto 0;
+            align-items: stretch;
+        }
+
+        /* Cards: consistent height, subtle polish */
+        #expansion .exp-card {
+            height: 100%;
+            padding: 1.25rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: center;
+        }
+
+        /* Title line in cards uses your existing .metric-value colors */
+        #expansion .exp-card .metric-value {
+            font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+            line-height: 1.25;
+            font-weight: 800;
+            margin-bottom: 0.35rem;
+        }
+
+        /* Subtext normalized to sentence case, no all-caps */
+        #expansion .exp-card .metric-label {
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: clamp(.86rem, 1.2vw, .95rem);
+            color: var(--color-text-secondary);
+            line-height: 1.45;
+        }
+
+        /* Footnote */
+        #expansion .exp-footnote {
+            margin-top: 1rem;
+            color: var(--color-text-secondary);
+            font-size: 0.92rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            #expansion .grid-6 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            #expansion .grid-6 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Market Size Section */
+        #market-size {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .market-metrics {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .market-metrics .metric-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            flex: 1 1 280px;
+            max-width: 360px;
+            text-align: center;
+        }
+
+        .market-metrics .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .market-metrics .metric-label {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .market-metrics p {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* Trajectory Chart Styling */
+        .trajectory-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .trajectory-container h3 {
+            margin-bottom: 0.75rem;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .trajectory-chart {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            height: 260px;
+            width: 100%;
+        }
+
+        .sources {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* Brand/phrase accent */
+        .brand-accent {
+            color: var(--color-accent);
+            font-weight: 800;
+        }
+
+        .brand-name {
+            color: var(--color-accent);
+            font-weight: 900;
+        }
+
+        /* Competition slide container uses your global .slide-title/.slide-subtitle */
+        #competition .slide-inner {
+            padding: 60px 48px;
+        }
+
+        /* Table wrapper to prevent layout shift and flashing */
+        #competition .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Clean table */
+        .competition-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+            font-size: 0.92rem;
+        }
+
+        /* Single-tone header (no full gradient) */
+        .competition-table thead {
+            background: #eef1f8;
+            /* soft neutral to match deck */
+            border-bottom: 1px solid #e4e7ee;
+        }
+
+        .competition-table th {
+            text-align: left;
+            padding: 14px 16px;
+            color: #1f2937;
+            /* near-black */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .035em;
+            font-size: .82rem;
+        }
+
+        /* Body cells */
+        .competition-table td {
+            padding: 16px;
+            color: #111827;
+            vertical-align: top;
+            border-bottom: 1px solid #edf0f5;
+            line-height: 1.45;
+        }
+
+        /* Zebra rows for readability */
+        .competition-table tbody tr:nth-child(even) {
+            background: #fafbfe;
+        }
+
+        /* Last row: SocialAudits highlight */
+        .competition-table .sa-row {
+            background: #f4f7ff;
+            border-top: 2px solid #9aa7ff;
+            border-bottom: 2px solid #9aa7ff;
+        }
+
+        .competition-table .sa-row td {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        /* Small helper text */
+        .competition-table .small {
+            font-size: .78rem;
+            color: #6b7280;
+        }
+
+        /* Make sure it fits on one slide */
+        @media (max-width: 1280px) {
+            .competition-table {
+                font-size: 0.88rem;
+            }
+
+            .competition-table th {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Sticky header (optional; remove if not desired) */
+        @supports (position: sticky) {
+            .competition-table thead th {
+                position: sticky;
+                top: 0;
+                z-index: 1;
+            }
+        }
+
+
+        /* Target Markets Slide */
+        .target-markets {
+            text-align: center;
+            padding: 80px 60px;
+        }
+
+        .target-markets .slide-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .target-markets .highlight {
+            color: #6c63ff;
+        }
+
+        .target-markets .slide-subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 3rem;
+        }
+
+        /* Market cards row layout */
+        .market-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 3rem;
+        }
+
+        .market-card {
+            flex: 1 1 260px;
+            max-width: 300px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.8rem 1.2rem;
+            text-align: center;
+            border-top: 3px solid #6c63ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .market-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .market-card h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 0.4rem;
+        }
+
+        .market-card .market-category {
+            text-transform: uppercase;
+            color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .market-card .market-sub {
+            color: #777;
+            font-size: 0.85rem;
+        }
+
+        /* Sources styling */
+        .sources {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .sources p {
+            margin: 0.4rem 0;
+            font-style: italic;
+        }
+
+        .sources strong {
+            font-style: normal;
+            font-weight: 700;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="deck-container">
+        <div id="deck">
+            <!-- Slide 1: Cover -->
+            <div class="slide active">
+                <img class="slide-logo animated-item"
+                    src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png"
+                    alt="SocialAudits logo" />
+                <h1 class="slide-title animated-item">SocialAudits</h1>
+                <p class="slide-subtitle animated-item">The World's First Influencer Forensics Platform</p>
+            </div>
+
+            <!-- Slide 2: The Problem -->
+            <div class="slide" data-comp="long" id="problem">
+                <h2 class="slide-title animated-item">The <span class="danger-text">Problem</span></h2>
+                <p class="slide-subtitle animated-item">
+                    $32.55B industry faces pervasive manipulation across platforms and tiers
+                </p>
+
+                <div class="grid-3 animated-item">
+                    <!-- Card 1 -->
+                    <div class="metric-card">
+                        <div class="metric-tag danger-text">Broken Incentives</div>
+                        <div class="metric-value" style="color: var(--color-danger);">55%</div>
+                        <div class="metric-label">Manipulated Engagement Rate</div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                            of engagement on some platforms is fake.
+                        </p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="metric-card">
+                        <div class="metric-tag accent-text">Synthetic Reach</div>
+                        <div class="metric-value" style="color: var(--color-success);">5.78x</div>
+                        <div class="metric-label">Industry Average ROI</div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                            but a large share of spend leaks to bots.
+                        </p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="metric-card">
+                        <div class="metric-tag warning-text">ROI Blindspots</div>
+                        <div class="metric-value" style="color: var(--color-danger);">$2B+</div>
+                        <div class="metric-label">Annual Manipulation Losses</div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                            in influencer fraud (North American industry estimates).
+                        </p>
+                    </div>
+                </div>
+                <p class="slide-description animated-item"
+                    style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                    Benchmarks & estimates: Influencer Marketing Hub, CHEQ/Univ. of Baltimore
+                </p>
+            </div>
+
+
+           <!-- Slide: Solution -->
+<div class="slide" id="solution">
+    <h2 class="slide-title animated-item">Our <span class="accent-text">Solution</span></h2>
+    <p class="slide-subtitle animated-item">Transparent, verifiable social integrity</p>
+
+    <div class="grid-3 animated-item">
+        <!-- Card 1 -->
+        <div class="metric-card">
+            <div
+                style="font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--color-accent); margin-bottom:.35rem;">
+                Social Trust Audits
+            </div>
+            <div class="metric-value" style="color: var(--color-accent);">Certified</div>
+            <div class="metric-label">Evidence-Based Verification</div>
+            <p style="margin-top: .75rem; font-size: .9rem; color: var(--color-text-secondary);">
+                Standardized audit framework validating real influence, growth patterns, and audience integrity.
+            </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="metric-card">
+            <div
+                style="font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--color-danger); margin-bottom:.35rem;">
+                Manipulation Intelligence Reports
+            </div>
+            <div class="metric-value" style="color: var(--color-danger);">Forensic</div>
+            <div class="metric-label">Detection + Attribution</div>
+            <p style="margin-top: .75rem; font-size: .9rem; color: var(--color-text-secondary);">
+                Clear breakdown of inorganic activity, coordinated networks, bots, and amplification tactics.
+            </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="metric-card">
+            <div
+                style="font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--color-success); margin-bottom:.35rem;">
+                Real-Time Authenticity Signal
+            </div>
+            <div class="metric-value" style="color: var(--color-success);">Live</div>
+            <div class="metric-label">Organic vs Manipulated</div>
+            <p style="margin-top: .75rem; font-size: .9rem; color: var(--color-text-secondary);">
+                Continuous scoring and alerts differentiating genuine sentiment and demand from engineered behavior.
+            </p>
+        </div>
+    </div>
+</div>
+
+            <section class="slide target-markets">
+                <h1 class="slide-title">
+                    TARGET <span class="highlight">MARKETS</span>
+                </h1>
+                <p class="slide-subtitle">
+                    High-stakes verticals with catastrophic manipulation costs
+                </p>
+
+                <div class="market-cards">
+                    <div class="market-card">
+                        <h2>$9.6B–12.8B</h2>
+                        <p class="market-category">HEALTH & BEAUTY</p>
+                        <p class="market-sub">$5.3B–7.0B wasted annually</p>
+                    </div>
+
+                    <div class="market-card">
+                        <h2>$2.0B–5.0B</h2>
+                        <p class="market-category">FINANCE & CRYPTO</p>
+                        <p class="market-sub">$1.1B–2.8B wasted annually</p>
+                    </div>
+
+                    <div class="market-card">
+                        <h2>$1.8B–2.5B</h2>
+                        <p class="market-category">FITNESS & WELLNESS</p>
+                        <p class="market-sub">$1.0B–1.4B wasted annually</p>
+                    </div>
+
+                    <div class="market-card">
+                        <h2>$13.4B–20.3B</h2>
+                        <p class="market-category">TOTAL ADDRESSABLE MARKET</p>
+                        <p class="market-sub">$7.4B–11.2B in annual waste across these verticals</p>
+                    </div>
+                </div>
+
+                <div class="sources">
+                    <p>
+                        <strong>Sources:</strong> Influencer Marketing Hub 2024; Statista 2024;
+                        Grand View Research 2024.
+                    </p>
+                    <p>
+                        Each dataset connects into the same multilingual, synchronized, and
+                        compliant reporting ecosystem.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Slide: Reporting Pipeline -->
+<div class="slide" id="pipeline">
+    <h2 class="slide-title animated-item">
+        THE <span class="text-accent">REPORTING PIPELINE</span>
+    </h2>
+    <p class="slide-subtitle animated-item">
+        We start with already-enriched data from Koat API & partners → normalize → identity resolve → analyze → verify → model → output.
+    </p>
+
+    <div class="animated-item pipeline-rail">
+        
+        <!-- 01 -->
+        <div class="pipe-stage">
+            <div class="pipe-top">
+                <h3>01 Ingest (Enriched)</h3>
+            </div>
+            <p>Authorized ingestion of already-enriched audience & interaction data via Koat API & partners.</p>
+        </div>
+
+        <!-- 02 -->
+        <div class="pipe-stage">
+            <div class="pipe-top">
+                <h3>02 Normalize</h3>
+            </div>
+            <p>Unify schemas, dedupe, harmonize languages/timezones.</p>
+        </div>
+
+        <!-- 03 -->
+        <div class="pipe-stage">
+            <div class="pipe-top">
+                <h3>03 Identity Resolution</h3>
+            </div>
+            <p>Deterministic + probabilistic stitching to map cross-platform identities and networks.</p>
+        </div>
+
+        <!-- 04 -->
+        <div class="pipe-stage">
+            <div class="pipe-top">
+                <h3>04 Analyze</h3>
+            </div>
+            <p>Graph analytics & risk scoring (bot rings, engagement entropy); narrative/stance tracking.</p>
+        </div>
+
+        <!-- 05 -->
+        <div class="pipe-stage">
+            <div class="pipe-top">
+                <h3>05 Verify</h3>
+            </div>
+            <p>Cross-source corroboration + light human QA on high-impact flags.</p>
+        </div>
+
+        <!-- 06 -->
+        <div class="pipe-stage">
+            <div class="pipe-top">
+                <h3>06 Deliver</h3>
+            </div>
+            <p>Dashboards & reports with full audit traceability and forensic integrity.</p>
+        </div>
+
+        <!-- 07 -->
+        <div class="pipe-stage">
+            <div class="pipe-top">
+                <h3>07 Predictive Simulation</h3>
+            </div>
+            <p>Run AI-driven campaign simulations to forecast outcomes, detect failure points, and estimate ROI under authentic vs manipulated conditions.</p>
+        </div>
+
+    </div>
+</div>
+
+            <!-- Slide 4: The SocialAudits Report (cleaned up) -->
+            <div class="slide" id="s6">
+                <h2 class="slide-title animated-item">
+                    The SocialAudits <span class="accent-text">Report</span>
+                </h2>
+                <p class="slide-subtitle animated-item">
+                    From raw data to actionable intelligence. Our reports provide a forensic-level view of an
+                    influencer's true impact.
+                    <a href="https://updatedcardscript.standard.us-east-1.oortstorages.com/Social%20Audits%20Report.png"
+                        style="color: var(--color-accent); text-decoration: underline;">Open full report</a>
+                </p>
+
+                <div class="animated-item report-wrap"
+                    style="width: 100%; max-width: 80rem; margin-top: 1rem; text-align: left;">
+                    <!-- Key Metrics Row (5 only, removed 5B+ block) -->
+                    <div class="grid grid-cols-3 lg:grid-cols-5 gap-4 text-center mb-6 animated-item">
+                        <div class="report-card p-3">
+                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">24</p>
+                            <p class="text-xs" style="color: var(--color-text-secondary);">Posts</p>
+                        </div>
+                        <div class="report-card p-3">
+                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">1.16M</p>
+                            <p class="text-xs" style="color: var(--color-text-secondary);">Impressions</p>
+                        </div>
+                        <div class="report-card p-3">
+                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">20.04</p>
+                            <p class="text-xs" style="color: var(--color-text-secondary);">Avg. Sentiment</p>
+                        </div>
+                        <div class="report-card p-3">
+                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">63.19</p>
+                            <p class="text-xs" style="color: var(--color-text-secondary);">Manipulation</p>
+                        </div>
+                        <div class="report-card p-3">
+                            <p class="text-lg sm:text-xl font-bold" style="color: var(--color-primary);">13</p>
+                            <p class="text-xs" style="color: var(--color-text-secondary);">Eng. Date</p>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 animated-item">
+                        <div class="report-card p-3">
+                            <h3>Sentiment</h3>
+                            <div style="height: 9rem;"><canvas id="sentimentChart"></canvas></div>
+                        </div>
+                        <div class="report-card p-3">
+                            <h3>Emotions</h3>
+                            <div style="height: 9rem;"><canvas id="emotionsChart"></canvas></div>
+                        </div>
+                        <div class="report-card p-3">
+                            <h3>Impressions</h3>
+                            <div style="height: 9rem;"><canvas id="impressionsChart"></canvas></div>
+                        </div>
+                        <div class="report-card p-3">
+                            <h3>Unique Engagement</h3>
+                            <div style="height: 9rem;"><canvas id="engagementChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+           <!-- COMPETITION -->
+<div class="slide" id="competition">
+    <div class="slide-inner competition-slide">
+        <h1 class="slide-title">COMPETITION</h1>
+        <p class="slide-subtitle">SocialAudits.ai vs Market</p>
+
+        <div class="table-wrapper">
+            <table class="competition-table">
+                <thead>
+                    <tr>
+                        <th>Competitor</th>
+                        <th>Target Segment</th>
+                        <th>Tech Approach</th>
+                        <th>Full Graph</th>
+                        <th>Real-Time</th>
+                        <th>Cross-Platform</th>
+                        <th>Bot / Manipulation Detection</th>
+                        <th>Pricing Model</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Competitors (Simplified Check Format) -->
+                    <tr>
+                        <td>HypeAuditor</td>
+                        <td>SMBs, agencies</td>
+                        <td>API + Sampling</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>– (Basic)</td>
+                        <td>$299–$499/mo</td>
+                    </tr>
+
+                    <tr>
+                        <td>Modash</td>
+                        <td>DTC + startups</td>
+                        <td>API + Limited Scraping</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>– (Limited)</td>
+                        <td>$199–$499/mo</td>
+                    </tr>
+
+                    <tr>
+                        <td>Upfluence</td>
+                        <td>Enterprise Agencies</td>
+                        <td>API Aggregation</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>– (Partial)</td>
+                        <td>– (Predictive)</td>
+                        <td>$800–$2,000/mo</td>
+                    </tr>
+
+                    <tr>
+                        <td>CreatorIQ</td>
+                        <td>Large Agencies, F500</td>
+                        <td>API Partner + Enrichment</td>
+                        <td>– (Partial)</td>
+                        <td>✗</td>
+                        <td>– (Siloed)</td>
+                        <td>– (Surface-Level)</td>
+                        <td>$20K–$50K/yr</td>
+                    </tr>
+
+                    <tr>
+                        <td>AspireIQ</td>
+                        <td>Mid-size brands</td>
+                        <td>Marketplace + API</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>✗</td>
+                        <td>– (Minimal)</td>
+                        <td>$299–$999/mo</td>
+                    </tr>
+
+                    <!-- SocialAudits.ai (Detailed Row) -->
+                    <tr class="sa-row">
+                        <td><strong>SocialAudits.ai <span class="small">(via Koat.ai)</span></strong></td>
+                        <td>Agencies, exchanges, brands, funds</td>
+                        <td><strong>Full-graph, multi-pipeline ingestion + enrichment</strong></td>
+                        <td><strong>100% Full Graph</strong></td>
+                        <td><strong>Yes — Real-Time</strong></td>
+                        <td><strong>Yes — Multi-Platform Identity Resolution</strong></td>
+                        <td><strong>Advanced bot taxonomy, influence forensics, network mapping, intent + stance analysis</strong></td>
+                        <td>$250/report <span class="small">(volume tiers)</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+            <!-- Slide: Our Advantage -->
+            <div class="slide" id="advantage">
+                <h2 class="slide-title animated-item">Our <span class="accent-text">Unfair Advantage</span></h2>
+                <p class="slide-subtitle animated-item">Exclusive pricing &amp; partnership with koat.ai</p>
+
+                <div class="grid-6 animated-item">
+                    <div class="metric-card">
+                        <div class="metric-value accent-text">$20–50M</div>
+                        <div class="metric-label">Cost to rebuild</div>
+                        <p class="card-subtext">5 years of historical data</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value success-text">40,000+</div>
+                        <div class="metric-label">News outlet integrations</div>
+                        <p class="card-subtext">Massive data pipeline</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value warning-text">5B+</div>
+                        <div class="metric-label">Enriched data points</div>
+                        <p class="card-subtext">Proprietary algorithms</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value accent-text">3–5 Years</div>
+                        <div class="metric-label">Barrier to entry</div>
+                        <p class="card-subtext">Deep technical expertise + capital required</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value success-text">Exclusive</div>
+                        <div class="metric-label">Contract terms</div>
+                        <p class="card-subtext">Priority access; data at ~25% above cost</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value success-text">100+</div>
+                        <div class="metric-label">Languages analyzed</div>
+                        <p class="card-subtext">Global coverage</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Go-To-Market Strategy -->
+            <div class="slide" id="gtm">
+                <h2 class="slide-title animated-item">
+                    Go-To-<span class="accent-text">Market</span> Strategy
+                </h2>
+                <p class="slide-subtitle animated-item">
+                    Multi-channel approach with exclusive partnerships and compounding data advantages.
+                </p>
+
+                <!-- Channel Mix -->
+                <div class="grid-3 animated-item gtm-grid">
+                    <!-- Solvent / Solana Partnership -->
+                    <div class="metric-card">
+                        <div class="metric-value text-accent">20%</div>
+                        <div class="metric-label">Solana Partnership</div>
+                        <p class="kpi-line">CAC $2K–$4K · 35% close rate</p>
+                        <p class="kpi-caption"><strong>12+</strong> integrated projects via Solvent ecosystem</p>
+                    </div>
+
+                    <!-- Direct Sales -->
+                    <div class="metric-card">
+                        <div class="metric-value text-success">40%</div>
+                        <div class="metric-label">Direct Sales (SDR)</div>
+                        <p class="kpi-line">CAC $6K–$8K · 20% close rate</p>
+                        <p class="kpi-caption"><strong>8</strong> active enterprise pilots</p>
+                    </div>
+
+                    <!-- Content / Inbound -->
+                    <div class="metric-card">
+                        <div class="metric-value text-warning">25%</div>
+                        <div class="metric-label">Content / Inbound</div>
+                        <p class="kpi-line">CAC $2K–$3K · 30% close rate</p>
+                        <p class="kpi-caption"><strong>140+</strong> paid audits generated</p>
+                    </div>
+                </div>
+
+                <!-- Partnerships / Positioning -->
+                <div class="grid-2 animated-item gtm-lower">
+                    <div class="metric-card">
+                        <div class="metric-value text-accent">$10B+</div>
+                        <div class="metric-label">Partner Ecosystem Market Cap</div>
+                        <p class="kpi-line">Solvent Labs, Backpack, Bonk communities</p>
+                        <p class="kpi-caption">3M+ games & campaigns tracked across network</p>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-value text-success">Exclusive Integration</div>
+                        <div class="metric-label">Solvent Labs × Solana Phone</div>
+                        <p class="kpi-line">
+                            Official verification & ads partner powering influencer transparency for Solana Mobile
+                            ecosystem
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide: Expansion to a Multi-Pipeline Infrastructure -->
+            <div class="slide" id="expansion">
+                <h2 class="slide-title animated-item">
+                    EXPANSION TO A <span class="accent-text">MULTI-PIPELINE</span> INFRASTRUCTURE
+                </h2>
+
+                <!-- normalized subtitle with line break + no bold on “Combining …” -->
+                <p class="slide-subtitle animated-item">
+                    While currently focused on real-time social and media data, the system is designed to scale into a
+                    multi-pipeline intelligence network.
+                </p>
+
+                <!-- fixed 3×2 layout, sentence case subtext -->
+                <div class="grid-6 animated-item">
+                    <div class="metric-card exp-card">
+                        <div class="metric-value danger-text">Behavioral Interaction Data</div>
+                        <div class="metric-label">Engagement patterns, attention cycles, and content resonance.</div>
+                    </div>
+
+                    <div class="metric-card exp-card">
+                        <div class="metric-value accent-text">Financial &amp; Market Intelligence</div>
+                        <div class="metric-label">Token, equity, and market indicators linked to audience behavior.
+                        </div>
+                    </div>
+
+                    <div class="metric-card exp-card">
+                        <div class="metric-value success-text">Geo-contextual Data</div>
+                        <div class="metric-label">Regional, dialectal, and cultural metadata.</div>
+                    </div>
+
+                    <div class="metric-card exp-card">
+                        <div class="metric-value warning-text">Search &amp; Trend Data</div>
+                        <div class="metric-label">Web and query pattern analytics for narrative detection.</div>
+                    </div>
+
+                    <div class="metric-card exp-card">
+                        <div class="metric-value danger-text">Regulatory &amp; Policy Data</div>
+                        <div class="metric-label">Government, compliance, and sentiment datasets.</div>
+                    </div>
+
+                    <div class="metric-card exp-card">
+                        <div class="metric-value success-text">Knowledge Graph Data</div>
+                        <div class="metric-label">Relational mapping between influencers, institutions, projects, and
+                            brands.</div>
+                    </div>
+                </div>
+
+                <p class="animated-item exp-footnote">
+                    Each dataset connects into the same multilingual, synchronized, and compliant reporting ecosystem.
+                </p>
+            </div>
+
+            <p class="animated-item" style="margin-top:1rem; color:var(--color-text-secondary);">
+                Each dataset connects into the same multilingual, synchronized, and compliant reporting ecosystem.
+            </p>
+        </div>
+
+        <!-- Slide 10b: Roadmap & Risk Mitigation (2-Year Plan) -->
+        <div class="slide">
+            <h2 class="slide-title animated-item">Roadmap & <span class="accent-text">Risk Mitigation</span>
+            </h2>
+            <p class="slide-subtitle animated-item">Clear 2-year plan; data risk removed with targeted
+                acquisition of data provider</p>
+            <div class="grid-3 animated-item">
+                <div class="metric-card" style="text-align: left;">
+                    <div class="metric-value" style="color: var(--color-success);">Year 1</div>
+                    <div class="metric-label">Foundation & Traction</div>
+                    <ul
+                        style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>0.1% market capture in Q1; 150–200 customers by M18. Proof-of-Organic™ adoption across 3
+                            priority verticals. Scale GTM, partnerships, and verification marketplace
+                        </li>
+                    </ul>
+                </div>
+                <div class="metric-card" style="text-align: left;">
+                    <div class="metric-value" style="color: var(--color-accent);">Year 2</div>
+                    <div class="metric-label">Own the Data Layer</div>
+                    <ul
+                        style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li><strong>Acquire koat.ai</strong> in the next raise (not this round)</li>
+                        <li>Full data ownership eliminates vendor risk</li>
+                        <li>Lower COGS, higher margins; expanded data products</li>
+                    </ul>
+                </div>
+                <div class="metric-card" style="text-align: left;">
+                    <div class="metric-value" style="color: var(--color-warning);">Risk</div>
+                    <div class="metric-label">Mitigation</div>
+                    <ul
+                        style="margin-top: 0.75rem; font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>Contractual exclusivity with renewal options</li>
+                        <li>Multi-source ingestion redundancy</li>
+                        <li>Acquisition plan addresses long-term dependency</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Business Model (Revised) -->
+        <div class="slide">
+            <h2 class="slide-title animated-item">
+                <span class="accent-text">Business</span> Model
+            </h2>
+            <p class="slide-subtitle animated-item">
+                SocialAudits operates a hybrid model — combining transaction-based, recurring, and
+                performance-driven revenue.
+            </p>
+
+            <!-- Core Revenue Tiers -->
+            <div class="grid-3 animated-item" style="margin-top: 1rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$59–$599</div>
+                    <div class="metric-label">Self-Serve Audits</div>
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Pay-per-report pricing for brands, creators, and agencies.
+                    </p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$2K–$20K/mo</div>
+                    <div class="metric-label">Data Licensing</div>
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Recurring access to APIs, dashboards, and analytics data feeds.
+                    </p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">5–10%</div>
+                    <div class="metric-label">Enterprise Performance</div>
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Pay-as-you-save model — % of verified fraud prevention or ROI lift.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Alignment Summary -->
+            <div class="grid-3 animated-item" style="margin-top: 2rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">Aligned</div>
+                    <div class="metric-label">With Outcomes</div>
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        We only win when clients reduce waste.
+                    </p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">Scalable</div>
+                    <div class="metric-label">With Usage</div>
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Margins improve as data flows and integrations grow.
+                    </p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">Expansive</div>
+                    <div class="metric-label">With Data</div>
+                    <p style="margin-top: 0.6rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Each audit enhances accuracy across the network.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Market Size (Consolidated) -->
+        <div class="slide" id="market-size">
+            <h2 class="slide-title animated-item">MARKET <span class="accent-text">SIZE</span></h2>
+            <p class="slide-subtitle animated-item">Consolidated TAM / SAM / SOM with growth trajectory</p>
+
+            <!-- Top Metric Boxes -->
+            <div class="market-metrics">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$32.55B</div>
+                    <div class="metric-label">TAM (Global)</div>
+                    <p>Influencer marketing industry size (2025) — projected to reach <strong>$121.81B by 2030</strong>.
+                    </p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$11.97B</div>
+                    <div class="metric-label">SAM (North America 2025)</div>
+                    <p>~35–37% of global market; regional base of <strong>$8.41B in 2024</strong>.</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">$13.4M–20.3M</div>
+                    <div class="metric-label">SOM (Year 1 @ 0.1%)</div>
+                    <p>Initial penetration target.</p>
+
+                    <div class="sources">Sources: Influencer Marketing Hub 2024; Statista 2024; Grand View Research
+                        2024.</div>
+                </div>
+            </div>
+
+            <!-- Centered Trajectory Chart -->
+            <div class="trajectory-container">
+                <h3>Trajectory</h3>
+                <div class="trajectory-chart">
+                    <canvas id="marketBar"></canvas>
+                </div>
+            </div>
+
+            <p class="slide-description animated-item sources">
+                Sources: Influencer Marketing Hub 2025, Mordor Intelligence 2025, Grand View, Fortune BI, eMarketer,
+                Statista
+            </p>
+        </div>
+
+
+
+        <!-- Slide 8: The Ask & Use of Funds -->
+        <div class="slide" id="use-funds">
+            <h2 class="slide-title animated-item">The Ask & <span class="accent-text">Use of Funds</span></h2>
+            <p class="slide-subtitle animated-item">$10M to accelerate revenue and build the data moat</p>
+            <div class="grid-2 animated-item">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$10M</div>
+                    <div class="metric-label">Raise @ $50M Valuation</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">18 Months</div>
+                    <div class="metric-label">Runway | Q1 target: 0.1% capture</div>
+                </div>
+            </div>
+            <div class="grid-2 animated-item" style="margin-top: 1rem; text-align: left; gap: 1rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$2.0M</div>
+                    <div class="metric-label">Sales & Marketing (20%)</div>
+                    <ul
+                        style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>Marketing campaigns & brand → 150–200 customers by M18</li>
+                    </ul>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">$1.5M</div>
+                    <div class="metric-label">Data Acquisition (15%)</div>
+                    <ul
+                        style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>Data licensing & enrichment</li>
+                        <li>Ingestion & infrastructure</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid-2 animated-item" style="margin-top: 1rem; text-align: left; gap: 1rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$1.7M</div>
+                    <div class="metric-label">Operations (17%)</div>
+                    <ul
+                        style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>Team, overhead, legal & compliance</li>
+                    </ul>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-danger);">$0.8M</div>
+                    <div class="metric-label">Product & Eng. (8%)</div>
+                    <ul
+                        style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>Platform stability, APIs, security</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="grid-2 animated-item" style="margin-top: 1rem; text-align: left; gap: 1rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$0.5M</div>
+                    <div class="metric-label">Partnerships & GTM (5%)</div>
+                    <ul
+                        style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>Strategic partnerships & events</li>
+                    </ul>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$3.5M</div>
+                    <div class="metric-label">Bridge to $50M Raise (35%)</div>
+                    <ul
+                        style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5;">
+                        <li>18-month runway & next-round preparation → profitability</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Trimmed highlight tiles moved to chart slide -->
+        </div>
+
+        <!-- Slide 8b: Use of Funds Visualization -->
+        <div class="slide" id="use-funds-chart">
+            <h2 class="slide-title animated-item">Use of <span class="accent-text">Funds</span></h2>
+            <p class="slide-subtitle animated-item">Updated allocation: $2M marketing, $3.5M bridge</p>
+            <div class="animated-item"
+                style="margin-top: 0.5rem; width: 100%; max-width: 1100px; margin-left: auto; margin-right: auto; overflow: visible;">
+                <div class="funds-chart-wrap">
+                    <canvas id="fundsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Slide 9: Financial Projections -->
+        <div class="slide">
+            <h2 class="slide-title animated-item">Financial <span class="success-text">Projections</span></h2>
+            <p class="slide-subtitle animated-item">Clear path to $174M+ ARR with strong unit economics</p>
+            <div class="grid-3 animated-item">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$13.4M-20.3M</div>
+                    <div class="metric-label">Year 1 ARR</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">134-203
+                        customers @ $100K avg</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$53.6M-81.2M</div>
+                    <div class="metric-label">Year 2 ARR</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">300% YoY
+                        growth</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">$174.2M-263.9M</div>
+                    <div class="metric-label">Year 3 ARR</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">1.3%
+                        market
+                        penetration</p>
+                </div>
+            </div>
+            <div class="grid-2 animated-item" style="margin-top: 2rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$402M-609M</div>
+                    <div class="metric-label">5-Year Upside (3% penetration)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$1.3B-2.0B+</div>
+                    <div class="metric-label">10-Year Potential (10% penetration)</div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- Slide 15: Path to Profitability -->
+        <div class="slide">
+            <h2 class="slide-title animated-item">Path to <span class="success-text">Profitability</span></h2>
+            <p class="slide-subtitle animated-item">Clear milestones with conservative assumptions</p>
+            <div class="grid-3 animated-item">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$8M - $12M</div>
+                    <div class="metric-label">Month 12: Break-Even</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">80-120
+                        customers @ $100K avg</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-success);">Status:
+                        Profitable</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$13.4M - $20.3M</div>
+                    <div class="metric-label">Month 18: Scale</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">150-200
+                        customers, 30-40% EBITDA</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-accent);">Series A ready
+                        @
+                        $150-200M</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">$25M - $35M</div>
+                    <div class="metric-label">Month 24: Market Leader</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">250-350+
+                        customers</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-warning);">
+                        Self-sustaining
+                        growth</p>
+                </div>
+            </div>
+            <div class="grid-4 animated-item" style="margin-top: 2rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$5K-8K</div>
+                    <div class="metric-label">CAC</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Enterprise
+                        acquisition cost</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$300K-500K</div>
+                    <div class="metric-label">LTV</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">3-5 year
+                        contracts</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">40-60x</div>
+                    <div class="metric-label">LTV/CAC</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Strong
+                        unit
+                        economics</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-danger);">6-8 months</div>
+                    <div class="metric-label">Payback Period</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Fast ROI
+                        for
+                        customers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Exit Strategy -->
+        <div class="slide">
+            <h2 class="slide-title animated-item">Exit <span class="accent-text">Strategy</span></h2>
+            <p class="slide-subtitle animated-item">Multiple paths to 10x+ return</p>
+            <div class="grid-3 animated-item">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$2-5B</div>
+                    <div class="metric-label">Strategic Buyers</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Meta,
+                        Google, TikTok - Platform integrity</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">
+                        Salesforce, HubSpot, Adobe - Martech</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">WPP,
+                        Omnicom, Publicis - Agencies</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$500M-1B</div>
+                    <div class="metric-label">Private Equity</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Rule of
+                        40+
+                        SaaS metrics</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">
+                        Predictable enterprise revenue</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Market
+                        leadership position</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">$200M+ ARR</div>
+                    <div class="metric-label">IPO Potential</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Category-defining company</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">
+                        Essential
+                        infrastructure for $100B+ economy</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Comps:
+                        ZoomInfo ($10B+), HubSpot ($25B+)</p>
+                </div>
+            </div>
+            <div class="grid-4 animated-item" style="margin-top: 2rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">$5B+</div>
+                    <div class="metric-label">Gaming & Esports</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">High
+                        engagement, fraud-prone</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">$8B+</div>
+                    <div class="metric-label">Fashion & Luxury</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Premium
+                        brands, high stakes</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-danger);">$4B+</div>
+                    <div class="metric-label">Travel & Hospitality</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Experience-based marketing</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$10B+</div>
+                    <div class="metric-label">B2B & Professional</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Thought
+                        leadership verification</p>
+                </div>
+            </div>
+            <p class="slide-description animated-item" style="margin-top: 2rem;">
+                <strong class="accent-text">TAM Expansion:</strong> Currently targeting 40% of $32.55B
+                influencer
+                market. Full addressable market exceeds <strong class="accent-text">$100B+</strong> with
+                expansion
+                into these verticals.
+            </p>
+        </div>
+
+        <!-- Slide 13: Team -->
+        <div class="slide">
+            <h2 class="slide-title animated-item">Our <span class="accent-text">Team</span></h2>
+            <p class="slide-subtitle animated-item">Capital-efficient, domain-expert team with proven track
+                records
+            </p>
+            <div class="grid-3 animated-item">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">Alistair Ewart</div>
+                    <div class="metric-label">Founder & CEO</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Co-founder
+                        of koat.ai, 5+ years in data intelligence</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">Deep
+                        expertise in fraud detection & data pipelines</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">Tyler Lockley</div>
+                    <div class="metric-label">Head of Sales</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Proven
+                        B2B
+                        SaaS revenue track record</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">
+                        Enterprise
+                        sales & customer success</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">Sang Lee</div>
+                    <div class="metric-label">COO</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Scaling
+                        specialist & operations expert</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-secondary);">
+                        Process
+                        optimization & team building</p>
+                </div>
+            </div>
+            <div class="grid-2 animated-item" style="margin-top: 2rem;">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">Peter Danihel</div>
+                    <div class="metric-label">Technical Advisor</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">CEO,
+                        Danihel
+                        Group - Enterprise technical architecture</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">koat.ai Team</div>
+                    <div class="metric-label">Development Partner</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">5+ years
+                        executing data pipelines at scale</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Closing -->
+        <div class="slide">
+            <h2 class="slide-title animated-item">Join us in building the <span class="accent-text">verification
+                    layer</span> for the creator economy</h2>
+            <div class="grid-3 animated-item">
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-accent);">$32.55B</div>
+                    <div class="metric-label">Market Opportunity</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">55% of
+                        payments go to bots</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-success);">Proof-of-Organic™</div>
+                    <div class="metric-label">What We're Building</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">
+                        Essential
+                        infrastructure between brands, influencers, & regulators.</p>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" style="color: var(--color-warning);">$10M</div>
+                    <div class="metric-label">Investment</div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);">Gets you
+                        20%
+                        of category-defining company</p>
+                </div>
+            </div>
+            <p class="slide-description animated-item" style="margin-top: 3rem; font-size: 1.1rem; line-height: 1.6;">
+                <strong class="accent-text">Why This Works:</strong> Every platform in this space helps you find
+                influencers. None of them stop you from paying bots.
+                <br>We're building the missing layer and our
+                revenue model means we win when clients stop waste.
+                </br>
+            </p>
+        </div>
+
+
+    </div>
+
+    <!-- NEW Controls Container -->
+    <div id="controls-container">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div id="nav-controls">
+            <button id="prev-btn" class="nav-button" aria-label="Previous Slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                </svg>
+            </button>
+            <button id="next-btn" class="nav-button" aria-label="Next Slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div id="aria-live-region" class="aria-live-region" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = Array.from(document.querySelectorAll('.slide'));
+            const progressBar = document.getElementById('progress-bar');
+            const ariaLiveRegion = document.getElementById('aria-live-region');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentSlideIndex = 0;
+            const totalSlides = slides.length;
+            let chartsInitialized = false;
+
+            function updateControls() {
+                prevBtn.disabled = currentSlideIndex === 0;
+                nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+            }
+
+            function goToSlide(index) {
+                if (index < 0 || index >= totalSlides) return;
+
+                slides[currentSlideIndex].classList.remove('active');
+
+                currentSlideIndex = index;
+                slides[currentSlideIndex].classList.add('active');
+
+                progressBar.style.width = `${((currentSlideIndex + 1) / totalSlides) * 100}%`;
+
+                const titleEl = slides[currentSlideIndex].querySelector('h1, h2');
+                if (titleEl) {
+                    ariaLiveRegion.textContent = `Now showing slide ${currentSlideIndex + 1} of ${totalSlides}: ${titleEl.textContent.trim()}`;
+                }
+
+                updateControls();
+
+                // Initialize charts when report slide (#s6) or funds slides are first shown
+                const activeSlide = slides[currentSlideIndex];
+                if (!chartsInitialized && activeSlide && (activeSlide.id === 's6' || activeSlide.id === 'use-funds' || activeSlide.id === 'use-funds-chart')) {
+                    try {
+                        initCharts();
+                        chartsInitialized = true;
+                    } catch (e) {
+                        console.error('Chart init failed', e);
+                    }
+                }
+            }
+
+            const nextSlide = () => goToSlide(currentSlideIndex + 1);
+            const prevSlide = () => goToSlide(currentSlideIndex - 1);
+
+            // Event Listeners
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    if (currentSlideIndex < totalSlides - 1) nextSlide();
+                }
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    if (currentSlideIndex > 0) prevSlide();
+                }
+            });
+
+            document.getElementById('deck').addEventListener('click', (e) => {
+                if (!e.target.closest('a, button, input, textarea, canvas, video')) {
+                    nextSlide();
+                }
+            });
+
+            // Initial setup
+            goToSlide(0);
+        });
+
+        // Unified charts initialization (Chart.js)
+        function initCharts() {
+            const sentimentCtx = document.getElementById('sentimentChart');
+            const emotionsCtx = document.getElementById('emotionsChart');
+            const impressionsCtx = document.getElementById('impressionsChart');
+            const engagementCtx = document.getElementById('engagementChart');
+            const fundsCtx = document.getElementById('fundsChart');
+            const marketBarCtx = document.getElementById('marketBar');
+
+            if (!window.Chart) return;
+
+            const makeLine = (ctx, labels, datasets) => new Chart(ctx, {
+                type: 'line',
+                data: { labels, datasets },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.06)' } } } }
+            });
+            const makeBar = (ctx, labels, datasets) => new Chart(ctx, {
+                type: 'bar',
+                data: { labels, datasets },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.06)' } } } }
+            });
+
+            const labels = ['08-14', '08-15', '08-16', '08-17', '08-18', '08-19', '08-20'];
+            const palette = ['#10B981', '#6366F1', '#F59E0B', '#EF4444'];
+
+            if (sentimentCtx) makeLine(sentimentCtx, labels, [
+                { data: [45, 50, 60, 75, 85, 70, 55], borderColor: palette[0], backgroundColor: 'transparent', tension: 0.35 },
+                { data: [10, 20, 35, 45, 55, 65, 75], borderColor: palette[1], backgroundColor: 'transparent', tension: 0.35 },
+                { data: [5, 40, 50, 30, 20, 15, 35], borderColor: palette[3], backgroundColor: 'transparent', tension: 0.35 }
+            ]);
+
+            if (emotionsCtx) makeLine(emotionsCtx, labels, [
+                { data: [30, 35, 38, 45, 50, 55, 60], borderColor: palette[1], backgroundColor: 'transparent', tension: 0.35 },
+                { data: [35, 38, 40, 45, 50, 55, 58], borderColor: palette[0], backgroundColor: 'transparent', tension: 0.35 },
+                { data: [8, 9, 10, 12, 14, 13, 12], borderColor: palette[3], backgroundColor: 'transparent', tension: 0.35 }
+            ]);
+
+            if (impressionsCtx) makeBar(impressionsCtx, labels, [
+                { data: [4000, 3500, 4200, 5000, 6000, 6500, 5200], backgroundColor: palette[0] },
+                { data: [3000, 2800, 3100, 3600, 4200, 4700, 3900], backgroundColor: palette[1] },
+                { data: [4500, 4300, 4700, 5200, 6100, 6800, 5900], backgroundColor: palette[2] }
+            ]);
+
+            if (engagementCtx) makeBar(engagementCtx, labels, [
+                { data: [10, 18, 9, 4, 3, 6, 9], backgroundColor: varColor('--color-warning') }
+            ]);
+
+            if (fundsCtx) {
+                const data = {
+                    labels: ['Sales & Marketing (20%)', 'Data (15%)', 'Operations (17%)', 'Prod/Eng (8%)', 'Partnerships & GTM (5%)', 'Bridge to $50M (35%)'],
+                    datasets: [{
+                        data: [20, 15, 17, 8, 5, 35],
+                        backgroundColor: [varColor('--color-accent'), varColor('--color-success'), varColor('--color-warning'), varColor('--color-danger'), '#94A3B8', '#60A5FA'],
+                        borderWidth: 0
+                    }]
+                };
+                new Chart(fundsCtx, {
+                    type: 'doughnut',
+                    data,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right', labels: { boxWidth: 12, color: varColor('--color-text-secondary'), padding: 12 } },
+                            datalabels: {
+                                color: varColor('--color-primary'),
+                                formatter: (value, ctx) => `${value}%`,
+                                font: { weight: '700' },
+                                clamp: true,
+                                anchor: 'center',
+                                align: 'center'
+                            }
+                        },
+                        cutout: '62%'
+                    }
+                });
+            }
+            if (marketBarCtx) {
+                new Chart(marketBarCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Year 1', 'Year 3'],
+                        datasets: [{
+                            data: [15, 219],
+                            backgroundColor: [varColor('--color-accent'), varColor('--color-success')]
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { callback: (v) => `$${v}M` } } } }
+                });
+            }
+        }
+
+        function varColor(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+    </script>
+</body>
+
+</html>
+</html>
