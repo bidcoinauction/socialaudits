@@ -1519,6 +1519,331 @@
         .metric-card .metric-desc {
             margin-top: 0 !important;
         }
+
+        /* Uniform competition card height */
+        #competition .metric-card {
+            min-height: 240px;
+            max-height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        /* Optional: reduce text size for long cards */
+        #competition .metric-card.long-card .metric-desc {
+            font-size: 0.85rem;
+            line-height: 1.25;
+        }
+
+        /* GTM GRID — Guaranteed Isolation */
+        #gtm .gtm-row {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            gap: 1.5rem !important;
+            margin-bottom: 2rem !important;
+        }
+
+        /* Fix card spacing */
+        #gtm .gtm-card {
+            padding: 1.3rem !important;
+            text-align: center !important;
+        }
+
+        /* Prevent text overflow */
+        #gtm .metric-desc {
+            font-size: 0.9rem !important;
+            line-height: 1.35 !important;
+        }
+
+        /* Tablet */
+        @media (max-width: 1100px) {
+            #gtm .gtm-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 750px) {
+            #gtm .gtm-row {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* -------------------------------------------------------
+   GLOBAL SLIDE IMPROVEMENT — Bigger, Cleaner, Readable
+   ------------------------------------------------------- */
+
+/* 1. Increase slide width */
+.slide-inner {
+    max-width: 1350px !important;   /* was ~900–1050 */
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* 2. Improve slide title size */
+.slide-title {
+    font-size: 3.2rem !important;   /* previously ~2.4–2.8 */
+    line-height: 1.15;
+}
+
+/* 3. Improve subtitle readability */
+.slide-subtitle {
+    font-size: 1.35rem !important;
+    line-height: 1.55;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 4. Section headers */
+.section-subheading, .emphasized-heading {
+    font-size: 1.55rem !important;
+    font-weight: 800 !important;
+    margin-top: 2.8rem !important;
+    margin-bottom: 1.3rem !important;
+}
+
+/* 5. Card readability upgrades */
+.metric-card {
+    padding: 2rem 2rem !important;   /* bigger interior */
+    border-radius: 20px !important;
+    font-size: 1.1rem;               /* increase base text */
+}
+
+/* Card titles */
+.metric-value {
+    font-size: 1.8rem !important;
+    font-weight: 800 !important;
+}
+
+/* Labels */
+.metric-label {
+    font-size: 1rem !important;
+    margin-bottom: 0.6rem;
+}
+
+/* Description text inside cards */
+.metric-desc {
+    font-size: 1rem !important;
+    line-height: 1.45 !important;
+}
+
+/* 6. Make grids breathe more */
+.grid-3, .grid-4, .grid-2 {
+    gap: 2rem !important;
+}
+
+/* 7. Mobile responsiveness */
+@media (max-width: 900px) {
+    .slide-title {
+        font-size: 2.4rem !important;
+    }
+    .metric-card {
+        padding: 1.5rem !important;
+    }
+    .metric-value {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* ============================================
+   GLOBAL HIERARCHY FIX — NO HTML CHANGES NEEDED
+   ============================================ */
+
+/* Bigger, cleaner section/page titles */
+.slide-title {
+    font-size: 3.2rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.5px;
+    text-shadow: 0px 3px 8px rgba(0,0,0,0.12);
+}
+
+/* Subtitles more readable */
+.slide-subtitle {
+    font-size: 1.25rem !important;
+    color: #444 !important;
+}
+
+/* --- CARD IMPROVEMENTS --- */
+
+/* Force all descriptive text to neutral color */
+.metric-desc,
+.metric-label,
+.metric-heading {
+    color: #2F2F2F !important;
+}
+
+/* Keep only the TITLE of each card using the accent color */
+.metric-card .metric-value {
+    font-weight: 800 !important;
+}
+
+/* Increase base card size slightly */
+.metric-card {
+    padding: 1.4rem 1.6rem !important;
+    font-size: 1.05rem !important;
+}
+
+/* Make card titles slightly bigger */
+.metric-card .metric-value {
+    font-size: 1.4rem !important;
+}
+
+/* Remove any accidental inherited color tint on card body */
+.metric-card p,
+.metric-card span {
+    color: inherit !important;
+}
+
+/* --- SOCIALAUDITS ALWAYS STAYS PURPLE --- */
+.metric-card .metric-value:contains("SocialAudits") {
+    color: var(--color-accent) !important;
+}
+
+/* FIX: Force all competition cards to equal height */
+#competition .metric-card {
+    min-height: 220px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* FIX: Reduce SocialAudits.ai text size (only inside that card) */
+#competition .metric-card .metric-value:contains("SocialAudits.ai") {
+    font-size: 1.35rem !important;
+}
+#competition .metric-card:has(.metric-value:contains("SocialAudits.ai")) p,
+#competition .metric-card:has(.metric-value:contains("SocialAudits.ai")) .metric-desc {
+    font-size: 0.9rem !important;
+    line-height: 1.25 !important;
+}
+
+/* FIX: Improve spacing inside the SocialAudits card */
+#competition .metric-card:has(.metric-value:contains("SocialAudits.ai")) {
+    padding-top: 1.4rem !important;
+    padding-bottom: 1.2rem !important;
+}
+
+/* =========================================================
+   COMPETITION SLIDE FIX — CLEAN, RELIABLE, NO :contains()
+   ========================================================= */
+
+/* Undo global card overrides ONLY inside competition */
+#competition .metric-card {
+    padding: 1.8rem 1.6rem;
+    font-size: 1rem;
+    border-radius: 16px;
+    min-height: 260px !important;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    color: var(--color-text-secondary) !important;
+}
+
+#competition .metric-card .metric-value {
+    font-size: 1.35rem !important;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+/* Tighten body text but keep readable */
+#competition .metric-card .metric-desc {
+    font-size: 0.92rem !important;
+    line-height: 1.38 !important;
+}
+
+/* ---------------------------------------------------------
+   SOCIALAUDITS CARD — SPECIFIC, STABLE SELECTOR
+   --------------------------------------------------------- */
+
+#competition .metric-card.long-card {
+    border: 2.5px solid var(--color-accent) !important;
+    padding: 1.9rem 1.6rem !important;
+}
+
+#competition .metric-card.long-card .metric-value {
+    color: var(--color-accent) !important;
+    font-size: 1.45rem !important;
+}
+
+#competition .metric-card.long-card .metric-desc {
+    font-size: 0.90rem !important;
+    line-height: 1.32 !important;
+}
+
+/* ---------------------------------------------------------
+   TITLES — BOLDER & CLEARER VISUAL HIERARCHY
+   --------------------------------------------------------- */
+
+.slide-title {
+    font-size: 3.2rem !important;
+    font-weight: 900 !important;
+    text-shadow: 0 3px 8px rgba(0,0,0,0.12);
+}
+
+.slide-subtitle {
+    font-size: 1.28rem !important;
+    color: #444 !important;
+}
+
+/* Make card titles stand out globally */
+.metric-value {
+    font-size: 1.55rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+}
+
+/* Keep SocialAudits purple everywhere */
+.metric-value:where(:not([style*="color"])) {
+    color: var(--color-accent);
+}
+
+/* =========================================================
+   GLOBAL CARD TITLE NORMALIZATION (APPLIES TO ALL SLIDES)
+   ========================================================= */
+
+/* Core card title styling */
+.metric-card .metric-value {
+    font-size: 1.85rem !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.015em;
+    color: inherit; /* keeps each brand color */
+    margin-bottom: 0.35rem;
+    text-align: center;
+}
+
+/* Secondary label below title */
+.metric-card .metric-label,
+.metric-card .metric-heading {
+    font-size: 1.05rem !important;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-align: center;
+}
+
+/* Body copy inside cards */
+.metric-card .metric-desc {
+    font-size: 1rem !important;
+    line-height: 1.45 !important;
+    color: var(--color-text);
+    margin-top: 0.75rem;
+}
+
+/* Extra boost for large cards (optional, keeps proportion) */
+.metric-card.large,
+#competition .metric-card,
+#revenue-streams .metric-card {
+    --title-size: 2rem;
+}
+
+.metric-card.large .metric-value,
+#competition .metric-card .metric-value,
+#revenue-streams .metric-card .metric-value {
+    font-size: var(--title-size) !important;
+}
+
     </style>
 
 </head>
@@ -1593,7 +1918,7 @@
 
                     <p class="slide-subtitle animated-item">
                         A full-stack verification and intelligence platform that restores trust,
-                        eliminates fraud, and aligns spend with real performance.
+                        detects manipulation, and aligns spend with real performance.
                     </p>
 
                     <!-- 2x2 Grid Layout -->
@@ -1800,20 +2125,20 @@
 
 
 
-                        <!-- SocialAudits.ai (highlight) -->
-                        <div class="metric-card"
-                            style="border:2px solid var(--color-accent); display:flex; flex-direction:column; justify-content:space-between;">
+                        <div class="metric-card long-card" style="border:2px solid var(--color-accent);">
+
                             <div>
                                 <div class="metric-value" style="color: var(--color-accent);">SocialAudits.ai</div>
                                 <div class="metric-label">Agencies, Exchanges, Brands, Funds</div>
                             </div>
-                            <p class="metric-desc" style="margin-top:auto;">
+
+                            <p class="metric-desc">
                                 <strong>Tech:</strong> Full-graph ingestion + multilayer verification<br>
                                 <strong>Coverage:</strong> 100% of creator & audience graph<br>
-                                <strong>Pricing:</strong> 24H — $29.99, 7D — $159.99, 
-                                <br>30D — $349.99</p>
-                                <em>+ Pay-per-data credits (next slide)</em>
+                                <strong>Pricing:</strong> 24H — $29.99, 7D — $159.99, 30D — $349.99<br>
+                                <em>+ Pay-per-data credits</em>
                             </p>
+
                         </div>
 
                     </div>
@@ -1953,7 +2278,8 @@
                         </div>
 
                         <div class="metric-card">
-                            <div class="metric-value" style="color: var(--color-warning);">Automation &amp; Integrations</div>
+                            <div class="metric-value" style="color: var(--color-warning);">Automation &amp; Integrations
+                            </div>
                             <p class="metric-desc">
                                 Metered billing tied to ingestion volume, automated enrichment, and workflow-level
                                 intelligence triggers.
@@ -2159,101 +2485,103 @@
         </div>
     </div>
 
-<!-- GO-TO-MARKET STRATEGY -->
-<div class="slide" id="gtm">
-    <div class="slide-inner gtm-container">
+    <!-- GO-TO-MARKET STRATEGY -->
+    <div class="slide" id="gtm">
+        <div class="slide-inner">
+            <h2 class="slide-title animated-item">GO-TO-<span class="accent-text">MARKET</span> STRATEGY</h2>
+            <p class="slide-subtitle animated-item">
+                Multi-channel distribution built around exclusive partnerships and compounding model performance
+                advantage.
+            </p>
 
-        <h2 class="slide-title animated-item">
-            GO-TO-<span class="accent-text">MARKET</span> STRATEGY
-        </h2>
+            <!-- PRIMARY CHANNELS -->
+            <h3 class="section-subheading animated-item emphasized-heading">Primary Channels</h3>
 
-        <p class="slide-subtitle animated-item">
-            Multi-channel distribution built around exclusive partnerships and 
-            compounding model performance advantage.
-        </p>
+            <div class="gtm-row animated-item">
+                <div class="gtm-card metric-card">
+                    <div class="metric-value text-accent">35%</div>
+                    <div class="metric-label">Ecosystem Partnerships</div>
+                </div>
 
-        <!-- PRIMARY CHANNELS -->
-        <h3 class="section-subheading animated-item emphasized-heading">Primary Channels</h3>
+                <div class="gtm-card metric-card">
+                    <div class="metric-value text-success">45%</div>
+                    <div class="metric-label">Direct Enterprise Sales</div>
+                </div>
 
-        <div class="gtm-grid animated-item top-grid">
-            <div class="metric-card compact">
-                <div class="metric-value text-accent">35%</div>
-                <div class="metric-label">Ecosystem Partnerships</div>
+                <div class="gtm-card metric-card">
+                    <div class="metric-value text-warning">20%</div>
+                    <div class="metric-label">Content / Inbound</div>
+                </div>
             </div>
-            <div class="metric-card compact">
-                <div class="metric-value text-success">45%</div>
-                <div class="metric-label">Direct Enterprise Sales</div>
+
+            <!-- DESCRIPTIONS -->
+            <div class="gtm-row animated-item">
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading">Ecosystem Partnerships</div>
+                    <p class="metric-desc">
+                        Network-level integrations, creator & gaming distribution, and Solvent Labs expansion.
+                    </p>
+                </div>
+
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading">Direct Enterprise Sales</div>
+                    <p class="metric-desc">
+                        Pilot-first enterprise motion focused on identity graphs, authentication, and fraud detection.
+                    </p>
+                </div>
+
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading">Content / Inbound</div>
+                    <p class="metric-desc">
+                        Audit-driven inbound funnel converting high-intent buyers through proof-of-work credibility.
+                    </p>
+                </div>
             </div>
-            <div class="metric-card compact">
-                <div class="metric-value text-warning">20%</div>
-                <div class="metric-label">Content / Inbound</div>
+
+            <!-- EXPANSION & PILOTS -->
+            <h3 class="section-subheading animated-item emphasized-heading">Expansion & Pilots</h3>
+
+            <div class="gtm-row animated-item">
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading"><strong style="color:var(--color-warning);">Kraken Pilot</strong></div>
+                    <p class="metric-desc">Live validation pilot underway using full-graph scoring.</p>
+                </div>
+
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading"><strong style="color:var(--color-accent);">Solvent Labs</strong></div>
+                    <p class="metric-desc">Active pilot integrating identity verification into creator & gaming
+                        ecosystem.</p>
+                </div>
+
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading"><strong style="color:var(--color-success);">BitLayer (Pre-TGE)</strong>
+                    </div>
+                    <p class="metric-desc">4-month closed beta completed → committed for Q1 ’26 commercial integration.
+                    </p>
+                </div>
             </div>
+
+            <div class="gtm-row animated-item">
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading"><strong style="color:var(--color-accent);">NutriFresh CPG</strong></div>
+                    <p class="metric-desc">LOI secured → enterprise verification rollout.</p>
+                </div>
+
+                <div class="gtm-card metric-card">
+                    <div class="metric-heading"><strong style="color:var(--color-success);">True North Mortgage</strong>
+                    </div>
+                    <p class="metric-desc">Identity graph + fraud detection pilot initiated.</p>
+                </div>
+
+                <div class="gtm-card metric-card">
+                    <div class="metric-value text-accent">$10B+</div>
+                    <div class="metric-label">Partner Ecosystem Market Cap</div>
+                </div>
+            </div>
+
         </div>
-
-        <div class="gtm-grid animated-item description-grid">
-            <div class="metric-card compact">
-                <div class="metric-heading">Ecosystem Partnerships</div>
-                <p class="metric-desc">
-                    Network-level integrations, creator & gaming distribution, and Solvent Labs expansion.
-                </p>
-            </div>
-            <div class="metric-card compact">
-                <div class="metric-heading">Direct Enterprise Sales</div>
-                <p class="metric-desc">
-                    Pilot-first enterprise motion focused on identity graphs, authentication, and fraud detection.
-                </p>
-            </div>
-            <div class="metric-card compact">
-                <div class="metric-heading">Content / Inbound</div>
-                <p class="metric-desc">
-                    Audit-driven inbound funnel converting high-intent buyers through proof-of-work credibility.
-                </p>
-            </div>
-        </div>
-
-        <!-- EXPANSION & PILOTS -->
-        <h3 class="section-subheading animated-item emphasized-heading">Expansion & Pilots</h3>
-
-        <div class="gtm-grid animated-item">
-            <div class="metric-card">
-                <div class="metric-heading"><strong style="color:var(--color-warning);">Kraken Pilot</strong></div>
-                <p class="metric-desc">Live validation pilot underway using full-graph scoring.</p>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-heading"><strong style="color:var(--color-accent);">Solvent Labs</strong></div>
-                <p class="metric-desc">Active pilot integrating identity verification into creator & gaming ecosystem.</p>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-heading"><strong style="color:var(--color-success);">BitLayer (Pre-TGE)</strong></div>
-                <p class="metric-desc">
-                    4-month closed beta completed → committed for Q1 ’26 commercial integration.
-                </p>
-            </div>
-        </div>
-
-        <div class="gtm-grid animated-item">
-            <div class="metric-card">
-                <div class="metric-heading"><strong style="color:var(--color-accent);">NutriFresh CPG</strong></div>
-                <p class="metric-desc">LOI secured → enterprise verification rollout.</p>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-heading"><strong style="color:var(--color-success);">True North Mortgage</strong></div>
-                <p class="metric-desc">Identity graph + fraud detection pilot initiated.</p>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-value text-accent">$10B+</div>
-                <div class="metric-label">Partner Ecosystem Market Cap</div>
-            </div>
-        </div>
-
     </div>
-</div>
 
-    
 
     <!-- ROADMAP & RISK MITIGATION -->
     <div class="slide" id="roadmap">
@@ -2489,89 +2817,123 @@ box-shadow: inset 0 0 10px rgba(0,0,0,0.06);
                 Revenue Streams & <span class="accent-text">Growth Inflection</span>
             </h2>
 
-            <p class="slide-subtitle animated-item">
-                Revenue evolution as simulations become the dominant enterprise product.
+            <p class="slide-subtitle animated-item" style="font-size:1.25rem; max-width:850px; margin:auto;">
+                As simulations become the dominant enterprise product, revenue scales in structured phases.
             </p>
 
-            <!-- CENTERED GRID WRAPPER -->
-            <div class="animated-item" style="
-                margin-top: 2.5rem;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-                max-width: 800px;
-                margin-left: auto;
-                margin-right: auto;
-             ">
+            <style>
+                #revenue-streams .rev-grid {
+                    margin-top: 3rem;
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 2rem;
+                    max-width: 1050px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
 
-                <style>
-                    .revenue-card {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        align-items: center;
-                        text-align: center;
-                        min-height: 220px;
-                        padding: 1.2rem;
-                    }
+                #revenue-streams .rev-card {
+                    position: relative;
+                    padding: 2rem 1.8rem;
+                    background: #ffffff;
+                    border-radius: 20px;
+                    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.06);
+                    transition: 0.2s ease;
+                }
 
-                    .revenue-card .metric-value {
-                        font-weight: 700;
-                        margin-bottom: 0.4rem;
-                        font-size: 1.1rem;
-                    }
+                #revenue-streams .rev-card:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+                }
 
-                    .revenue-card .metric-label {
-                        font-size: 0.9rem;
-                        color: var(--color-text-secondary);
-                        margin-bottom: 0.8rem;
+                #revenue-streams .rev-phase {
+                    font-size: 1rem;
+                    font-weight: 800;
+                    margin-bottom: 0.4rem;
+                    letter-spacing: 0.3px;
+                    text-transform: uppercase;
+                }
+
+                #revenue-streams .rev-title {
+                    font-size: 1.45rem;
+                    font-weight: 700;
+                    margin-bottom: 1rem;
+                    color: var(--color-text-primary);
+                }
+
+                #revenue-streams .rev-desc {
+                    font-size: 1.05rem;
+                    line-height: 1.55;
+                    color: var(--color-text-secondary);
+                }
+
+                /* Left timeline gradient marker */
+                #revenue-streams .rev-card:before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    bottom: 0;
+                    width: 5px;
+                    border-radius: 6px 0 0 6px;
+                    background: linear-gradient(180deg,
+                            var(--color-accent),
+                            var(--color-success));
+                }
+
+                @media (max-width: 900px) {
+                    #revenue-streams .rev-grid {
+                        grid-template-columns: 1fr;
                     }
-                </style>
+                }
+            </style>
+
+            <div class="rev-grid animated-item">
 
                 <!-- Q1–Q3 2026 -->
-                <div class="metric-card revenue-card">
-                    <div class="metric-value">Q1–Q3 2026</div>
-                    <div class="metric-label">Reports Only</div>
-                    <p class="metric-desc">
+                <div class="metric-card rev-card">
+                    <div class="rev-phase" style="color:var(--color-accent);">Phase 1 — Reports Only</div>
+                    <div class="rev-title">Q1–Q3 2026</div>
+                    <p class="rev-desc">
                         <strong>Avg ARR / Customer:</strong> $7,500–$50K<br>
                         <strong>Projected ARR:</strong> $0.5M–$1.2M
                     </p>
                 </div>
 
                 <!-- Q4 2026 -->
-                <div class="metric-card revenue-card">
-                    <div class="metric-value">Q4 2026</div>
-                    <div class="metric-label">Full Stack (Reports + Simulations)</div>
-                    <p class="metric-desc">
+                <div class="metric-card rev-card">
+                    <div class="rev-phase" style="color:var(--color-success);">Phase 2 — Full Stack</div>
+                    <div class="rev-title">Q4 2026</div>
+                    <p class="rev-desc">
                         <strong>Avg ARR / Customer:</strong> $80K–$180K+<br>
                         <strong>Projected ARR:</strong> $3M–$8M+
                     </p>
                 </div>
 
                 <!-- End 2027 -->
-                <div class="metric-card revenue-card">
-                    <div class="metric-value">End 2027</div>
-                    <div class="metric-label">Simulation Primary</div>
-                    <p class="metric-desc">
+                <div class="metric-card rev-card">
+                    <div class="rev-phase" style="color:var(--color-warning);">Phase 3 — Simulation Primary</div>
+                    <div class="rev-title">End 2027</div>
+                    <p class="rev-desc">
                         <strong>Avg ARR / Customer:</strong> $150K–$350K+<br>
                         <strong>Projected ARR:</strong> $12M–$25M+
                     </p>
                 </div>
 
                 <!-- End 2028 -->
-                <div class="metric-card revenue-card">
-                    <div class="metric-value">End 2028</div>
-                    <div class="metric-label">Simulation Dominant</div>
-                    <p class="metric-desc">
+                <div class="metric-card rev-card">
+                    <div class="rev-phase" style="color:#6a5cff;">Phase 4 — Simulation Dominant</div>
+                    <div class="rev-title">End 2028</div>
+                    <p class="rev-desc">
                         <strong>Avg ARR / Customer:</strong> $250K–$500K+<br>
                         <strong>Projected ARR:</strong> $30M–$60M+
                     </p>
                 </div>
 
             </div>
+
         </div>
     </div>
-
 
 
     <!-- TEAM & GOVERNANCE -->
