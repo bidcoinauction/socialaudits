@@ -2161,95 +2161,49 @@
 
 <!-- GO-TO-MARKET STRATEGY -->
 <div class="slide" id="gtm">
-    <div class="slide-inner">
+    <div class="slide-inner gtm-container">
 
-        <h2 class="slide-title animated-item">GO-TO-<span class="accent-text">MARKET</span> STRATEGY</h2>
+        <h2 class="slide-title animated-item">
+            GO-TO-<span class="accent-text">MARKET</span> STRATEGY
+        </h2>
+
         <p class="slide-subtitle animated-item">
-            Multi-channel distribution built around exclusive partnerships and compounding model performance advantage.
+            Multi-channel distribution built around exclusive partnerships and 
+            compounding model performance advantage.
         </p>
-
-        <style>
-            /* Responsive GTM Fix */
-            #gtm .gtm-grid,
-            #gtm .description-cards,
-            #gtm .expansion-grid {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1.2rem;
-            }
-
-            /* Make grids shrink on small screens */
-            @media (max-width: 1100px) {
-                #gtm .gtm-grid,
-                #gtm .description-cards,
-                #gtm .expansion-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
-
-            @media (max-width: 700px) {
-                #gtm .gtm-grid,
-                #gtm .description-cards,
-                #gtm .expansion-grid {
-                    grid-template-columns: repeat(1, 1fr);
-                }
-            }
-
-            /* Reduce card padding to prevent height overflow */
-            #gtm .metric-card {
-                padding: 0.9rem 1rem !important;
-            }
-
-            /* Reduce heading spacing */
-            #gtm h3.section-subheading {
-                margin: 1.5rem 0 1rem;
-            }
-
-            /* Slightly compress metric desc text */
-            #gtm .metric-desc {
-                font-size: 0.85rem;
-                line-height: 1.3;
-            }
-
-            /* Limit max-width to prevent spreading too wide */
-            #gtm .slide-inner {
-                max-width: 1100px;
-                margin: 0 auto;
-            }
-        </style>
 
         <!-- PRIMARY CHANNELS -->
         <h3 class="section-subheading animated-item emphasized-heading">Primary Channels</h3>
 
-        <div class="gtm-grid animated-item" style="margin-bottom: 1.5rem;">
-            <div class="metric-card">
+        <div class="gtm-grid animated-item top-grid">
+            <div class="metric-card compact">
                 <div class="metric-value text-accent">35%</div>
                 <div class="metric-label">Ecosystem Partnerships</div>
             </div>
-            <div class="metric-card">
+            <div class="metric-card compact">
                 <div class="metric-value text-success">45%</div>
                 <div class="metric-label">Direct Enterprise Sales</div>
             </div>
-            <div class="metric-card">
+            <div class="metric-card compact">
                 <div class="metric-value text-warning">20%</div>
                 <div class="metric-label">Content / Inbound</div>
             </div>
         </div>
 
-        <div class="description-cards animated-item" style="margin-bottom: 2rem;">
-            <div class="metric-card">
+        <div class="gtm-grid animated-item description-grid">
+            <div class="metric-card compact">
                 <div class="metric-heading">Ecosystem Partnerships</div>
                 <p class="metric-desc">
                     Network-level integrations, creator & gaming distribution, and Solvent Labs expansion.
                 </p>
             </div>
-            <div class="metric-card">
+            <div class="metric-card compact">
                 <div class="metric-heading">Direct Enterprise Sales</div>
                 <p class="metric-desc">
                     Pilot-first enterprise motion focused on identity graphs, authentication, and fraud detection.
                 </p>
             </div>
-            <div class="metric-card">
+            <div class="metric-card compact">
                 <div class="metric-heading">Content / Inbound</div>
                 <p class="metric-desc">
                     Audit-driven inbound funnel converting high-intent buyers through proof-of-work credibility.
@@ -2257,137 +2211,48 @@
             </div>
         </div>
 
-  <!-- EXPANSION & PILOTS -->
-<h3 class="section-subheading animated-item emphasized-heading">Expansion & Pilots</h3>
+        <!-- EXPANSION & PILOTS -->
+        <h3 class="section-subheading animated-item emphasized-heading">Expansion & Pilots</h3>
 
-<div class="expansion-grid animated-item" style="margin-top:1.5rem;">
+        <div class="gtm-grid animated-item">
+            <div class="metric-card">
+                <div class="metric-heading"><strong style="color:var(--color-warning);">Kraken Pilot</strong></div>
+                <p class="metric-desc">Live validation pilot underway using full-graph scoring.</p>
+            </div>
 
-    <!-- Kraken -->
-    <div class="metric-card">
-        <div class="metric-heading">
-            <strong style="color:var(--color-warning);">Kraken Pilot</strong>
+            <div class="metric-card">
+                <div class="metric-heading"><strong style="color:var(--color-accent);">Solvent Labs</strong></div>
+                <p class="metric-desc">Active pilot integrating identity verification into creator & gaming ecosystem.</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-heading"><strong style="color:var(--color-success);">BitLayer (Pre-TGE)</strong></div>
+                <p class="metric-desc">
+                    4-month closed beta completed → committed for Q1 ’26 commercial integration.
+                </p>
+            </div>
         </div>
-        <p class="metric-desc">Live validation pilot underway using full-graph scoring.</p>
-    </div>
 
-    <!-- Solvent Labs -->
-    <div class="metric-card">
-        <div class="metric-heading">
-            <strong style="color:var(--color-accent);">Solvent Labs</strong>
+        <div class="gtm-grid animated-item">
+            <div class="metric-card">
+                <div class="metric-heading"><strong style="color:var(--color-accent);">NutriFresh CPG</strong></div>
+                <p class="metric-desc">LOI secured → enterprise verification rollout.</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-heading"><strong style="color:var(--color-success);">True North Mortgage</strong></div>
+                <p class="metric-desc">Identity graph + fraud detection pilot initiated.</p>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-value text-accent">$10B+</div>
+                <div class="metric-label">Partner Ecosystem Market Cap</div>
+            </div>
         </div>
-        <p class="metric-desc">Active pilot integrating identity verification into creator & gaming ecosystem.</p>
-    </div>
 
-    <!-- BitLayer -->
-    <div class="metric-card">
-        <div class="metric-heading">
-            <strong style="color:var(--color-success);">BitLayer (Pre-TGE)</strong>
-        </div>
-        <p class="metric-desc">4-month closed beta completed → committed for Q1 ’26 commercial integration.</p>
     </div>
-
-    <!-- NutriFresh -->
-    <div class="metric-card">
-        <div class="metric-heading">
-            <strong style="color:var(--color-accent);">NutriFresh CPG</strong>
-        </div>
-        <p class="metric-desc">LOI secured → enterprise verification rollout.</p>
-    </div>
-
-    <!-- True North -->
-    <div class="metric-card">
-        <div class="metric-heading">
-            <strong style="color:var(--color-success);">True North Mortgage</strong>
-        </div>
-        <p class="metric-desc">Identity graph + fraud detection pilot initiated.</p>
-    </div>
-
-    <!-- Market Cap -->
-    <div class="metric-card">
-        <div class="metric-value text-accent">$10B+</div>
-        <div class="metric-label">Partner Ecosystem Market Cap</div>
-    </div>
-
 </div>
 
-<style>
-    /* -----------------------------------
-       GTM — Expansion & Pilots ONLY
-    ------------------------------------ */
-    
-    #gtm .expansion-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.2rem;
-        max-width: 1100px;
-        margin: 0 auto;
-    }
-    
-    /* Tablet */
-    @media (max-width: 1100px) {
-        #gtm .expansion-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-    
-    /* Mobile */
-    @media (max-width: 700px) {
-        #gtm .expansion-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-    
-    /* -----------------------------------
-       Preserve TOP SECTION layouts
-    ------------------------------------ */
-    #gtm .gtm-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-        max-width: 1100px;
-        margin: 0 auto 2rem;
-    }
-    
-    #gtm .description-cards {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-        max-width: 1100px;
-        margin: 0 auto 2rem;
-    }
-    
-    /* Responsive for top area */
-    @media (max-width: 900px) {
-        #gtm .gtm-grid,
-        #gtm .description-cards {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-    
-    @media (max-width: 650px) {
-        #gtm .gtm-grid,
-        #gtm .description-cards {
-            grid-template-columns: 1fr;
-        }
-    }
-    
-    /* -----------------------------------
-       General Card Compression
-    ------------------------------------ */
-    #gtm .metric-card {
-        padding: 1rem 1.2rem !important;
-    }
-    
-    #gtm .metric-desc {
-        font-size: 0.9rem !important;
-        line-height: 1.35 !important;
-    }
-    
-    #gtm .slide-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    </style>
     
 
     <!-- ROADMAP & RISK MITIGATION -->
@@ -3006,4 +2871,3 @@ box-shadow: inset 0 0 10px rgba(0,0,0,0.06);
 </html>
 
 </html>
-
