@@ -1692,35 +1692,18 @@
 
 /* Remove any accidental inherited color tint on card body */
 .metric-card p,
-.metric-card span {
-    color: inherit !important;
-}
-
-/* --- SOCIALAUDITS ALWAYS STAYS PURPLE --- */
-.metric-card .metric-value:contains("SocialAudits") {
-    color: var(--color-accent) !important;
-}
+.metric-card span {/* removed non-standard selector block */
 
 /* FIX: Force all competition cards to equal height */
-#competition .metric-card {
-    min-height: 220px !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-/* FIX: Reduce SocialAudits.ai text size (only inside that card) */
-#competition .metric-card .metric-value:contains("SocialAudits.ai") {
-    font-size: 1.35rem !important;
-}
-#competition .metric-card:has(.metric-value:contains("SocialAudits.ai")) p,
-#competition .metric-card:has(.metric-value:contains("SocialAudits.ai")) .metric-desc {
+#competition .metric-card {/* removed non-standard selector block */
+#competition .metric-card:has(.metric-value:contains("SocialAudits")) p,
+#competition .metric-card:has(.metric-value:contains("SocialAudits")) .metric-desc {
     font-size: 0.9rem !important;
     line-height: 1.25 !important;
 }
 
 /* FIX: Improve spacing inside the SocialAudits card */
-#competition .metric-card:has(.metric-value:contains("SocialAudits.ai")) {
+#competition .metric-card:has(.metric-value:contains("SocialAudits")) {
     padding-top: 1.4rem !important;
     padding-bottom: 1.2rem !important;
 }
@@ -1900,18 +1883,7 @@
 
 /* Card body text */
 .metric-card .metric-desc,
-.metric-card p {
-    font-size: 0.95rem !important;
-    line-height: 1.45 !important;
-    color: var(--color-text-secondary) !important;
-    margin: 0;
-}
-
-/* Maintain SocialAudits purple */
-.metric-value[style*="SocialAudits"],
-.metric-value:contains("SocialAudits") {
-    color: var(--color-accent) !important;
-}
+.metric-card p {/* removed non-standard selector block */
 
 /* ============================
    GLOBAL TYPOGRAPHY NORMALIZER
@@ -1969,20 +1941,55 @@
 
 /* Card body text */
 .metric-card .metric-desc,
-.metric-card p {
-    font-size: 0.95rem !important;
-    line-height: 1.45 !important;
-    color: var(--color-text-secondary) !important;
-    margin: 0;
-}
-
-/* Maintain SocialAudits purple */
-.metric-value[style*="SocialAudits"],
-.metric-value:contains("SocialAudits") {
-    color: var(--color-accent) !important;
-}
+.metric-card p {/* removed non-standard selector block */
 
     </style>
+
+
+<style id="cc-refactor">
+/* Consolidated core sizes – prefer classes over !important; scope exceptions by slide id */
+.slide-title { font-size: 3rem; line-height: 1.1; }
+.slide-subtitle { font-size: 1.25rem; opacity: .85; }
+.metric-card .metric-title { font-size: 1.05rem; }
+.metric-card .metric-value { font-size: 1.6rem; font-weight: 700; }
+
+/* Competition layout without non-standard selectors */
+#competition .metric-card { min-height: 240px; padding: 16px; }
+
+/* Brand domain caption */
+.brand-domain { letter-spacing: .2px; }
+
+/* Pricing explainer chip */
+.pricing-explainer strong { margin-right: 6px; }
+</style>
+
+
+<style id="cc-tighten">
+/* Global rhythm */
+section, .slide, [data-slide] { padding-top: 28px; padding-bottom: 28px; }
+.slide-title { margin-bottom: 10px; letter-spacing: -0.2px; }
+.slide-subtitle { margin-top: 2px; margin-bottom: 12px; }
+
+/* Cards */
+.metric-card { margin: 8px; border-radius: 12px; }
+.metric-card .metric-title { margin-bottom: 6px; }
+.metric-card .metric-value { line-height: 1.15; }
+
+/* Hero */
+#cover .slide-title { font-size: 3.2rem; }
+#cover .brand-domain { margin-top: 4px; }
+
+/* Traction */
+#traction .metric-card { min-height: 160px; }
+
+/* Competition */
+#competition .metric-card { min-height: 232px; }
+#competition .metric-title { font-weight: 600; }
+
+/* Spacing utilities (used if present in deck) */
+.gap-compact > * + * { margin-top: 8px; }
+.stack-tight > * + * { margin-top: 10px; }
+</style>
 
 </head>
 
@@ -1995,6 +2002,7 @@
                     src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png"
                     alt="SocialAudits logo" />
                 <h1 class="slide-title animated-item">SocialAudits</h1>
+<p class="brand-domain" style="margin-top:8px;opacity:.75;font-size:0.9em;">socialaudits.ai</p>
                 <p class="slide-subtitle animated-item">The World's First Influencer Forensics Platform</p>
             </div>
 
@@ -2266,7 +2274,7 @@
                         <div class="metric-card long-card" style="border:2px solid var(--color-accent);">
 
                             <div>
-                                <div class="metric-value" style="color: var(--color-accent);">SocialAudits.ai</div>
+                                <div class="metric-value" style="color: var(--color-accent);">SocialAudits</div>
                                 <div class="metric-label">Agencies, Exchanges, Brands, Funds</div>
                             </div>
 
@@ -2830,7 +2838,7 @@
 
                 <p class="metric-desc" style="margin-top: 1rem; line-height: 1.4rem;">
                     <strong>Minimum lead check:</strong> $1M<br>
-                    <strong>Discount:</strong> 20% discount on pre-money valuation → effective $15M pre<br>
+                    <strong>Discount:</strong> 20% discount on round terms<br>
                     <strong>Rights:</strong> Board seat + full pro-rata rights<br>
                     <strong>Timing:</strong> Closing December 2025 — one lead investor slot remaining
                 </p>
