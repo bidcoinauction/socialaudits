@@ -1,111 +1,737 @@
-<!-- HERO -->
-<header class="text-center mb-14">
-  <img class="mx-auto w-40 md:w-48 mb-4" src="https://updatedcardscript.standard.us-east-1.oortstorages.com/socialaudits_inverse.png" alt="SocialAudits Logo"/>
-  <h1 class="title">SocialAudits</h1>
-  <p class="subtitle">
-    The <span class="accent font-bold">Proof-of-Organic™</span> verification layer for influencer marketing—pay only for <strong>verifiable human reach</strong>.
-  </p>
-  <div class="mt-5 flex flex-wrap items-center justify-center gap-2">
-    <span class="chip">Pre-payment verification</span>
-    <span class="chip">94%+ bot detection</span>
-    <span class="chip">100+ languages</span>
-    <span class="chip">20,000+ publishers</span>
-  </div>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SocialAudits.ai — Investor One-Pager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- PAIN → VALUE (merged) -->
-<section class="mb-12 grid-3">
-  <div class="metric">
-    <div class="value danger">55%</div>
-    <div class="label">Fake Engagement</div>
-    <p class="mt-2 text-sm text-gray-500">Spend leaks to bots & paid farms.</p>
-  </div>
-  <div class="metric">
-    <div class="value accent">Gate</div>
-    <div class="label">Before You Pay</div>
-    <p class="mt-2 text-sm text-gray-500">Funds released only after verification.</p>
-  </div>
-  <div class="metric">
-    <div class="value success">ROI ↑</div>
-    <div class="label">No Synthetic Reach</div>
-    <p class="mt-2 text-sm text-gray-500">Budget reaches real people only.</p>
-  </div>
-</section>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- PIPELINE (how it works, once) -->
-<section class="mb-12">
-  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Reporting Pipeline</h2>
-  <p class="subtitle">Six stages turn signals into payment-grade verification.</p>
-  <div class="pipeline mt-6">
-    <div class="stage"><h4>Ingest</h4><p>All major socials + 20k publishers.</p></div>
-    <div class="stage"><h4>Normalize</h4><p>De-duplication, language/charset.</p></div>
-    <div class="stage"><h4>Contextualize</h4><p>Entity, topic, sentiment, emotion.</p></div>
-    <div class="stage"><h4>Score</h4><p>Manipulation & conversion likelihood.</p></div>
-    <div class="stage"><h4>Visualize</h4><p>Forensic dashboards & timelines.</p></div>
-    <div class="stage"><h4>Deliver</h4><p>Audit PDFs & payout gating.</p></div>
-  </div>
-</section>
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-elevated: #0b1020;
+      --card-bg: #0f172a;
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --color-text-primary: #e5e7eb;
+      --color-text-secondary: #9ca3af;
+      --color-muted: #6b7280;
 
-<!-- VERIFICATION OUTPUTS (tight) -->
-<section class="mb-12">
-  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Verification Outputs</h2>
-  <div class="grid-3 mt-6">
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Authentic Reach Index (ARI)</h3><p>Human-only audience reach.</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Bot Density (%)</h3><p>Share of synthetic audience.</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Social Liquidity Score (SLS)</h3><p>Narrative movement across networks.</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Propagation Lag (PL-24)</h3><p>Amplification velocity (24h).</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Engagement Entropy</h3><p>Attention concentration vs. spread.</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Proof-of-Organic™</h3><p>Payout only after thresholds met.</p></div>
-  </div>
-</section>
+      --color-accent: #7c5cff;
+      --color-success: #22c55e;
+      --color-warning: #fbbf24;
+      --color-danger: #f97373;
+      --color-info: #38bdf8;
 
-<!-- ADVANTAGE + COVERAGE (merged) -->
-<section class="mb-12">
-  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Why We Win</h2>
-  <div class="grid-4 mt-6">
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Pre-Payment Verification</h3><p class="text-sm text-gray-600 mt-1">The missing gating layer—others report after the fact.</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Coverage</h3><p class="text-sm text-gray-600 mt-1">X, TikTok, Instagram, YouTube, Reddit, Telegram, Discord, LinkedIn, Facebook + decentralized.</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Scale & Languages</h3><p class="text-sm text-gray-600 mt-1">20k+ publishers; 100+ languages in real time.</p></div>
-    <div class="card p-5"><h3 class="font-extrabold text-lg">Accuracy & Speed</h3><p class="text-sm text-gray-600 mt-1">94%+ detection; ~10s ingestion cadence.</p></div>
-  </div>
-</section>
+      --radius-lg: 18px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.70);
+      --shadow-card: 0 14px 30px rgba(15, 23, 42, 0.65);
+      --transition-fast: 180ms ease-out;
+    }
 
-<!-- PRICING (trimmed copy) -->
-<section class="mb-10">
-  <h2 class="text-2xl md:text-3xl font-black text-center uppercase tracking-wide">Simple, Transparent Pricing</h2>
-  <div class="grid-3 mt-6">
-    <div class="card p-6 pricing">
-      <h3>24-Hour Pulse</h3>
-      <div class="price">$59</div>
-      <ul class="checklist">
-        <li>Viral post deep-dive</li><li>Manipulation signals</li><li>Historic baseline</li>
-      </ul>
-    </div>
-    <div class="card p-6 pricing" style="border:2px solid var(--color-accent); background:rgba(99,102,241,.05)">
-      <div class="badge ok inline-block mb-2">Most Popular</div>
-      <h3>7-Day Breakdown</h3>
-      <div class="price">$299</div>
-      <ul class="checklist">
-        <li>Weekly summary</li><li>Trends & anomalies</li><li>Cohort comparison</li>
-      </ul>
-    </div>
-    <div class="card p-6 pricing">
-      <h3>Official Audit</h3>
-      <div class="price">$599 <small>/mo</small></div>
-      <ul class="checklist">
-        <li>Real-time tracking (10s)</li><li>Deleted content capture</li><li>Daily & monthly reports</li><li>“Verified Audit” status</li>
-      </ul>
-    </div>
-  </div>
-  <p class="text-center text-sm text-gray-500 mt-3">Enterprise & pay-as-you-save verification available on request.</p>
-</section>
+    * {
+      box-sizing: border-box;
+    }
 
-<!-- CTA -->
-<section class="text-center">
-  <h2 class="text-2xl md:text-3xl font-black uppercase tracking-wide">Get Your First Audit</h2>
-  <p class="subtitle">Initial report in 24 hours. Enable payout gating on your next campaign.</p>
-  <a href="#" class="inline-block mt-6 px-8 py-3 rounded-xl text-white font-extrabold tracking-wide uppercase"
-     style="background:linear-gradient(90deg,var(--color-accent),var(--color-success)); box-shadow:0 14px 38px rgba(99,102,241,.35)">
-    Contact Our Team
-  </a>
-</section>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%, #000 100%);
+      color: var(--color-text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 1.5rem 3rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1120px;
+    }
+
+    /* Slide shell (matches your deck) */
+    .slide {
+      background: rgba(15, 23, 42, 0.85);
+      border-radius: 26px;
+      padding: 2.75rem 3rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      backdrop-filter: blur(14px);
+    }
+
+    .slide-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .slide + .slide {
+      margin-top: 1.75rem;
+    }
+
+    .slide-title {
+      font-size: 2.1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .accent-text {
+      color: var(--color-accent);
+    }
+
+    .slide-subtitle {
+      margin: 0.95rem auto 0;
+      text-align: center;
+      max-width: 720px;
+      font-size: 0.98rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Layout utilities */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 900px) {
+      .slide {
+        padding: 2.2rem 1.7rem;
+      }
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .slide-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* Metric / info cards (matches your deck style) */
+    .metric-card {
+      position: relative;
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.96));
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.3rem;
+      box-shadow: var(--shadow-card);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border-top: 3px solid transparent;
+      border-image: linear-gradient(90deg, var(--color-accent), var(--color-success)) 1;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .metric-card.compact {
+      padding: 1.1rem 1.1rem;
+    }
+
+    .metric-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .metric-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .metric-desc {
+      font-size: 0.84rem;
+      color: var(--color-text-secondary);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .metric-desc strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .section-heading {
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin: 1.9rem 0 0.75rem;
+      text-align: left;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.16rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      gap: 0.3rem;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-success);
+    }
+
+    .hero-kpis {
+      margin-top: 2.2rem;
+    }
+
+    .hero-kpis .metric-card {
+      text-align: center;
+    }
+
+    .hero-kpis .metric-value {
+      font-size: 1.4rem;
+    }
+
+    .hero-kpis .metric-label {
+      font-size: 0.76rem;
+    }
+
+    /* Table-ish competition row */
+    .table-like {
+      display: grid;
+      grid-template-columns: 1.1fr 0.85fr 1.1fr 1.1fr;
+      gap: 0.9rem;
+      margin-top: 1.1rem;
+      font-size: 0.8rem;
+    }
+
+    .table-like-header {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .muted {
+      color: var(--color-muted);
+      font-size: 0.78rem;
+    }
+
+    .inline-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--color-text-secondary);
+    }
+
+    .inline-list span::before {
+      content: "• ";
+      color: var(--color-accent);
+    }
+
+    /* CTA / footer */
+    .closing-line {
+      margin-top: 2.1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .closing-line .accent-text {
+      font-weight: 800;
+    }
+
+    /* Simple appear animation */
+    .animated-item {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 260ms ease-out, transform 260ms ease-out;
+    }
+
+    .animated-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Small tweaks for one-pager layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.8rem;
+    }
+
+    @media (max-width: 900px) {
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HERO / SUMMARY -->
+    <section class="slide">
+      <div class="slide-inner animated-item">
+        <h2 class="slide-title">
+          SocialAudits.ai — <span class="accent-text">Verification & Prediction</span> for the Creator Economy
+        </h2>
+        <p class="slide-subtitle">
+          Full-graph authenticity, fraud forensics, and predictive simulations for the
+          <strong>$32.55B</strong> influencer & creator market.
+        </p>
+
+        <div class="grid-3 hero-kpis">
+          <div class="metric-card">
+            <div class="metric-value" style="color:var(--color-accent);">$32.55B</div>
+            <div class="metric-label">Market Opportunity</div>
+            <p class="metric-desc">
+              Inorganic engagement, manipulated metrics, and synthetic virality are distorting the creator economy.
+            </p>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" style="color:var(--color-warning);">55%</div>
+            <div class="metric-label">Manipulated Engagement</div>
+            <p class="metric-desc">
+              Engagement on key platforms is botted or incentivized, breaking attribution and ROI.
+            </p>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value" style="color:var(--color-success);">$2B+</div>
+            <div class="metric-label">Annual Fraud Losses</div>
+            <p class="metric-desc">
+              Estimated yearly leakage in North America alone from influencer fraud and fake virality.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM & SOLUTION -->
+    <section class="slide">
+      <div class="slide-inner two-col">
+
+        <!-- Problem -->
+        <div class="animated-item">
+          <div class="tag-pill">
+            <span class="tag-dot"></span> Problem → Market Failure
+          </div>
+          <h3 class="section-heading" style="margin-top:1.1rem;">Broken Signals</h3>
+
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-warning);">Inorganic Metrics</div>
+            <p class="metric-desc">
+              Inorganic engagement, manipulated metrics, and synthetic virality are distorting the $32.55B influencer
+              economy — inflating perceived ROI and hiding risk.
+            </p>
+          </div>
+
+          <div class="metric-card compact" style="margin-top:0.9rem;">
+            <div class="metric-value" style="color:var(--color-danger);">No Verification Layer</div>
+            <p class="metric-desc">
+              Brands, agencies, and funds make decisions on sampled data and public APIs. No one provides
+              cross-platform identity graphs, follower-level authenticity, or real-time, full-graph verification.
+            </p>
+          </div>
+        </div>
+
+        <!-- Solution -->
+        <div class="animated-item">
+          <div class="tag-pill">
+            <span class="tag-dot" style="background:var(--color-accent);"></span> Solution → Full-Graph Forensics
+          </div>
+          <h3 class="section-heading" style="margin-top:1.1rem;">Verification + Prediction Stack</h3>
+
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-accent);">Five-Stage Intelligence Pipeline</div>
+            <p class="metric-desc">
+              <strong>1. Ingest:</strong> Full-graph audience, interaction & pricing history.<br>
+              <strong>2. Filter:</strong> Remove bots, purchased engagement, and synthetic virality.<br>
+              <strong>3. Model:</strong> Identity graphs, stance, narrative & influence mapping.<br>
+              <strong>4. Report:</strong> Forensic-grade authenticity, risk, and true reach.<br>
+              <strong>5. Predict:</strong> AI simulations of virality, risk, and ROI under
+              authentic vs. manipulated conditions.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- REVENUE & PRICING -->
+    <section class="slide">
+      <div class="slide-inner animated-item">
+        <h2 class="slide-title">
+          Revenue Streams & <span class="accent-text">Usage-Based Pricing</span>
+        </h2>
+        <p class="slide-subtitle">
+          Reports prove the problem, simulations price the risk, and the prediction engine compounds ARR.
+        </p>
+
+        <h3 class="section-heading">Revenue Evolution</h3>
+        <div class="grid-2">
+          <div class="metric-card">
+            <div class="metric-value">Q1–Q3 2026</div>
+            <div class="metric-label">Reports Only</div>
+            <p class="metric-desc">
+              <strong>Avg ARR / Customer:</strong> $7.5K–$50K<br>
+              <strong>Projected ARR:</strong> $0.5M–$1.2M
+            </p>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">Q4 2026</div>
+            <div class="metric-label">Full Stack (Reports + Simulations)</div>
+            <p class="metric-desc">
+              <strong>Avg ARR / Customer:</strong> $80K–$180K+<br>
+              <strong>Projected ARR:</strong> $3M–$8M+
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:1.2rem;">
+          <div class="metric-card">
+            <div class="metric-value">End 2027</div>
+            <div class="metric-label">Simulation Primary</div>
+            <p class="metric-desc">
+              <strong>Avg ARR / Customer:</strong> $150K–$350K+<br>
+              <strong>Projected ARR:</strong> $12M–$25M+
+            </p>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">End 2028</div>
+            <div class="metric-label">Simulation Dominant</div>
+            <p class="metric-desc">
+              <strong>Avg ARR / Customer:</strong> $250K–$500K+<br>
+              <strong>Projected ARR:</strong> $30M–$60M+
+            </p>
+          </div>
+        </div>
+
+        <h3 class="section-heading">3-Stream Pricing Model</h3>
+        <div class="grid-3">
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-accent);">Stream 1 — Reports</div>
+            <div class="metric-label">Data-Indexed</div>
+            <p class="metric-desc">
+              Entry: <strong>1M pts → $8,500</strong><br>
+              Growth: <strong>3M pts → $22,500</strong><br>
+              Enterprise: <strong>5M+ pts → $30K–$60K+</strong><br><br>
+              Predictable, credit-like allowances instead of one-off audits.
+            </p>
+          </div>
+
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-success);">Stream 2 — Reports + Sims</div>
+            <div class="metric-label">Full-Stack Intelligence</div>
+            <p class="metric-desc">
+              Starter: <strong>1 sim → $15K</strong><br>
+              Professional: <strong>3 sims → $25K</strong><br>
+              Enterprise: <strong>5+ sims → $45K+</strong><br><br>
+              Bundles combine proof (reports) with forward-looking risk pricing.
+            </p>
+          </div>
+
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-warning);">Stream 3 — Sims Only</div>
+            <div class="metric-label">Prediction Engine</div>
+            <p class="metric-desc">
+              Starter: <strong>$7.5K</strong> (1 sim)<br>
+              Pro: <strong>$15K</strong> (3 sims)<br>
+              Enterprise: <strong>$20K</strong> (5 sims)<br><br>
+              High-margin, software-like revenue as the prediction layer becomes the primary spend.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GTM & TRACTION -->
+    <section class="slide">
+      <div class="slide-inner animated-item">
+        <h2 class="slide-title">
+          Go-To-<span class="accent-text">Market</span> & Early Traction
+        </h2>
+        <p class="slide-subtitle">
+          Multi-channel distribution built around exclusive integrations and high-signal pilots.
+        </p>
+
+        <h3 class="section-heading">Primary Channels</h3>
+        <div class="grid-3">
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-accent);">35%</div>
+            <div class="metric-label">Ecosystem Partnerships</div>
+            <p class="metric-desc">
+              Exchanges, platforms, and gaming ecosystems embed SocialAudits.ai as the verification layer.
+            </p>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-success);">45%</div>
+            <div class="metric-label">Direct Enterprise Sales</div>
+            <p class="metric-desc">
+              Identity-graph, fraud, and compliance buyers across CPG, finance, and marketplaces.
+            </p>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-warning);">20%</div>
+            <div class="metric-label">Content / Inbound</div>
+            <p class="metric-desc">
+              Audit-driven funnels that convert high-intent buyers through proof-of-work reporting.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="section-heading">Expansion & Pilots</h3>
+        <div class="grid-3">
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-success);">Solvent Labs</div>
+            <div class="metric-label">Creator & Gaming</div>
+            <p class="metric-desc">
+              Active pilot integrating identity verification into creator & gaming ecosystem.
+            </p>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-warning);">Kraken</div>
+            <div class="metric-label">Exchange Pilot</div>
+            <p class="metric-desc">
+              Live validation pilot using full-graph scoring for campaigns and listings.
+            </p>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-info);">BitLayer (Pre-TGE)</div>
+            <div class="metric-label">Q1 ’26 Commit</div>
+            <p class="metric-desc">
+              4-month closed beta completed → committed to commercial integration in Q1 2026.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:1.1rem;">
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-accent);">NutriFresh CPG</div>
+            <div class="metric-label">Enterprise LOI</div>
+            <p class="metric-desc">
+              LOI secured → enterprise-wide verification rollout.
+            </p>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-success);">True North Mortgage</div>
+            <div class="metric-label">Fraud & Identity Graph</div>
+            <p class="metric-desc">
+              Identity graph + fraud detection pilot initiated.
+            </p>
+          </div>
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-accent);">$10B+</div>
+            <div class="metric-label">Partner Ecosystem Cap</div>
+            <p class="metric-desc">
+              Combined market cap across active pilots & ecosystem partners.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPETITION -->
+    <section class="slide">
+      <div class="slide-inner animated-item">
+        <h2 class="slide-title">
+          <span class="accent-text">Competition</span> & Differentiation
+        </h2>
+        <p class="slide-subtitle">
+          Everyone else samples; we see the full graph and simulate the future.
+        </p>
+
+        <div class="grid-3" style="margin-top:2rem;">
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-success);">HypeAuditor</div>
+            <div class="metric-label">SMBs & Agencies</div>
+            <p class="metric-desc">
+              <strong>Tech:</strong> API aggregation + sampling<br>
+              <strong>Coverage:</strong> 1–5% analyzed<br>
+              <strong>Pricing:</strong> $99–$1,999/mo
+            </p>
+          </div>
+
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-warning);">Modash</div>
+            <div class="metric-label">DTC Brands</div>
+            <p class="metric-desc">
+              <strong>Tech:</strong> Public APIs + limited scraping<br>
+              <strong>Coverage:</strong> 1–5% analyzed<br>
+              <strong>Pricing:</strong> $199–$499/mo
+            </p>
+          </div>
+
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-danger);">CreatorIQ</div>
+            <div class="metric-label">Enterprise Agencies</div>
+            <p class="metric-desc">
+              <strong>Tech:</strong> Partner data + enrichment<br>
+              <strong>Coverage:</strong> ~5% analyzed<br>
+              <strong>Pricing:</strong> $35K–$150K+/yr
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:1.1rem;">
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-success);">Traackr</div>
+            <div class="metric-label">Enterprise Brands</div>
+            <p class="metric-desc">
+              <strong>Tech:</strong> CRM + influencer management<br>
+              <strong>Coverage:</strong> &lt;5% analyzed<br>
+              <strong>Pricing:</strong> $32.5K–$55K+/yr
+            </p>
+          </div>
+
+          <div class="metric-card compact">
+            <div class="metric-value" style="color:var(--color-warning);">AspireIQ</div>
+            <div class="metric-label">Mid-Market Brands</div>
+            <p class="metric-desc">
+              <strong>Tech:</strong> Marketplace + API<br>
+              <strong>Coverage:</strong> &lt;5% analyzed<br>
+              <strong>Pricing:</strong> $299–$999/mo
+            </p>
+          </div>
+
+          <div class="metric-card compact" style="border-width:2px; border-color:var(--color-accent);">
+            <div class="metric-value" style="color:var(--color-accent);">SocialAudits.ai</div>
+            <div class="metric-label">Agencies, Exchanges, Brands, Funds</div>
+            <p class="metric-desc">
+              <strong>Tech:</strong> Full-graph, multi-pipeline enriched ingestion + prediction engine<br>
+              <strong>Coverage:</strong> 100% of data<br>
+              <strong>Pricing:</strong> $29.99–$349.99 per report + pay-per-data credits<br><br>
+              Real-time authenticity verification, cross-platform identity stitching, full-graph forensics,
+              and quantum-style outcome modeling.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM & ASK -->
+    <section class="slide">
+      <div class="slide-inner animated-item">
+        <h2 class="slide-title">
+          Team, Governance & <span class="accent-text">Investment Ask</span>
+        </h2>
+        <p class="slide-subtitle">
+          Ex-intelligence, capital markets, and exchange engineering experience — focused on building the
+          missing verification layer.
+        </p>
+
+        <div class="grid-2" style="margin-top:1.9rem;">
+          <!-- Team -->
+          <div>
+            <h3 class="section-heading">Board & Governance</h3>
+            <div class="metric-card compact">
+              <div class="metric-value" style="color:var(--color-accent);">Board</div>
+              <p class="metric-desc">
+                <strong>Jeremy</strong> — Founding member of Anonymous; digital activist & strategist.<br>
+                <strong>Amir</strong> — Former UK intelligence; global investigations & emerging-market risk.<br>
+                <strong>Helena</strong> — ex-JPMorgan PE & capital-raising; co-founded Astro Capital Fund I.
+              </p>
+            </div>
+
+            <h3 class="section-heading">Leadership</h3>
+            <div class="metric-card compact">
+              <div class="metric-value" style="color:var(--color-success);">Execution Team</div>
+              <p class="metric-desc">
+                <strong>Alistair</strong> — CEO; creator-economy & verification architect.<br>
+                <strong>Sang</strong> — COO; marketplace ops & growth.<br>
+                <strong>Jason</strong> — Lead Engineer; Kraken consumer trading, fintech, crypto.<br>
+                <strong>Akash</strong> — Lead Marketing; growth & narrative.<br>
+                <strong>Tyler</strong> — Lead Sales; enterprise & agency revenue.
+              </p>
+            </div>
+          </div>
+
+          <!-- Investment Ask -->
+          <div>
+            <h3 class="section-heading">Investment Ask — Final Terms</h3>
+            <div class="metric-card compact">
+              <div class="metric-value" style="color:var(--color-warning);">Seed Round</div>
+              <p class="metric-desc">
+                <strong>Round:</strong> Seed<br>
+                <strong>Total Raise:</strong> $3.5M USD<br>
+                <strong>Pre-Money Valuation:</strong> $15M<br>
+                <strong>Post-Money Valuation:</strong> $18.5M
+              </p>
+            </div>
+
+            <div class="metric-card compact" style="margin-top:0.9rem;">
+              <div class="metric-value" style="color:var(--color-accent);">Lead Investor Incentive</div>
+              <p class="metric-desc">
+                Minimum lead check: <strong>$1M</strong><br>
+                <strong>20% discount</strong> on pre-money valuation (effective $15M pre).<br>
+                Board seat + full pro-rata rights.<br>
+                Closing target: <strong>December 2025</strong> — one lead slot remaining.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p class="closing-line">
+          Join us in building the <span class="accent-text">verification layer</span> for the creator economy.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Simple intersection observer to fade in sections as you scroll
+    (function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.animated-item').forEach(el => observer.observe(el));
+    })();
+  </script>
+</body>
+</html>
+
