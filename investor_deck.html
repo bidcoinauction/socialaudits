@@ -1844,6 +1844,76 @@
     font-size: var(--title-size) !important;
 }
 
+        /* ============================
+   GLOBAL TYPOGRAPHY NORMALIZER
+   ============================ */
+
+/* Slide titles — consistent everywhere */
+.slide-title {
+    font-size: 3rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem !important;
+}
+
+/* Slide subtitles — same everywhere */
+.slide-subtitle {
+    font-size: 1.3rem !important;
+    font-weight: 500;
+    line-height: 1.5;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--color-text-secondary) !important;
+}
+
+/* ============================
+   CARD SYSTEM NORMALIZER
+   ============================ */
+
+.metric-card {
+    padding: 1.75rem 1.75rem !important;
+    border-radius: 18px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0.6rem;
+}
+
+/* Card titles */
+.metric-card .metric-value {
+    font-size: 1.65rem !important;
+    font-weight: 800 !important;
+    line-height: 1.15;
+    margin-bottom: 0.25rem;
+    text-align: center;
+}
+
+/* Card subtitle */
+.metric-card .metric-label,
+.metric-card .metric-heading {
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: var(--color-text-secondary) !important;
+    text-align: center;
+}
+
+/* Card body text */
+.metric-card .metric-desc,
+.metric-card p {
+    font-size: 0.95rem !important;
+    line-height: 1.45 !important;
+    color: var(--color-text-secondary) !important;
+    margin: 0;
+}
+
+/* Maintain SocialAudits purple */
+.metric-value[style*="SocialAudits"],
+.metric-value:contains("SocialAudits") {
+    color: var(--color-accent) !important;
+}
+
+
     </style>
 
 </head>
