@@ -1,146 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialAudits - Resources</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-background: #F8F9FC;
-            --color-surface: #FFFFFF;
-            --color-primary: #1D243D;
-            --color-accent: #6D28D9;
-            --color-text-primary: #111827;
-            --color-text-secondary: #6B7280;
-        }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 1.5rem;
-            box-sizing: border-box;
-            background-color: var(--color-background);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Inter', sans-serif;
-            color: var(--color-text-primary);
-        }
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            width: 40%;
-            height: 40%;
-            filter: blur(120px);
-            z-index: -1;
-            opacity: 0.8;
-        }
-        body::before {
-            top: -10%;
-            left: -10%;
-            background: radial-gradient(circle, rgba(109, 40, 217, 0.1), transparent 70%);
-        }
-        body::after {
-            bottom: -10%;
-            right: -10%;
-            background: radial-gradient(circle, rgba(236, 72, 153, 0.1), transparent 70%);
-        }
-        .main-container {
-            width: 100%;
-            max-width: 48rem; /* 768px */
-            padding: 3rem 4rem;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 2rem;
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
-            border: 1px solid #E5E7EB;
-        }
-        .link-card {
-            background-color: var(--color-surface);
-            border: 1px solid #E5E7EB;
-            border-radius: 1.5rem;
-            padding: 2rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            align-items: center;
-        }
-        .link-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.1);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialAudits — Resources</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-background: #F8F9FC;
+      --color-surface: #FFFFFF;
+      --color-primary: #1D243D;
+      --color-accent: #6D28D9;
+      --color-text-primary: #111827;
+      --color-text-secondary: #6B7280;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 1.5rem;
+      box-sizing: border-box;
+      background-color: var(--color-background);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      color: var(--color-text-primary);
+    }
+
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      width: 40%;
+      height: 40%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: -10%;
+      left: -10%;
+      background: radial-gradient(circle, rgba(109, 40, 217, 0.12), transparent 70%);
+    }
+
+    body::after {
+      bottom: -10%;
+      right: -10%;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.12), transparent 70%);
+    }
+
+    .main-container {
+      width: 100%;
+      max-width: 52rem; /* slightly wider */
+      padding: 3rem 4rem;
+      background-color: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+      border: 1px solid #E5E7EB;
+    }
+
+    .link-card {
+      background-color: var(--color-surface);
+      border: 1px solid #E5E7EB;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+    }
+
+    .link-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px -16px rgba(0,0,0,0.22);
+      border-color: rgba(109,40,217,0.22);
+    }
+
+    /* Tailwind-like helpers for your tokens */
+    .text-primary { color: var(--color-primary); }
+    .text-accent { color: var(--color-accent); }
+    .text-text-secondary { color: var(--color-text-secondary); }
+
+    /* Mobile spacing */
+    @media (max-width: 640px) {
+      html, body { padding: 1rem; }
+      .main-container { padding: 2rem 1.25rem; border-radius: 1.5rem; }
+      .link-card { padding: 1.25rem; border-radius: 1.25rem; }
+    }
+  </style>
 </head>
+
 <body class="antialiased">
+  <div class="main-container">
+    <header class="text-center mb-10">
+      <img
+        src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png"
+        alt="SocialAudits Logo"
+        class="mx-auto w-40 mb-4"
+      >
+      <h1 class="text-5xl font-black text-primary tracking-tight">SocialAudits</h1>
+      <p class="mt-2 text-xl text-text-secondary">Stop Guessing. Start Knowing.</p>
+    </header>
 
-    <div class="main-container">
-        <header class="text-center mb-12">
-            <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/Remove%20background%20project.png" alt="Social Audits Logo" class="mx-auto w-40 mb-4">
-            <h1 class="text-5xl font-black text-primary tracking-tight">SocialAudits</h1>
-            <p class="mt-2 text-xl text-text-secondary">Stop Guessing. Start Knowing.</p>
-        </header>
+    <main class="space-y-6">
+      <!-- Link to Pitch Deck -->
+      <a href="pitchdeck.html" class="link-card space-x-6">
+        <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-primary">Pitch Deck</h2>
+          <p class="text-text-secondary mt-1">Primary sales and product overview.</p>
+        </div>
+      </a>
 
-        <main class="space-y-6">
-            <!-- Link to Pitch Deck -->
-            <a href="pitchdeck.html" class="link-card space-x-6">
-                <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-primary">Pitch Deck</h2>
-                    <p class="text-text-secondary mt-1">Our primary sales and product overview.</p>
-                </div>
-            </a>
+      <!-- Link to Investor Deck -->
+      <a href="investor_deck.html" class="link-card space-x-6">
+        <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-primary">Investor Deck</h2>
+          <p class="text-text-secondary mt-1">Full-length presentation for potential investors.</p>
+        </div>
+      </a>
 
-            <!-- Link to Investor Deck -->
-            <a href="investor_deck.html" class="link-card space-x-6">
-                <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-primary">Investor Deck</h2>
-                    <p class="text-text-secondary mt-1">Full-length presentation for potential investors.</p>
-                </div>
-            </a>
+      <!-- Link to One-Pager -->
+      <a href="onepager.html" class="link-card space-x-6">
+        <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-primary">One-Pager</h2>
+          <p class="text-text-secondary mt-1">Concise summary for quick introductions.</p>
+        </div>
+      </a>
 
-              <!-- Link to One-Pager -->
-            <a href="onepager.html" class="link-card space-x-6">
-                <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-primary">One-Pager</h2>
-                    <p class="text-text-secondary mt-1">A concise summary for quick introductions.</p>
-                </div>
-            </a>
+      <!-- Link to Sample Report -->
+      <a href="social_audits_sample.html" class="link-card space-x-6">
+        <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-primary">Sample Audit Report</h2>
+          <p class="text-text-secondary mt-1">Sneak peek of our reporting output.</p>
+        </div>
+      </a>
 
+      <!-- NEW: IB Deck + Talk Track -->
+      <a href="ib_deck_talk.html" class="link-card space-x-6">
+        <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-primary">IB Deck + Talk Track</h2>
+          <p class="text-text-secondary mt-1">Institutional narrative deck with presenter notes / talk track.</p>
+        </div>
+      </a>
 
-            <!-- Link to Sample Report -->
-            <a href="social_audits_sample.html" class="link-card space-x-6">
-                <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                </div>
-                <div>
-                    <h2 class="text-2xl font-bold text-primary">Sample Audit Report</h2>
-                    <p class="text-text-secondary mt-1">Sneak peek of our reports.</p>
-                </div>
-            </a>
-        </main>
-    </div>
+      <!-- NEW: IB V4 (Graphic) -->
+      <a href="ib_v4_graphic.html" class="link-card space-x-6">
+        <div class="flex-shrink-0 bg-purple-100 text-accent p-4 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4-4 4 4 8-8M4 20h16" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-primary">IB Deck (V4 — Graphic)</h2>
+          <p class="text-text-secondary mt-1">Enhanced visual version for executive-level walkthroughs.</p>
+        </div>
+      </a>
+    </main>
 
+    <footer class="mt-10 text-center">
+      <p class="text-sm text-text-secondary">Internal resources hub • Keep links private</p>
+    </footer>
+  </div>
 </body>
 </html>
 
