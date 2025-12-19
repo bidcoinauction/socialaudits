@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialAudits — Output Deck</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#07070B;
+      --surface:#0E0F16;
+      --panel:#121327;
+      --card:#0F1022;
+      --border:rgba(255,255,255,.10);
+      --text:#FFFFFF;
+      --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.55);
+      --a1:#C879FF;
+      --a2:#7C3AED;
+      --r1:#FB7185;
+      --r2:#EF4444;
+      --g1:#34D399;
+      --g2:#22C55E;
+      --y1:#FBBF24;
+      --y2:#F59E0B;
+    }
+    body{
+      font-family:'Inter',sans-serif;
+      background:
+        radial-gradient(1200px 700px at 18% 12%, rgba(124,58,237,.18), transparent 56%),
+        radial-gradient(900px 600px at 84% 18%, rgba(200,121,255,.12), transparent 54%),
+        radial-gradient(820px 520px at 82% 92%, rgba(239,68,68,.09), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      overflow:hidden;
+    }
+    #wrap{ width:100vw;height:100vh; display:flex; align-items:center; justify-content:center; }
+    #deck{
+      width:1366px; height:768px;
+      transform-origin:center center;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 28%), var(--surface);
+      border:1px solid var(--border);
+      border-radius:26px;
+      overflow:hidden;
+      box-shadow: 0 30px 90px rgba(0,0,0,.65);
+      display:flex; flex-direction:column;
+    }
+    main{ flex-grow:1; position:relative; }
+    .slide{
+      position:absolute; inset:0;
+      display:none; opacity:0;
+      padding:44px;
+      transition:opacity .45s ease-in-out;
+    }
+    .slide.active{ display:flex; flex-direction:column; opacity:1; }
+    .kicker{
+      letter-spacing:.26em;
+      text-transform:uppercase;
+      font-weight:800;
+      font-size:12px;
+      color:var(--muted2);
+    }
+    .muted{ color:var(--muted); }
+    .muted2{ color:var(--muted2); }
+    .divider{ height:1px; background: rgba(255,255,255,.08); }
+    .topline{
+      height:1px;
+      background: linear-gradient(90deg, rgba(200,121,255,.0), rgba(200,121,255,.55), rgba(239,68,68,.30), rgba(200,121,255,.0));
+      opacity:.9;
+    }
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 50%), var(--panel);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:18px;
+      backdrop-filter: blur(10px);
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.035), transparent 45%), var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:18px;
+      backdrop-filter: blur(10px);
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: linear-gradient(90deg,var(--a1),var(--a2));
+      box-shadow: 0 0 0 3px rgba(124,58,237,.15);
+    }
+    .grad{
+      background:linear-gradient(to right,var(--a1),var(--a2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .bad{
+      background:linear-gradient(to right,var(--r1),var(--r2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .good{
+      background:linear-gradient(to right,var(--g1),var(--g2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .warn{
+      background:linear-gradient(to right,var(--y1),var(--y2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    }
+    .metric{ font-feature-settings:"tnum" 1, "ss01" 1; letter-spacing:-0.02em; }
+    .btn{
+      border-radius:14px; padding:10px 18px; font-weight:900; font-size:14px; line-height:1;
+    }
+    .btn-primary{
+      background:linear-gradient(to right,var(--a1),var(--a2));
+      color:var(--text);
+      box-shadow: 0 12px 30px rgba(124,58,237,.22);
+    }
+    .btn-secondary{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      color:var(--text);
+    }
+    .kbd{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.035);
+      padding:2px 8px;
+      border-radius:10px;
+      font-size:12px;
+      color:var(--muted2);
+      font-weight:800;
+    }
+    /* small "infra UI" polish */
+    .card, .panel{ backdrop-filter: blur(10px); }
+    .grow{ flex:1; min-height:0; }
+    .clamp2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+    .clamp3{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+
+    .tight p{ margin-top:0; }
+
+  </style>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="deck">
+      <main>
+
+        <!-- 1: TITLE -->
+        <section class="slide active">
+          <div class="h-full flex flex-col">
+            <div class="topline"></div>
+
+            <div class="mt-9 grow grid grid-cols-12 gap-10 items-start">
+              <div class="col-span-7">
+                <div class="kicker mb-4">Narrative Integrity Infrastructure</div>
+                <h1 class="text-4xl font-black tracking-tight leading-[1.02]">SocialAudits</h1>
+
+                <p class="mt-5 text-xl font-bold leading-snug max-w-3xl">
+                  Verification outputs for social signals used in <span class="grad">capital</span> and <span class="grad">go-to-market</span>.
+                </p>
+
+                <p class="mt-3 text-base muted leading-relaxed max-w-3xl">
+                  We turn platform-native activity into integrity scores, coordination maps, and timing signals.
+                  Designed for decision workflows, not dashboards.
+                </p>
+
+                <div class="mt-10 flex flex-wrap gap-3">
+                  <span class="pill"><span class="dot"></span> Integrity score</span>
+                  <span class="pill"><span class="dot"></span> Coordination map</span>
+                  <span class="pill"><span class="dot"></span> Narrative velocity</span>
+                  <span class="pill"><span class="dot"></span> Conversion signal</span>
+                </div>
+              </div>
+
+              <div class="col-span-5">
+                <div class="panel">
+                  <div class="kicker mb-3">This deck is designed to be guided, not read</div>
+                  <div class="text-3xl font-black leading-tight">
+                    Each slide is a <span class="grad">module</span> you can point to.
+                  </div>
+
+                  <div class="mt-8 divider"></div>
+
+                  <div class="mt-6 grid grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Module</div>
+                      <div class="mt-2 text-xl font-extrabold">Metric</div>
+                      <div class="mt-1 muted text-sm">what it means</div>
+                    </div>
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Module</div>
+                      <div class="mt-2 text-xl font-extrabold">Interpretation</div>
+                      <div class="mt-1 muted text-sm">how to read it</div>
+                    </div>
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Module</div>
+                      <div class="mt-2 text-xl font-extrabold">Action</div>
+                      <div class="mt-1 muted text-sm">what you do next</div>
+                    </div>
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Delivery</div>
+                      <div class="mt-2 text-xl font-extrabold">Report + API</div>
+                      <div class="mt-1 muted text-sm">workflow-ready</div>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="mt-4 muted2 text-sm leading-relaxed">Confidential — for discussion purposes.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2: PLATFORMS (SPECIFIC) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Coverage</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">Platforms, events, and what “scale” means</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">We ingest public, platform-native events and normalize them into comparable integrity signals.
+              Coverage is configurable by mandate.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6 items-stretch">
+              <div class="col-span-7 panel">
+                <div class="text-lg font-extrabold">Primary public networks</div>
+
+                <div class="mt-4 grid grid-cols-3 gap-4">
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">X</div>
+                    <div class="mt-2 text-base font-extrabold">Posts, replies</div>
+                    <div class="mt-1 muted text-sm">retweets, quotes, mentions</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Reddit</div>
+                    <div class="mt-2 text-base font-extrabold">Threads</div>
+                    <div class="mt-1 muted text-sm">comments, brigading signals</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">YouTube</div>
+                    <div class="mt-2 text-base font-extrabold">Video</div>
+                    <div class="mt-1 muted text-sm">comments, velocity</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">TikTok</div>
+                    <div class="mt-2 text-base font-extrabold">Posts</div>
+                    <div class="mt-1 muted text-sm">comments, trend lift</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Instagram</div>
+                    <div class="mt-2 text-base font-extrabold">Posts</div>
+                    <div class="mt-1 muted text-sm">comments, farms</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Web / News</div>
+                    <div class="mt-2 text-base font-extrabold">Mentions</div>
+                    <div class="mt-1 muted text-sm">pickup, anchors</div>
+                  </div>
+                </div>
+
+                <div class="mt-6 divider"></div>
+
+                <div class="mt-4 grid grid-cols-3 gap-4">
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Normalize</div>
+                    <div class="mt-2 text-base font-extrabold">event types</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Model</div>
+                    <div class="mt-2 text-base font-extrabold">actors + clusters</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Output</div>
+                    <div class="mt-2 text-base font-extrabold">decision signals</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-5 card">
+                <div class="text-lg font-extrabold">Scale in real terms</div>
+                <p class="mt-3 muted leading-relaxed">
+                  Instead of quoting internet-wide totals, we show what a single analysis looks like in practice.
+                </p>
+
+                <div class="mt-6 p-6 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Example dataset (one topic)</div>
+                  <div class="mt-4 grid grid-cols-2 gap-4">
+                    <div>
+                      <div class="text-4xl font-black metric">4,211</div>
+                      <div class="muted text-sm mt-1">posts analyzed</div>
+                    </div>
+                    <div>
+                      <div class="text-4xl font-black metric">212.9M</div>
+                      <div class="muted text-sm mt-1">impressions</div>
+                    </div>
+                    <div>
+                      <div class="text-4xl font-black metric">4,166</div>
+                      <div class="muted text-sm mt-1">public mentions</div>
+                    </div>
+                    <div>
+                      <div class="text-4xl font-black metric">0.001%</div>
+                      <div class="muted text-sm mt-1">conversion rate</div>
+                    </div>
+                  </div>
+                </div>
+
+                <p class="mt-4 muted2 text-sm leading-relaxed">
+                  The point: sampling fails in adversarial systems. Integrity is a verification problem.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3: OUTPUT PRIMITIVES (TILES) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Outputs</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">Four primitives</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">Every report and feed is built from these primitives. Each one has a clear interpretation and a clear next action.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6">
+              <div class="col-span-3 card">
+                <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Primitive</div>
+                <div class="mt-3 text-2xl font-extrabold">Integrity score</div>
+                <div class="mt-2 muted leading-relaxed">Confidence that observed activity reflects real participants.</div>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Use it to</div>
+                <div class="mt-2 text-base font-extrabold">discount manipulation</div>
+              </div>
+
+              <div class="col-span-3 card" style="border-color: rgba(200,121,255,.22);">
+                <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Primitive</div>
+                <div class="mt-3 text-2xl font-extrabold">Coordination map</div>
+                <div class="mt-2 muted leading-relaxed">Clusters, repeated phrasing, synchronized timing, actor reuse.</div>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Use it to</div>
+                <div class="mt-2 text-base font-extrabold">attribute campaigns</div>
+              </div>
+
+              <div class="col-span-3 card">
+                <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Primitive</div>
+                <div class="mt-3 text-2xl font-extrabold">Narrative velocity</div>
+                <div class="mt-2 muted leading-relaxed">Rate of adoption, contributor diversity, inflection risk.</div>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Use it to</div>
+                <div class="mt-2 text-base font-extrabold">time decisions</div>
+              </div>
+
+              <div class="col-span-3 card">
+                <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Primitive</div>
+                <div class="mt-3 text-2xl font-extrabold">Conversion signal</div>
+                <div class="mt-2 muted leading-relaxed">Whether attention turns into measurable action among organic users.</div>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Use it to</div>
+                <div class="mt-2 text-base font-extrabold">validate demand</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4: MODULE — MANIPULATION SPLIT (IMPACT) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Module</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">Manipulation split (impact)</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">Metric: how much reach is driven by public accounts vs manipulation-linked accounts.
+              Interpretation: high manipulation share means the “market read” can be a synthetic artifact.</span></p>
+
+            <p class="mt-2 muted2 text-sm">Example (illustrative)</p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6 items-stretch">
+              <div class="col-span-7 panel h-full">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Impact by source</div>
+                    <div class="mt-2 text-2xl font-black">Example: one topic analysis</div>
+                    <div class="mt-2 muted">Reach attributed to source categories</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Finding</div>
+                    <div class="mt-2 text-4xl font-black metric"><span class="bad">71%</span></div>
+                    <div class="muted text-sm mt-1">impact from manipulation-linked accounts</div>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <!-- clean bar -->
+                  <div class="h-4 w-full rounded-full overflow-hidden" style="background: rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.08);">
+                    <div class="h-full" style="width:71.34%; background: linear-gradient(90deg, var(--r1), var(--r2)); float:left;"></div>
+                    <div class="h-full" style="width:28.66%; background: linear-gradient(90deg, var(--g1), var(--g2)); float:left;"></div>
+                  </div>
+
+                  <div class="mt-4 grid grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(239,68,68,.22); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Manipulation impact</div>
+                      <div class="mt-2 text-3xl font-black metric">151,917,397</div>
+                      <div class="mt-1 muted text-sm">estimated reach</div>
+                    </div>
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(34,197,94,.18); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Public impact</div>
+                      <div class="mt-2 text-3xl font-black metric">61,041,785</div>
+                      <div class="mt-1 muted text-sm">estimated reach</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-5 card h-full flex flex-col">
+                <div class="text-lg font-extrabold">Decision implication</div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Research</div>
+                  <div class="mt-2 text-base font-extrabold">Discount “sentiment” as signal</div>
+                  <div class="mt-2 muted">Treat it as a campaign artifact unless validated by organic sources.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Risk</div>
+                  <div class="mt-2 text-base font-extrabold">Flag narrative-driven exposure</div>
+                  <div class="mt-2 muted">Use the split as a risk control input during event windows.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Diligence</div>
+                  <div class="mt-2 text-base font-extrabold">Ask a better question</div>
+                  <div class="mt-2 muted">Is the narrative organic, or manufactured to look organic?</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5: MODULE — MENTIONS SPLIT -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Module</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">Mentions split (volume vs influence)</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">Metric: how many mentions come from public accounts vs manipulation-linked accounts.
+              Interpretation: manipulation can be low in volume but high in impact.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6 items-stretch">
+              <div class="col-span-7 panel">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Mentions by source</div>
+                    <div class="mt-2 text-3xl font-black">Example: one topic analysis</div>
+                    <div class="mt-2 muted">Mentions are not impact</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Pattern</div>
+                    <div class="mt-2 text-4xl font-black metric"><span class="warn">Low volume</span></div>
+                    <div class="muted text-sm mt-1">can still drive high reach</div>
+                  </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-2 gap-4">
+                  <div class="p-6 rounded-2xl" style="border:1px solid rgba(34,197,94,.18); background: rgba(255,255,255,.02);">
+                    <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Public mentions</div>
+                    <div class="mt-2 text-4xl font-black metric">4,166</div>
+                    <div class="mt-2 muted text-sm">98.93% of mentions</div>
+                  </div>
+                  <div class="p-6 rounded-2xl" style="border:1px solid rgba(239,68,68,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Manipulation mentions</div>
+                    <div class="mt-2 text-4xl font-black metric">45</div>
+                    <div class="mt-2 muted text-sm">1.07% of mentions</div>
+                  </div>
+                </div>
+
+                <div class="mt-6 divider"></div>
+
+                <div class="mt-5 p-5 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Interpretation</div>
+                  <div class="mt-2 text-2xl font-black leading-snug">
+                    A small set of accounts can manufacture reach without manufacturing volume.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-5 card">
+                <div class="text-lg font-extrabold">What you do with it</div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Do not</div>
+                  <div class="mt-2 text-xl font-extrabold">equate volume with truth</div>
+                  <div class="mt-2 muted">Mentions can be organic while impact is engineered.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Do</div>
+                  <div class="mt-2 text-xl font-extrabold">cross-check with impact split</div>
+                  <div class="mt-2 muted">If impact is dominated by manipulation, treat sentiment as contaminated.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Do</div>
+                  <div class="mt-2 text-xl font-extrabold">inspect actor clusters</div>
+                  <div class="mt-2 muted">Identify the small set responsible for outsized reach.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6: MODULE — SENTIMENT BASELINE (ORGANIC VS MANIPULATION) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Module</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">Sentiment baseline (organic vs manipulation)</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">Metric: average sentiment among organic participants vs manipulation-linked accounts.
+              Interpretation: manipulation sentiment often reflects steering, not community reality.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6">
+              <div class="col-span-7 panel">
+                <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Average sentiment (example)</div>
+
+                <div class="mt-6 grid grid-cols-2 gap-4">
+                  <div class="p-6 rounded-2xl" style="border:1px solid rgba(34,197,94,.18); background: rgba(255,255,255,.02);">
+                    <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Organic</div>
+                    <div class="mt-2 text-4xl font-black metric">6.16</div>
+                    <div class="mt-2 muted">baseline community tone</div>
+                  </div>
+                  <div class="p-6 rounded-2xl" style="border:1px solid rgba(239,68,68,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Manipulation</div>
+                    <div class="mt-2 text-4xl font-black metric">10.03</div>
+                    <div class="mt-2 muted">steering / amplification tone</div>
+                  </div>
+                </div>
+
+                <div class="mt-8 p-5 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Interpretation</div>
+                  <div class="mt-2 text-2xl font-black leading-snug">
+                    Separate what the crowd feels from what the campaign wants you to think the crowd feels.
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-5 card">
+                <div class="text-lg font-extrabold">What you do with it</div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Funds</div>
+                  <div class="mt-2 text-xl font-extrabold">treat divergence as a flag</div>
+                  <div class="mt-2 muted">If manipulation sentiment diverges, the narrative may be engineered.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Brands</div>
+                  <div class="mt-2 text-xl font-extrabold">avoid buying “fake enthusiasm”</div>
+                  <div class="mt-2 muted">Use organic baseline to select creator timing and messaging.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Both</div>
+                  <div class="mt-2 text-xl font-extrabold">combine with impact split</div>
+                  <div class="mt-2 muted">Sentiment without integrity is a liability.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7: MODULE — ANOMALY SPIKE (TIMELINE) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Module</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">Anomaly spike (timeline)</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">Metric: abnormal spikes in activity or reach.
+              Interpretation: spikes are where synthetic coordination shows up first.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6 items-stretch">
+              <div class="col-span-8 panel">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Timeline module</div>
+                    <div class="mt-2 text-3xl font-black">Velocity + anomaly detection</div>
+                    <div class="mt-2 muted">Illustrative shape (not a screenshot)</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Alert</div>
+                    <div class="mt-2 text-4xl font-black metric"><span class="warn">Spike</span></div>
+                    <div class="muted text-sm mt-1">cluster review required</div>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <!-- minimal chart -->
+                  <svg viewBox="0 0 1000 220" width="100%" height="220" aria-label="Anomaly sparkline">
+                    <defs>
+                      <linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="rgba(200,121,255,0.9)"/>
+                        <stop offset="100%" stop-color="rgba(124,58,237,0.9)"/>
+                      </linearGradient>
+                      <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="rgba(124,58,237,0.25)"/>
+                        <stop offset="100%" stop-color="rgba(124,58,237,0)"/>
+                      </linearGradient>
+                    </defs>
+
+                    <path d="M0,180 C80,170 140,175 200,168 C260,160 320,170 380,155 C440,140 500,165 560,150 C620,132 680,165 720,110 C760,55 820,150 880,135 C940,120 980,130 1000,125"
+                          fill="none" stroke="url(#spark)" stroke-width="6" stroke-linecap="round"/>
+                    <path d="M0,180 C80,170 140,175 200,168 C260,160 320,170 380,155 C440,140 500,165 560,150 C620,132 680,165 720,110 C760,55 820,150 880,135 C940,120 980,130 1000,125 L1000,220 L0,220 Z"
+                          fill="url(#fill)"/>
+
+                    <!-- spike marker -->
+                    <line x1="760" y1="30" x2="760" y2="220" stroke="rgba(239,68,68,0.35)" stroke-width="3" />
+                    <circle cx="760" cy="55" r="9" fill="rgba(239,68,68,0.95)" />
+                  </svg>
+
+                  <div class="mt-4 grid grid-cols-3 gap-4">
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Trigger</div>
+                      <div class="mt-2 text-base font-extrabold">abnormal lift</div>
+                      <div class="mt-1 muted text-sm">velocity jump</div>
+                    </div>
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Check</div>
+                      <div class="mt-2 text-base font-extrabold">cluster reuse</div>
+                      <div class="mt-1 muted text-sm">phrases, timing</div>
+                    </div>
+                    <div class="p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                      <div class="text-xs muted2 font-extrabold uppercase tracking-wider">Outcome</div>
+                      <div class="mt-2 text-base font-extrabold">integrity verdict</div>
+                      <div class="mt-1 muted text-sm">real vs engineered</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-4 card">
+                <div class="text-lg font-extrabold">What you do with it</div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Funds</div>
+                  <div class="mt-2 text-xl font-extrabold">event window alerting</div>
+                  <div class="mt-2 muted">Treat spikes as an early warning system for narrative risk.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Brands</div>
+                  <div class="mt-2 text-xl font-extrabold">timing selection</div>
+                  <div class="mt-2 muted">Avoid paying peak pricing during synthetic lift.</div>
+                </div>
+
+                <div class="mt-3 p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                  <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Both</div>
+                  <div class="mt-2 text-xl font-extrabold">drill-down to posts</div>
+                  <div class="mt-2 muted">We surface the highest-impact drivers and the actors behind them.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8: WHO USES IT (FUNDS) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Use cases</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">For funds, research, and risk</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">The outputs map cleanly to institutional workflows.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6">
+              <div class="col-span-4 card">
+                <div class="text-2xl font-extrabold">Narrative risk</div>
+                <p class="mt-3 muted leading-relaxed">Integrity scoring and alerts during event windows.</p>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Outputs</div>
+                <div class="mt-2 text-base font-extrabold">impact split, velocity alerts</div>
+              </div>
+              <div class="col-span-4 card" style="border-color: rgba(200,121,255,.22);">
+                <div class="text-2xl font-extrabold">Diligence support</div>
+                <p class="mt-3 muted leading-relaxed">Validate whether “attention” reflects real adoption.</p>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Outputs</div>
+                <div class="mt-2 text-base font-extrabold">integrity score, drivers</div>
+              </div>
+              <div class="col-span-4 card">
+                <div class="text-2xl font-extrabold">Research signal</div>
+                <p class="mt-3 muted leading-relaxed">Separate crowd sentiment from campaign steering.</p>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Outputs</div>
+                <div class="mt-2 text-base font-extrabold">organic baseline, divergence</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9: WHO USES IT (BRANDS) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Use cases</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">For brands and influencer spend</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">Spend certainty requires integrity and timing, not reach.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6">
+              <div class="col-span-4 card">
+                <div class="text-2xl font-extrabold">Audience authenticity</div>
+                <p class="mt-3 muted leading-relaxed">Score real audience participation vs farms.</p>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Outputs</div>
+                <div class="mt-2 text-base font-extrabold">authenticity drivers</div>
+              </div>
+              <div class="col-span-4 card" style="border-color: rgba(200,121,255,.22);">
+                <div class="text-2xl font-extrabold">Moment selection</div>
+                <p class="mt-3 muted leading-relaxed">Know whether influence is rising or decaying.</p>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Outputs</div>
+                <div class="mt-2 text-base font-extrabold">velocity, inflection risk</div>
+              </div>
+              <div class="col-span-4 card">
+                <div class="text-2xl font-extrabold">Amplifier mapping</div>
+                <p class="mt-3 muted leading-relaxed">Identify the network that actually drives reach.</p>
+                <div class="mt-6 text-sm muted2 font-extrabold uppercase tracking-wider">Outputs</div>
+                <div class="mt-2 text-base font-extrabold">coordination map, nodes</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10: DIFFERENTIATION (ONE LINE + MODULE LOGIC) -->
+        <section class="slide">
+          <div class="h-full flex flex-col">
+            <div class="kicker">Differentiation</div>
+            <h2 class="mt-3 text-4xl font-extrabold tracking-tight">Verification is a different product category</h2>
+            <p class="mt-3 text-base muted leading-relaxed max-w-5xl"><span class="clamp2">We do not compete on prettier charts. We compete on defensible integrity outputs that survive scrutiny.</span></p>
+
+            <div class="mt-8 grow grid grid-cols-12 gap-6">
+              <div class="col-span-6 card">
+                <div class="text-sm muted2 font-extrabold uppercase tracking-wider">Most tools</div>
+                <div class="mt-3 text-2xl font-extrabold">describe activity</div>
+                <div class="mt-4 grid grid-cols-2 gap-4">
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-lg font-extrabold">reach</div>
+                    <div class="muted text-sm mt-1">volume</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-lg font-extrabold">sentiment</div>
+                    <div class="muted text-sm mt-1">inference</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-span-6 card" style="border-color: rgba(200,121,255,.22);">
+                <div class="text-sm muted2 font-extrabold uppercase tracking-wider">SocialAudits</div>
+                <div class="mt-3 text-2xl font-extrabold">evaluates integrity</div>
+                <div class="mt-4 grid grid-cols-2 gap-4">
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-lg font-extrabold">integrity</div>
+                    <div class="muted text-sm mt-1">confidence + drivers</div>
+                  </div>
+                  <div class="p-4 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-lg font-extrabold">coordination</div>
+                    <div class="muted text-sm mt-1">actor clustering</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10 panel">
+              <div class="kicker mb-3">One sentence</div>
+              <div class="text-3xl font-black leading-snug">
+                Reporting tells you what happened. Verification tells you whether it was real.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 11: CLOSE -->
+        <section class="slide">
+          <div class="h-full flex flex-col justify-center items-center text-center">
+            <div class="kicker">Close</div>
+            <h2 class="mt-3 text-4xl font-black tracking-tight leading-[1.02]">
+              If you make decisions on social signals
+            </h2>
+
+            <div class="mt-10 max-w-5xl">
+              <div class="panel text-left">
+                <div class="grid grid-cols-3 gap-6">
+                  <div class="p-6 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider mb-2">Funds</div>
+                    <div class="text-2xl font-extrabold">Add integrity to research</div>
+                    <div class="mt-2 muted">Treat synthetic narratives as measurable risk.</div>
+                  </div>
+                  <div class="p-6 rounded-2xl" style="border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider mb-2">Brands</div>
+                    <div class="text-2xl font-extrabold">Buy influence with certainty</div>
+                    <div class="mt-2 muted">Stop paying for engineered reach.</div>
+                  </div>
+                  <div class="p-6 rounded-2xl" style="border:1px solid rgba(200,121,255,.22); background: rgba(255,255,255,.02);">
+                    <div class="text-sm muted2 font-extrabold uppercase tracking-wider mb-2">Both</div>
+                    <div class="text-2xl font-extrabold">Treat integrity as infra</div>
+                    <div class="mt-2 muted">Not a dashboard. A control layer.</div>
+                  </div>
+                </div>
+
+                <div class="mt-8 divider"></div>
+                <div class="mt-5 flex items-center justify-between">
+                  <div class="muted text-sm">
+                    <span class="kbd">←</span> <span class="kbd">→</span> navigate · <span class="kbd">Space</span> next
+                  </div>
+                  <div class="muted2 text-sm">SocialAudits</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const deck = document.getElementById('deck');
+      const nativeW = 1366, nativeH = 768;
+
+      function scale(){
+        const s = Math.min(window.innerWidth/nativeW, window.innerHeight/nativeH);
+        deck.style.transform = `scale(${s})`;
+      }
+      window.addEventListener('resize', scale);
+      scale();
+
+      const slides = Array.from(document.querySelectorAll('.slide'));
+            let i = 0;
+
+      function show(idx){
+        slides.forEach(s => s.classList.remove('active'));
+        slides[idx].classList.add('active');
+                                i = idx;
+      }
+
+            
+      
+      // Keyboard navigation (robust space support)
+      document.addEventListener('keydown', (e) => {
+        const key = e.key;
+        const isNext = (key === 'ArrowRight' || key === 'PageDown' || key === ' ' || key === 'Spacebar' || key === 'Space');
+        const isPrev = (key === 'ArrowLeft' || key === 'PageUp');
+        if (isNext) {
+          e.preventDefault();
+          if(i < slides.length - 1) show(i + 1);
+        }
+        if (isPrev) {
+          e.preventDefault();
+          if(i > 0) show(i - 1);
+        }
+      });
+
+      // Click / tap anywhere to advance (except when selecting text)
+      deck.addEventListener('click', (e) => {
+        // Ignore clicks on selectable text elements if user is highlighting
+        const sel = window.getSelection ? window.getSelection().toString() : "";
+        if (sel && sel.length > 0) return;
+        if(i < slides.length - 1) show(i + 1);
+      });
+
+      show(0);
+
+    });
+  </script>
+</body>
+</html>
