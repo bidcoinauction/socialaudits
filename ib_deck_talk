@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SocialAudits — IB Deck</title>
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#060814;
+      --bg1:#0A1030;
+
+      /* Higher contrast (readable on projectors + Zoom) */
+      --text: rgba(248,250,255,.98);
+      --muted: rgba(248,250,255,.86);
+      --faint: rgba(248,250,255,.72);
+
+      /* Slightly stronger borders for clarity */
+      --border: rgba(255,255,255,.13);
+
+      --accent:#7C5CFF;
+      --accent2:#34D399;
+
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --r2: 18px;
+
+      /* Typographic scale (bigger by default) */
+      --body: clamp(18px, 1.35vw, 22px);
+      --bodySmall: clamp(16px, 1.15vw, 20px);
+      --kicker: clamp(12px, 0.95vw, 14px);
+    }
+
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; color:var(--text); }
+
+    body{
+      background:
+        radial-gradient(1000px 700px at 18% 18%, rgba(124,92,255,.18) 0%, rgba(124,92,255,0) 55%),
+        radial-gradient(900px 650px at 82% 22%, rgba(52,211,153,.12) 0%, rgba(52,211,153,0) 62%),
+        radial-gradient(900px 650px at 55% 92%, rgba(255,255,255,.07) 0%, rgba(255,255,255,0) 70%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 100%);
+      overflow:hidden;
+    }
+
+    /* Subtle institutional grid */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at 50% 40%, rgba(0,0,0,.95) 0%, rgba(0,0,0,.35) 56%, rgba(0,0,0,0) 80%);
+      pointer-events:none;
+      opacity:.33;
+    }
+
+    /* FULLSCREEN 16:9 STAGE */
+    .stage{
+      position:fixed;
+      inset:0;
+      display:grid;
+      place-items:center;
+      padding:0;
+    }
+
+    .viewport{
+      width: min(100vw, calc(100vh * (16/9)));
+      height: min(100vh, calc(100vw * (9/16)));
+      position:relative;
+      border-radius:0;
+      overflow:hidden;
+      cursor: pointer;
+    }
+
+    #deck{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+    }
+
+    /* Uniform slide padding (bigger safe margins for readability) */
+    .slide{
+      position:absolute; inset:0;
+      padding: clamp(54px, 4.8vw, 86px);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap: 18px;
+      opacity:0;
+      transform: translateY(14px) scale(.992);
+      transition: opacity .26s ease, transform .26s ease;
+      pointer-events:none;
+    }
+    .slide.active{
+      opacity:1;
+      transform: translateY(0) scale(1);
+      pointer-events:auto;
+    }
+
+    .kicker{
+      display:flex; align-items:center; gap:12px;
+      font-size: var(--kicker);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(248,250,255,.72);
+      margin-bottom: 2px;
+    }
+    .kicker .line{
+      width:52px; height:2px;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(124,92,255,.95), rgba(52,211,153,.95));
+      opacity:.95;
+    }
+
+    h1, h2{
+      margin:0;
+      letter-spacing:-.03em;
+      line-height:1.04;
+    }
+    h1{ font-size: clamp(54px, 5.8vw, 88px); font-weight:900; }
+    h2{ font-size: clamp(44px, 5.1vw, 76px); font-weight:900; }
+
+    .subhead{
+      margin:0;
+      max-width: 1080px;
+      font-size: var(--body);
+      line-height:1.62;
+      color: var(--muted);
+    }
+
+    .accent{ color: var(--accent); }
+
+    .quote{
+      margin-top: 10px;
+      max-width: 1080px;
+      padding: 16px 18px;
+      border-radius: var(--r2);
+      border: 1px solid rgba(124,92,255,.28);
+      background: linear-gradient(90deg, rgba(124,92,255,.16), rgba(52,211,153,.08));
+      color: rgba(248,250,255,.92);
+      font-weight: 650;
+      font-size: var(--bodySmall);
+      line-height: 1.55;
+    }
+
+    /* Cards */
+    .grid{ display:grid; gap:18px; margin-top: 16px; }
+    .two{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .three{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .four{ grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: var(--r2);
+      background: linear-gradient(180deg, rgba(14,22,52,.78), rgba(8,12,32,.62));
+      padding: 20px 20px 18px;
+      box-shadow: 0 14px 30px rgba(0,0,0,.22);
+      min-height: 132px;
+    }
+
+    .card .title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      font-size: clamp(16px, 1.25vw, 19px);
+      font-weight: 850;
+      letter-spacing:-.01em;
+      color: rgba(248,250,255,.96);
+      margin-bottom:12px;
+    }
+
+    .chip{
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(248,250,255,.78);
+      white-space:nowrap;
+    }
+
+    .card p{
+      margin:0;
+      color: rgba(248,250,255,.84);
+      font-size: var(--bodySmall);
+      line-height:1.6;
+    }
+
+    .card ul{
+      margin:0;
+      padding-left: 20px;
+      color: rgba(248,250,255,.86);
+      font-size: var(--bodySmall);
+      line-height:1.6;
+    }
+    .card li{ margin:8px 0; }
+
+    /* Minimal hint (auto hides; toggled with H) */
+    .hint{
+      position:absolute;
+      right: 18px;
+      bottom: 18px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10, 16, 48, .52);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+      font-size: 13px;
+      color: rgba(248,250,255,.82);
+      user-select: none;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity .35s ease;
+    }
+    .hint.hidden{ opacity: 0; }
+
+    /* Mobile */
+    @media (max-width: 980px){
+      body{ overflow:auto; }
+      .stage{ position:relative; padding: 12px; }
+      .viewport{
+        width: 100%;
+        height: auto;
+        min-height: 900px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        cursor: default;
+      }
+      #deck{ position:relative; }
+      .slide{ position:relative; padding: 46px 22px 38px; }
+      .two,.three,.four{ grid-template-columns: 1fr; }
+      .hint{ position: sticky; bottom: 12px; margin-left:auto; width: fit-content; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stage">
+    <div class="viewport" id="viewport" aria-label="Click to advance">
+
+      <main id="deck" role="region" aria-label="Slide deck">
+
+        <!-- SLIDE 1 -->
+        <section class="slide active">
+          <div class="kicker"><span class="line"></span> WHAT THIS IS (NO HYPE)</div>
+          <h1>SocialAudits</h1>
+          <p class="subhead">
+            <span class="accent">Narrative Authenticity &amp; Manipulation Detection</span> for capital markets.
+          </p>
+          <p class="subhead">
+            We provide institutional-grade intelligence that distinguishes <strong>real public participation</strong>
+            from <strong>synthetic, coordinated social activity</strong>—before it distorts perception, risk, or valuation.
+          </p>
+          <div class="quote">Clear category: <strong>Narrative risk intelligence</strong> (not “AI / influencer / trust”).</div>
+        </section>
+
+        <!-- SLIDE 2 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> THE OUTPUT (START WITH ANSWERS)</div>
+          <h2>What SocialAudits <span class="accent">Delivers</span></h2>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Authenticity verification <span class="chip">Core</span></div>
+              <p>Verification of whether social engagement is <strong>organic</strong> or <strong>manufactured</strong>.</p>
+            </div>
+            <div class="card">
+              <div class="title">Coordination detection <span class="chip">Core</span></div>
+              <p>Detection of <strong>coordinated narrative campaigns</strong>.</p>
+            </div>
+            <div class="card">
+              <div class="title">Sentiment integrity <span class="chip">Core</span></div>
+              <p>Early identification of <strong>artificial sentiment shifts</strong>.</p>
+            </div>
+            <div class="card">
+              <div class="title">Asset-level intelligence <span class="chip">Use</span></div>
+              <p>Decision-ready output for <strong>research</strong>, <strong>risk</strong>, and <strong>diligence</strong> teams.</p>
+            </div>
+          </div>
+          <div class="quote">This is not social listening. This is <strong>authenticity verification</strong>.</div>
+        </section>
+
+        <!-- SLIDE 3 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHY THIS EXISTS (ONE FACT, NO DRAMA)</div>
+          <h2>Narrative Is Now a <span class="accent">Market Variable</span></h2>
+          <p class="subhead">
+            Every day, roughly <strong>1 trillion</strong> social engagements occur across major platforms.
+            <br>
+            Our data shows a majority are <strong>non-human</strong> or <strong>coordinated</strong>.
+          </br>
+          </p>
+          <div class="grid three">
+            <div class="card">
+              <div class="title">Markets react to <span class="chip">Perception</span></div>
+              <p>Perceived demand and narrative legitimacy influence behavior.</p>
+            </div>
+            <div class="card">
+              <div class="title">Markets react to <span class="chip">Momentum</span></div>
+              <p>Acceleration patterns shape positioning and risk response.</p>
+            </div>
+            <div class="card">
+              <div class="title">Markets react to <span class="chip">Velocity</span></div>
+              <p>Narrative velocity drives coverage, attention, and liquidity.</p>
+            </div>
+          </div>
+          <div class="quote">Without verification, those signals are <strong>misread</strong>.</div>
+        </section>
+
+        <!-- SLIDE 4 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHAT MAKES THIS AN INSTITUTIONAL PROBLEM</div>
+          <h2>The Risk Is Not Volatility — It’s <span class="accent">Misinterpretation</span></h2>
+          <p class="subhead">
+            Most institutions already ingest sentiment data. What they cannot currently answer:
+          </p>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Unanswered questions <span class="chip">Gap</span></div>
+              <ul>
+                <li>Who is actually participating?</li>
+                <li>Is activity coordinated?</li>
+                <li>Is sentiment organic or engineered?</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="title">Why tools fail <span class="chip">Reality</span></div>
+              <p>Existing tools measure <strong>volume</strong>. They do not verify <strong>authenticity</strong>.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 5 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHAT YOU ACTUALLY BUILT (CORE PRODUCT)</div>
+          <h2>Synthetic Narrative <span class="accent">Detection Layer</span></h2>
+          <p class="subhead">SocialAudits analyzes <strong>100%</strong> of observed data, not samples.</p>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Identity &amp; behavior clustering <span class="chip">Capability</span></div>
+              <p>Groups accounts by behavior signatures to isolate coordinated participation.</p>
+            </div>
+            <div class="card">
+              <div class="title">Coordination detection <span class="chip">Capability</span></div>
+              <p>Identifies synchronized posting patterns and amplification structures.</p>
+            </div>
+            <div class="card">
+              <div class="title">Organic vs synthetic classification <span class="chip">Capability</span></div>
+              <p>Separates real participation from manufactured momentum.</p>
+            </div>
+            <div class="card">
+              <div class="title">Narrative acceleration tracking <span class="chip">Capability</span></div>
+              <p>Detects when narratives shift, accelerate, and “legitimize.”</p>
+            </div>
+          </div>
+          <div class="quote">Functions as an overlay intelligence layer — not a trading system.</div>
+        </section>
+
+        <!-- SLIDE 6 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> HOW THE SIGNAL FORMS (NO GAMESTOP)</div>
+          <h2>How Narrative Manipulation Typically <span class="accent">Emerges</span></h2>
+          <div class="grid four">
+            <div class="card"><div class="title">1 <span class="chip">Start</span></div><p>Coordinated synthetic engagement initiates.</p></div>
+            <div class="card"><div class="title">2 <span class="chip">Scale</span></div><p>Activity crosses anomaly thresholds.</p></div>
+            <div class="card"><div class="title">3 <span class="chip">Appear</span></div><p>Narrative appears organic.</p></div>
+            <div class="card"><div class="title">4 <span class="chip">React</span></div><p>Media and analysts react, then capital responds.</p></div>
+          </div>
+          <div class="quote">SocialAudits detects manipulation <strong>before Step 3</strong>.</div>
+        </section>
+
+        <!-- SLIDE 7 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> REAL-WORLD SCENARIO (BANK-SAFE)</div>
+          <h2>Public Issuer <span class="accent">Narrative Distortion</span></h2>
+          <p class="subhead">
+            A public company undergoes a visible corporate action. Social sentiment rapidly turns negative.
+          </p>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Traditional interpretation <span class="chip">Assumption</span></div>
+              <p>→ “Investor backlash”</p>
+            </div>
+            <div class="card">
+              <div class="title">SocialAudits finding <span class="chip">Verified</span></div>
+              <p>→ Majority of activity driven by <strong>coordinated, non-organic accounts</strong></p>
+            </div>
+          </div>
+          <div class="quote">Result: narrative risk mispriced. Perception divorced from reality.</div>
+        </section>
+
+        <!-- SLIDE 8 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHO THIS IS FOR (BE SPECIFIC)</div>
+          <h2>Primary <span class="accent">Institutional Users</span></h2>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Investment Banks <span class="chip">IB</span></div>
+              <p>ECM, Research, Risk</p>
+            </div>
+            <div class="card">
+              <div class="title">Hedge Funds <span class="chip">Buy-side</span></div>
+              <p>Diligence &amp; positioning</p>
+            </div>
+            <div class="card">
+              <div class="title">Asset Managers <span class="chip">AM</span></div>
+              <p>Signal validation &amp; exposure management</p>
+            </div>
+            <div class="card">
+              <div class="title">Corporate Strategy &amp; IR <span class="chip">Issuer</span></div>
+              <p>Perception risk monitoring &amp; event response</p>
+            </div>
+          </div>
+          <div class="quote">Decision support infrastructure — not marketing software.</div>
+        </section>
+
+        <!-- SLIDE 9 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> USE CASES BY FUNCTION (NO GENERIC AI)</div>
+          <h2>Where SocialAudits Is <span class="accent">Deployed</span></h2>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Equity Research <span class="chip">Validate</span></div>
+              <p>Validate whether sentiment reflects real investor interest.</p>
+            </div>
+            <div class="card">
+              <div class="title">Risk &amp; Surveillance <span class="chip">Flag</span></div>
+              <p>Flag artificial narrative shocks.</p>
+            </div>
+            <div class="card">
+              <div class="title">Capital Markets <span class="chip">Monitor</span></div>
+              <p>Monitor perception around offerings, rebrands, restructurings.</p>
+            </div>
+            <div class="card">
+              <div class="title">Due Diligence <span class="chip">Separate</span></div>
+              <p>Separate organic traction from manufactured attention.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 10 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHAT MAKES YOU DIFFERENT (CLEAR EDGE)</div>
+          <h2>Why Existing Platforms <span class="accent">Fail</span></h2>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Legacy approach <span class="chip">Common</span></div>
+              <ul>
+                <li>Sample &lt;1% of available data</li>
+                <li>Rely on engagement volume</li>
+                <li>Cannot detect coordination</li>
+                <li>Cannot verify actor authenticity</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="title">SocialAudits <span class="chip">Forensic</span></div>
+              <ul>
+                <li>Full-dataset ingestion</li>
+                <li>Behavior-level analysis</li>
+                <li>Forensic classification</li>
+                <li>Institutional reporting standards</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SLIDE 11 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> PROOF THIS IS REAL (KOL REPORT AS EVIDENCE)</div>
+          <h2>What a SocialAudits <span class="accent">Report</span> Shows</h2>
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Signal divergence <span class="chip">Integrity</span></div>
+              <p>Organic vs manipulation sentiment divergence.</p>
+            </div>
+            <div class="card">
+              <div class="title">Emotion &amp; momentum <span class="chip">Context</span></div>
+              <p>Emotion and momentum mapping.</p>
+            </div>
+            <div class="card">
+              <div class="title">Participation analysis <span class="chip">Attribution</span></div>
+              <p>Identity-level participation analysis.</p>
+            </div>
+            <div class="card">
+              <div class="title">Timeline anomalies <span class="chip">Forensics</span></div>
+              <p>Timeline anomaly detection.</p>
+            </div>
+          </div>
+          <div class="quote">This reporting structure already exists and is live.</div>
+        </section>
+
+        <!-- SLIDE 12 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> DEPLOYMENT MODEL (NO TIMELINES)</div>
+          <h2>Institutional <span class="accent">Deployment</span></h2>
+          <div class="grid two">
+            <div class="card"><div class="title">Issuer-level monitoring <span class="chip">Ongoing</span></div><p>Continuous monitoring around selected issuers/assets.</p></div>
+            <div class="card"><div class="title">Event-driven alerts <span class="chip">Triggers</span></div><p>Alerts when integrity thresholds and anomalies are crossed.</p></div>
+            <div class="card"><div class="title">Historical forensics <span class="chip">Review</span></div><p>Forensic review for events, campaigns, and perception shocks.</p></div>
+            <div class="card"><div class="title">Dashboard / API delivery <span class="chip">Integrate</span></div><p>Delivered as intelligence infrastructure into existing workflows.</p></div>
+          </div>
+          <div class="quote">Positioned as intelligence infrastructure — not a roadmap promise.</div>
+        </section>
+
+        <!-- SLIDE 13 -->
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> THE TAKEAWAY (MEMORABLE, SHORT)</div>
+          <h2>The Internet Now <span class="accent">Moves Markets</span></h2>
+          <p class="subhead">But the signal is polluted.</p>
+          <p class="subhead">
+            SocialAudits exists to <strong>separate real attention from artificial noise</strong>,
+            so institutional decisions can be made with confidence.
+          </p>
+          <div class="quote">Closing: If you’re allocating risk, reputation, or capital based on social data… is what you’re seeing <strong>real</strong>?</div>
+        </section>
+
+      </main>
+
+      <div class="hint" id="hint">Click / Space to advance • ← to go back • H toggles this</div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const deck = document.getElementById('deck');
+      const viewport = document.getElementById('viewport');
+      const hint = document.getElementById('hint');
+      let i = 0;
+
+      function render(){
+        slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+      }
+
+      function go(n){
+        i = Math.max(0, Math.min(slides.length - 1, n));
+        render();
+      }
+
+      // Auto-hide hint after 3 seconds (doesn't steal attention)
+      let hintTimer = setTimeout(() => hint?.classList.add('hidden'), 3000);
+
+      function toggleHint(){
+        if(!hint) return;
+        hint.classList.toggle('hidden');
+        clearTimeout(hintTimer);
+      }
+
+      // Click anywhere to advance (ignore interactive elements if added later)
+      viewport.addEventListener('click', (e) => {
+        if (e.target.closest('button,a,input,textarea,select')) return;
+        go(i + 1);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        const k = e.key;
+
+        // forward
+        if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); go(i + 1); }
+
+        // back
+        if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') { e.preventDefault(); go(i - 1); }
+
+        // optional
+        if (k === 'Home') { e.preventDefault(); go(0); }
+        if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
+
+        // hint toggle
+        if (k === 'h' || k === 'H') { e.preventDefault(); toggleHint(); }
+
+        // fullscreen toggle (optional)
+        if (k === 'f' || k === 'F') {
+          e.preventDefault();
+          const el = document.documentElement;
+          if (!document.fullscreenElement) el.requestFullscreen?.();
+          else document.exitFullscreen?.();
+        }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
