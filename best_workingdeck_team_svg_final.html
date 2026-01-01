@@ -1,0 +1,3792 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>SocialAudits AI — Investor Deck</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: "OskariG2";
+      src: url("./assets/fonts/Oskari+G2+Medium.otf") format("opentype");
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg0: #060814;
+      --bg1: #0A1030;
+
+      --sheetGlow: rgba(124, 92, 255, .14);
+      --border: rgba(255, 255, 255, .12);
+      --borderStrong: rgba(255, 255, 255, .20);
+
+      --text: rgba(248, 250, 255, .98);
+      --muted: rgba(248, 250, 255, .82);
+      --faint: rgba(248, 250, 255, .60);
+
+      --accent: #7C5CFF;
+      --accent2: #34D399;
+
+      --shadow: 0 40px 120px rgba(0, 0, 0, .55);
+      --rSheet: 28px;
+      --rCard: 20px;
+
+      --padSlide: 64px;
+      --padSheet: 56px;
+
+      --h1: 72px;
+      --h2: 58px;
+
+      --sub: 20px;
+      --micro: 14px;
+
+      --navH: 56px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'OskariG2', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 18% 12%, rgba(124, 92, 255, .18), transparent 60%),
+        radial-gradient(1000px 600px at 82% 28%, rgba(52, 211, 153, .14), transparent 65%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      padding: var(--padSlide);
+      display: none;
+      opacity: 0;
+      transform: scale(.985);
+      transition: opacity .28s ease, transform .28s ease;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .sheet {
+      flex: 1;
+      border-radius: var(--rSheet);
+      background:
+        radial-gradient(120% 140% at 20% 10%, var(--sheetGlow), transparent 40%),
+        linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .02));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .05);
+      padding: var(--padSheet);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      padding-bottom: 72px;
+    }
+
+    .progress {
+      height: 2px;
+      background: rgba(255, 255, 255, .08);
+      margin-bottom: 24px;
+    }
+
+    .progress>span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .28s ease;
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--faint);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .kicker::before {
+      content: "";
+      width: 46px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: .9;
+    }
+
+    h1,
+    h2 {
+      margin: 14px 0 10px 0;
+      letter-spacing: -.035em;
+    }
+
+    h1 {
+      font-size: var(--h1);
+      line-height: 1.02;
+    }
+
+    h2 {
+      font-size: var(--h2);
+      line-height: 1.06;
+    }
+
+    .sub {
+      font-size: var(--sub);
+      max-width: 1000px;
+      color: var(--muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    .micro {
+      font-size: var(--micro);
+      color: var(--faint);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .cols {
+      display: grid;
+      grid-template-columns: .95fr 1.45fr;
+      gap: 28px;
+      margin-top: 28px;
+      align-items: stretch;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .card {
+      background: rgba(10, 14, 32, .70);
+      border: 1px solid var(--border);
+      border-radius: var(--rCard);
+      padding: 22px;
+    }
+
+    .card.primary {
+      background: linear-gradient(180deg, rgba(124, 92, 255, .25), rgba(10, 14, 32, .85));
+      border-color: rgba(124, 92, 255, .45);
+    }
+
+    .card.muted {
+      background: rgba(10, 14, 32, .45);
+      opacity: .90;
+    }
+
+    .card strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: rgba(248, 250, 255, .92);
+    }
+
+    .card p {
+      margin: 0;
+      color: rgba(248, 250, 255, .82);
+      line-height: 1.35;
+    }
+
+    .cardHead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .06em;
+    }
+
+    .pill.live {
+      color: var(--accent2);
+      border-color: rgba(52, 211, 153, .45);
+      background: rgba(52, 211, 153, .07);
+    }
+
+    .pill.ibis {
+      color: var(--accent);
+      border-color: rgba(124, 92, 255, .45);
+      background: rgba(124, 92, 255, .07);
+    }
+
+    .vizCard {
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(0, 0, 0, .28);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .35);
+    }
+
+    .vizTitle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .62);
+      margin-bottom: 12px;
+    }
+
+    .vizTitle b {
+      color: rgba(248, 250, 255, .90);
+      letter-spacing: .08em;
+    }
+
+    .vizFrame {
+      flex: 1;
+      min-height: 0;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background:
+        radial-gradient(140% 160% at 10% 0%, rgba(124, 92, 255, .22), transparent 60%),
+        radial-gradient(160% 200% at 100% 100%, rgba(52, 211, 153, .16), transparent 65%),
+        rgba(4, 6, 20, .98);
+      padding: 4px 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vizFrame svg {
+      width: 118%;
+      height: auto;
+      max-height: 118%;
+      display: block;
+    }
+
+    .vizFrame svg text {
+      font-family: 'OskariG2', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      paint-order: stroke;
+      stroke-width: 0;
+    }
+
+    .caption {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--faint);
+      line-height: 1.35;
+    }
+
+    .claim {
+      margin-top: 22px;
+      padding: 20px 22px;
+      border-radius: 18px;
+      background: linear-gradient(90deg, rgba(124, 92, 255, .16), rgba(52, 211, 153, .12));
+      font-weight: 800;
+      letter-spacing: -.01em;
+    }
+
+    .hud {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 18px;
+      height: var(--navH);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(6, 8, 20, .45);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .35);
+      z-index: 50;
+      pointer-events: auto;
+    }
+
+    .hud .left,
+    .hud .right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hud .center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(248, 250, 255, .75);
+      font-weight: 700;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .06);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: .01em;
+      cursor: pointer;
+    }
+
+    .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .btn.primary {
+      border: 0;
+      background: linear-gradient(90deg, rgba(124, 92, 255, .95), rgba(124, 92, 255, .70));
+    }
+
+    .kbd {
+      font-size: 12px;
+      color: rgba(248, 250, 255, .62);
+      border: 1px solid rgba(255, 255, 255, .12);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .05);
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: rgba(248, 250, 255, .70);
+      user-select: none;
+    }
+
+    .toggle input {
+      accent-color: var(--accent2);
+    }
+
+    @media (max-width:980px) {
+      body {
+        overflow: auto;
+      }
+
+      .slide {
+        height: auto;
+        padding: 18px;
+      }
+
+      .sheet {
+        padding: 22px;
+      }
+
+      .cols {
+        grid-template-columns: 1fr;
+      }
+
+      .vizFrame {
+        min-height: 320px;
+      }
+
+      h1 {
+        font-size: 52px;
+      }
+
+      h2 {
+        font-size: 44px;
+      }
+
+      .hud {
+        position: sticky;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
+      }
+    }
+
+    @media print {
+
+      html,
+      body {
+        width: 1920px;
+        height: auto;
+        overflow: visible !important;
+      }
+
+      body {
+        background: #060814 !important;
+      }
+
+      .slide {
+        display: block !important;
+      }
+
+      .sheet {
+        width: 1920px !important;
+        height: 1080px !important;
+        min-height: 1080px !important;
+        padding: 64px 80px 96px !important;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .hud,
+      .nav,
+      .footer,
+      .clickHint,
+      .progress {
+        display: none !important;
+      }
+
+      .vizFrame {
+        max-height: 60vh !important;
+        padding: 12px 18px;
+      }
+
+      .vizFrame svg {
+        max-height: 60vh !important;
+      }
+
+      * {
+        box-shadow: none !important;
+      }
+    }
+
+    .hud,
+    .hud * {
+      pointer-events: auto !important;
+      z-index: 9999 !important;
+    }
+
+    .slide,
+    .sheet {
+      pointer-events: auto;
+    }
+
+    /* =========================
+       Imported slide utilities
+       ========================= */
+    .imported .saQuote {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(124, 92, 255, .22);
+      background: linear-gradient(90deg, rgba(124, 92, 255, .10), rgba(16, 185, 129, .06));
+      color: rgba(248, 250, 255, .90);
+      font-weight: 700;
+      font-size: clamp(14px, 1.05vw, 16px);
+      line-height: 1.5;
+    }
+
+    .imported .saGrid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .imported .saFour {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .imported .saStepHead {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .imported .saStepNum {
+      font-weight: 900;
+      font-size: clamp(20px, 1.6vw, 28px);
+      letter-spacing: -.02em;
+    }
+
+    .imported .saSplit {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 24px;
+      margin-top: 22px;
+      align-items: start;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .imported .saPanel {
+      min-height: 0;
+    }
+
+    .imported .saImgRow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .imported .saImgCard {
+      border: 1px solid rgba(255, 255, 255, .10);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(10, 14, 32, .45);
+      display: flex;
+      flex-direction: column;
+      min-height: 250px;
+      margin: 0;
+    }
+
+    .imported .saImg {
+      height: 170px;
+      background: rgba(255, 255, 255, .02);
+      overflow: hidden;
+    }
+
+    .imported .saImg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+      filter: saturate(1.05) contrast(1.03);
+    }
+
+    .imported figcaption {
+      padding: 12px 12px 14px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .imported .saName {
+      font-weight: 900;
+      letter-spacing: -.01em;
+    }
+
+    .imported .saNote {
+      color: var(--muted);
+      font-size: clamp(12px, .95vw, 14px);
+      line-height: 1.4;
+    }
+
+    .imported .saTakeaway {
+      padding: 22px;
+    }
+
+    .imported .saKV {
+      display: grid;
+      gap: 12px;
+    }
+
+    .imported .saKVRow {
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .03);
+      border-radius: 16px;
+      padding: 14px 14px 13px;
+    }
+
+    .imported .saKVRow.saEmph {
+      border-color: rgba(124, 92, 255, .36);
+      background: rgba(124, 92, 255, .10);
+    }
+
+    .imported .saLbl {
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--faint);
+      font-weight: 900;
+    }
+
+    .imported .saBig {
+      margin-top: 6px;
+      font-weight: 900;
+      letter-spacing: -.01em;
+      font-size: clamp(14px, 1.1vw, 18px);
+    }
+
+    .imported .saSm {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: clamp(12px, .95vw, 14px);
+      line-height: 1.4;
+    }
+
+    .imported .saModuleGrid {
+      display: grid;
+      grid-template-columns: 1.85fr 1fr;
+      gap: 18px;
+      margin-top: 14px;
+      align-items: start;
+    }
+
+    .imported .saBetween {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .imported .saH3 {
+      margin: 10px 0 0 0;
+      font-size: clamp(18px, 1.6vw, 24px);
+      letter-spacing: -.02em;
+    }
+
+    .imported .saRight {
+      text-align: right;
+    }
+
+    .imported .saMetric {
+      margin-top: 10px;
+      font-size: clamp(34px, 3.0vw, 54px);
+      font-weight: 950;
+      letter-spacing: -.03em;
+    }
+
+    .imported .saWarn {
+      color: #EF4444;
+    }
+
+    .imported .saChart {
+      margin-top: 16px;
+    }
+
+    .imported .saMini3 {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .imported .saMini {
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .imported .saMiniEmph {
+      border-color: rgba(124, 92, 255, .36);
+      background: rgba(124, 92, 255, .08);
+    }
+
+    .imported .saTiny {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    .imported .saBase {
+      margin-top: 8px;
+      font-weight: 900;
+      letter-spacing: -.01em;
+      font-size: clamp(14px, 1.05vw, 18px);
+    }
+
+    .imported .saSmall {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: clamp(12px, .95vw, 14px);
+      line-height: 1.4;
+    }
+
+    .imported .saCaseSplit {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 20px;
+      margin-top: 12px;
+      align-items: start;
+    }
+
+    .imported .saCaseBlock {
+      padding: 18px;
+    }
+
+    .imported .saKV2 {
+      display: grid;
+      gap: 10px;
+    }
+
+    .imported .saKV2Row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      line-height: 1.45;
+    }
+
+    .imported .saKV2K {
+      font-weight: 900;
+      color: rgba(248, 250, 255, .96);
+    }
+
+    .imported .saMedia {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      min-height: 300px;
+      overflow: hidden;
+    }
+
+    .imported .saMedia img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: saturate(1.05) contrast(1.03);
+    }
+
+    /* Responsive adjustments (match deck’s breakpoint behavior) */
+    @media (max-width: 980px) {
+
+      .imported .saSplit,
+      .imported .saModuleGrid,
+      .imported .saCaseSplit {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr;
+        gap: 20px;
+        margin-top: 12px;
+        align-items: start;
+      }
+
+      .imported .saFour {
+        grid-template-columns: 1fr;
+      }
+
+      .imported .saImgRow {
+        grid-template-columns: 1fr;
+      }
+
+      .imported .saMini3 {
+        grid-template-columns: 1fr;
+      }
+
+      .imported .saKV2Row {
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, .10);
+        background: rgba(255, 255, 255, .02);
+        line-height: 1.45;
+      }
+
+      .imported .saMedia {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+        min-height: 300px;
+        overflow: hidden;
+      }
+    }
+
+
+    /* --- Imported compact slides: enforce safe vertical budget --- */
+    .slide.imported.sa-case .sheet,
+    .slide.imported.sa-anom .sheet {
+      --padSheet: 44px;
+      padding-bottom: 56px;
+      /* keep nav clear while reclaiming space */
+    }
+
+    .slide.imported.sa-case .saH2,
+    .slide.imported.sa-anom .saH2 {
+      margin: 0;
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      font-weight: 900;
+      font-size: clamp(34px, 3.6vw, 56px);
+    }
+
+    .slide.imported.sa-case .saSub,
+    .slide.imported.sa-anom .saSub {
+      font-size: 18px;
+      line-height: 1.45;
+      max-width: 980px;
+    }
+
+    /* Case study layout */
+    .slide.imported.sa-case .saCaseSplit {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      align-items: start;
+      margin-top: 10px;
+    }
+
+    .slide.imported.sa-case .saFacts {
+      padding: 14px 14px 12px;
+    }
+
+    .slide.imported.sa-case .saKV {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 10px 16px;
+      align-items: start;
+    }
+
+    .slide.imported.sa-case .saK {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .72);
+      padding-top: 2px;
+    }
+
+    .slide.imported.sa-case .saV {
+      font-size: clamp(13px, 1.02vw, 15px);
+      color: rgba(248, 250, 255, .90);
+      line-height: 1.45;
+    }
+
+    .slide.imported.sa-case .saFacts {
+      padding: 16px;
+    }
+
+    .slide.imported.sa-case .saK {
+      font-weight: 800;
+      color: rgba(255, 255, 255, .92);
+    }
+
+    .slide.imported.sa-case .saKV strong {
+      color: rgba(255, 255, 255, .96);
+    }
+
+    .slide.imported.sa-case .saQuote {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(124, 92, 255, .22);
+      background: linear-gradient(90deg, rgba(124, 92, 255, .14), rgba(52, 211, 153, .06));
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 650;
+      max-width: 980px;
+    }
+
+    .slide.imported.sa-case .saMedia {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 10px;
+      min-height: 0;
+      height: clamp(380px, 44vh, 520px);
+      overflow: hidden
+    }
+
+    .slide.imported.sa-case .saMediaFrame {
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .96);
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .slide.imported.sa-case .saMediaFrame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .slide.imported.sa-case .saCap {
+      font-size: 12px;
+      color: var(--faint);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-align: center;
+      opacity: .95;
+      padding-bottom: 2px;
+    }
+
+    /* Anomaly module layout */
+    .slide.imported.sa-anom .saModuleGrid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+      min-height: 0;
+    }
+
+    .slide.imported.sa-anom .saPanel {
+      padding: 14px;
+    }
+
+    .slide.imported.sa-anom .saBetween {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .slide.imported.sa-anom .saTiny {
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: rgba(255, 255, 255, .68);
+    }
+
+    .slide.imported.sa-anom .saH3 {
+      margin-top: 6px;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+
+    .slide.imported.sa-anom .saMicro {
+      margin-top: 4px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, .78);
+      line-height: 1.35;
+    }
+
+    .slide.imported.sa-anom .saAlert {
+      text-align: right;
+    }
+
+    .slide.imported.sa-anom .saMetric {
+      margin-top: 6px;
+      font-size: clamp(28px, 2.8vw, 40px);
+      font-weight: 950;
+      letter-spacing: -0.02em;
+    }
+
+    .slide.imported.sa-anom .saWarn {
+      color: #EF4444;
+    }
+
+    .slide.imported.sa-anom .saChart {
+      margin-top: 10px;
+    }
+
+    .slide.imported.sa-anom .saMini3 {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .slide.imported.sa-anom .saMini {
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 14px;
+      padding: 10px 10px 9px;
+    }
+
+    .slide.imported.sa-anom .saEmph {
+      border-color: rgba(124, 92, 255, .22);
+    }
+
+    .slide.imported.sa-anom .saBase {
+      margin-top: 6px;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+
+    .slide.imported.sa-anom .saActions {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 0;
+    }
+
+    .slide.imported.sa-anom .saActionHead {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 2px;
+    }
+
+    .slide.imported.sa-anom .saQuote {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(124, 92, 255, .22);
+      background: linear-gradient(90deg, rgba(124, 92, 255, .14), rgba(52, 211, 153, .06));
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 650;
+      max-width: 1100px;
+    }
+
+    @media (max-width: 980px) {
+      .slide.imported.sa-case .saCaseSplit {
+        grid-template-columns: 1fr;
+      }
+
+      .slide.imported.sa-case .saKV {
+        grid-template-columns: 1fr;
+      }
+
+      .slide.imported.sa-case .saMedia {
+        height: 360px;
+      }
+
+      .slide.imported.sa-anom .saModuleGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .slide.imported.sa-anom .saMini3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    /* --- Readability tweaks for added slides --- */
+    .sheet .sub {
+      font-size: var(--bodySmall);
+      line-height: 1.55;
+      color: rgba(248, 250, 255, .86);
+      max-width: 1050px;
+    }
+
+    .sheet .kicker {
+      font-size: var(--kicker);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .70);
+    }
+  </style>
+
+  <style>
+    /* Global SVG typography + contrast */
+    svg {
+      shape-rendering: geometricPrecision;
+      text-rendering: geometricPrecision;
+    }
+
+    svg text {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    .logoPlaceholder {
+      margin: 48px auto 32px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .logoImg {
+      height: 44px;
+      opacity: 0.85;
+      filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .35));
+    }
+
+    .logoLockup {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      gap: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background:
+        radial-gradient(120% 140% at 18% 12%, rgba(124, 92, 255, .18), transparent 55%),
+        radial-gradient(120% 140% at 88% 92%, rgba(52, 211, 153, .14), transparent 60%),
+        rgba(6, 8, 20, .35);
+    }
+
+    .logoImg {
+      width: min(520px, 86%);
+      height: auto;
+      max-height: 62%;
+      object-fit: contain;
+      opacity: .95;
+      filter: drop-shadow(0 14px 34px rgba(0, 0, 0, .45));
+    }
+
+    .logoSub {
+      font-size: 14px;
+      color: rgba(248, 250, 255, .70);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="deck" id="deck">
+    <!-- SLIDE 1 (REFINED) -->
+    <section class="slide active">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">OVERVIEW</div>
+        <h1>SocialAudits AI</h1>
+        <p class="sub">Early-stage virality intelligence for high-stakes decisions.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card primary">
+              <strong>Live Today</strong>
+              <p>
+                A Signal Engine that detects narrative ignition, coordination,
+                and velocity shifts before amplification and spend.
+              </p>
+            </div>
+            <div class="card subtle">
+              <strong>Core Focus</strong>
+              <p>
+                Separating real momentum from engineered activity
+                while it still changes outcomes.
+              </p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle">
+              <span>SYSTEM</span>
+              <span><b>SIGNALS</b> → DECISIONS</span>
+            </div>
+            <div class="vizFrame">
+              <svg preserveaspectratio="xMidYMid meet" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s1g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".90"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- Raw social -->
+                <rect fill="rgba(255,255,255,.04)" height="128" rx="18" ry="18" stroke="rgba(255,255,255,.14)"
+                  width="230" x="60" y="96"></rect>
+                <text fill="rgba(248,250,255,.92)" font-size="20" text-anchor="middle" x="175" y="138">
+                  Raw social
+                </text>
+                <text fill="rgba(248,250,255,.70)" font-size="15" text-anchor="middle" x="175" y="168">
+                  posts · replies · timing
+                </text>
+                <!-- Signal Engine -->
+                <rect fill="rgba(124,92,255,.10)" height="144" rx="18" ry="18" stroke="url(#s1g)" stroke-width="2.5"
+                  width="260" x="335" y="88"></rect>
+                <text fill="rgba(248,250,255,.94)" font-size="20" text-anchor="middle" x="465" y="138">
+                  Signal Engine
+                </text>
+                <text fill="rgba(248,250,255,.72)" font-size="15" text-anchor="middle" x="465" y="168">
+                  early virality · coordination
+                </text>
+                <!-- Decisions -->
+                <rect fill="rgba(255,255,255,.04)" height="128" rx="18" ry="18" stroke="rgba(255,255,255,.14)"
+                  width="190" x="650" y="96"></rect>
+                <text fill="rgba(248,250,255,.92)" font-size="20" text-anchor="middle" x="745" y="138">
+                  Decisions
+                </text>
+                <text fill="rgba(248,250,255,.70)" font-size="15" text-anchor="middle" x="745" y="168">
+                  selection · timing · risk
+                </text>
+                <!-- Connectors -->
+                <path d="M290 160 L335 160" stroke="rgba(248,250,255,.18)" stroke-linecap="round" stroke-width="6">
+                </path>
+                <path d="M595 160 L650 160" stroke="rgba(248,250,255,.18)" stroke-linecap="round" stroke-width="6">
+                </path>
+              </svg>
+            </div>
+            <div class="caption">
+              Signal integrity determines decision quality.
+            </div>
+          </div>
+        </div>
+        <div class="claim">
+          We surface real momentum before it becomes obvious — or expensive.
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 2 -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">WHY THIS EXISTS</div>
+        <h2>Narrative Is Now a Market Variable</h2>
+        <p class="sub">
+          Every day, roughly 1T social engagements occur across major platforms. <br />
+          A significant portion are non-human or coordinated.
+        </p>
+        <div class="cols">
+          <!-- LEFT: CONCEPT STACK -->
+          <div class="stack">
+            <div class="card">
+              <strong>Perception</strong>
+              <p>
+                Perceived demand and narrative legitimacy
+                directly influence behavior.
+              </p>
+            </div>
+            <div class="card">
+              <strong>Momentum</strong>
+              <p>
+                Acceleration patterns shape positioning
+                and risk response.
+              </p>
+            </div>
+            <div class="card">
+              <strong>Velocity</strong>
+              <p>
+                Narrative velocity drives coverage,
+                attention, and liquidity.
+              </p>
+            </div>
+          </div>
+          <!-- RIGHT: MODEL -->
+          <div class="vizCard">
+            <div class="vizTitle">
+              <span>MODEL</span>
+              <span><b>VELOCITY</b> → OUTCOMES</span>
+            </div>
+            <div class="vizFrame">
+              <svg aria-label="Team capability scope diagram" role="img" viewBox="0 0 900 320"
+                preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="tmLine" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,.95)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,.90)" />
+                  </linearGradient>
+                  <linearGradient id="tmGlow" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(124,92,255,.16)" />
+                    <stop offset="100%" stop-color="rgba(0,0,0,0)" />
+                  </linearGradient>
+                </defs>
+
+                <!-- soft backdrop -->
+                <rect x="18" y="18" width="864" height="284" rx="28" fill="rgba(255,255,255,.02)"
+                  stroke="rgba(255,255,255,.10)" />
+                <rect x="18" y="18" width="864" height="284" rx="28" fill="url(#tmGlow)" opacity=".9" />
+
+                <text x="450" y="72" text-anchor="middle" fill="rgba(248,250,255,.92)" font-size="22" font-weight="800">
+                  Execution matters more than claims
+                </text>
+                <text x="450" y="96" text-anchor="middle" fill="rgba(248,250,255,.62)" font-size="13">
+                  Built to operate inside institutional workflows
+                </text>
+
+                <!-- connector baseline -->
+                <path d="M140 230 C240 212, 300 212, 360 230 C420 252, 480 252, 540 230 C600 212, 660 212, 760 230"
+                  fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8" stroke-linecap="round" opacity=".9" />
+                <path d="M140 230 C240 212, 300 212, 360 230 C420 252, 480 252, 540 230 C600 212, 660 212, 760 230"
+                  fill="none" stroke="url(#tmLine)" stroke-width="3.5" stroke-linecap="round" opacity=".85" />
+
+                <!-- left card -->
+                <rect x="120" y="132" width="220" height="110" rx="22" fill="rgba(255,255,255,.03)"
+                  stroke="rgba(255,255,255,.12)" />
+                <text x="230" y="172" text-anchor="middle" fill="rgba(248,250,255,.94)" font-size="16"
+                  font-weight="800">Engineering</text>
+                <text x="230" y="196" text-anchor="middle" fill="rgba(248,250,255,.62)" font-size="12">pipelines •
+                  identity • scale</text>
+
+                <!-- center card (highlight) -->
+                <rect x="340" y="116" width="220" height="140" rx="26" fill="rgba(124,92,255,.18)" stroke="url(#tmLine)"
+                  stroke-width="2.5" />
+                <text x="450" y="162" text-anchor="middle" fill="rgba(248,250,255,.96)" font-size="16"
+                  font-weight="900">Intelligence</text>
+                <text x="450" y="186" text-anchor="middle" fill="rgba(248,250,255,.78)" font-size="12">forensics •
+                  anomaly scoring</text>
+                <rect x="382" y="204" width="136" height="26" rx="13" fill="rgba(52,211,153,.18)"
+                  stroke="rgba(52,211,153,.45)" />
+                <text x="450" y="222" text-anchor="middle" fill="rgba(248,250,255,.88)" font-size="11"
+                  font-weight="800">decision-grade</text>
+
+                <!-- right card -->
+                <rect x="560" y="132" width="220" height="110" rx="22" fill="rgba(255,255,255,.03)"
+                  stroke="rgba(255,255,255,.12)" />
+                <text x="670" y="172" text-anchor="middle" fill="rgba(248,250,255,.94)" font-size="16"
+                  font-weight="800">Delivery</text>
+                <text x="670" y="196" text-anchor="middle" fill="rgba(248,250,255,.62)" font-size="12">reporting •
+                  workflow integration</text>
+
+                <!-- subtle footer -->
+                <text x="450" y="286" text-anchor="middle" fill="rgba(248,250,255,.50)" font-size="12">
+                  Institutional tone • operational discipline
+                </text>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="claim">
+          When narrative is misread, capital is misallocated.
+          Without verification, those signals are wrong.
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 3 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">SIGNAL INTEGRITY</div>
+        <h2>The Internet Is Mostly Not Human</h2>
+        <p class="sub">When engagement isn’t human, metric-based authenticity becomes noise.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card muted">
+              <strong>Scoring error</strong>
+              <p>Like-to-follower ratios dominate scoring.</p>
+            </div>
+            <div class="card muted">
+              <strong>Scale break</strong>
+              <p>Heuristics collapse from micro → macro scale.</p>
+            </div>
+            <div class="card primary">
+              <strong>False organic</strong>
+              <p>Artificial engagement clears filters as “organic”.</p>
+            </div>
+            <p class="micro">Visual: internet activity is ~⅔ non-human (“dead”).</p>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle">
+              <span>EVIDENCE</span>
+              <span><b>PATTERN</b> SIGNATURE</span>
+            </div>
+            <div class="vizFrame">
+              <!-- add internal padding via viewBox + keep labels away from right edge -->
+              <svg aria-label="Pattern signature chart" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <!-- chart bounds -->
+                <g stroke="rgba(255,255,255,.07)" stroke-width="1">
+                  <line x1="80" x2="840" y1="250" y2="250"></line>
+                  <line x1="80" x2="840" y1="200" y2="200"></line>
+                  <line x1="80" x2="840" y1="150" y2="150"></line>
+                  <line x1="80" x2="840" y1="100" y2="100"></line>
+                </g>
+                <!-- axes -->
+                <line stroke="rgba(255,255,255,.10)" x1="80" x2="840" y1="270" y2="270"></line>
+                <line stroke="rgba(255,255,255,.10)" x1="80" x2="80" y1="70" y2="270"></line>
+                <!-- synthetic baseline -->
+                <line opacity="0.95" stroke="#7C5CFF" stroke-dasharray="10,8" stroke-width="4" x1="110" x2="820"
+                  y1="165" y2="165"></line>
+                <!-- organic variance -->
+                <polyline fill="none" points="110,255 210,210 310,235 410,175 510,230 610,140 710,195 810,215"
+                  stroke="#34D399" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"></polyline>
+                <!-- labels moved inward to avoid clipping -->
+                <text fill="#7C5CFF" font-size="20" text-anchor="end" x="820" y="155">Synthetic</text>
+                <text fill="#34D399" font-size="20" text-anchor="end" x="820" y="212">Organic</text>
+                <text fill="rgba(248,250,255,.55)" font-size="14" x="80" y="52">signal variance</text>
+                <!-- subtle frame -->
+                <rect fill="none" height="220" rx="18" stroke="rgba(255,255,255,.06)" width="800" x="60" y="60"></rect>
+              </svg>
+            </div>
+            <div class="caption">
+              Synthetic engagement stabilizes into patterns. Organic engagement fluctuates.
+            </div>
+          </div>
+        </div>
+        <div class="claim">Bad data doesn’t just mislead — it misprices decisions.</div>
+      </div>
+    </section>
+    <!-- SLIDE 4 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">MARKET FAILURE</div>
+        <h2>Influencer Spend Without Visibility</h2>
+        <p class="sub">Budgets commit on surface signals. Authenticity is discovered after outcomes are locked.
+        </p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card muted">
+              <strong>Visible</strong>
+              <p>Followers, reported engagement, past results.</p>
+            </div>
+            <div class="card primary">
+              <strong>Hidden</strong>
+              <p>Real participation, bot/farm activity, whether influence is active now.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>SEQUENCE</span><span><b>SPEND</b> → REPORT</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Spend to report sequence" role="img" viewBox="0 0 900 320"
+                preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="dpBg" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,0.16)" />
+                    <stop offset="55%" stop-color="rgba(0,0,0,0)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,0.12)" />
+                  </linearGradient>
+                  <filter id="dpSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="rgba(0,0,0,0.35)" />
+                  </filter>
+                  <style>
+                    <![CDATA[
+                    text {
+                      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+                    }
+
+                    .k {
+                      fill: rgba(248, 250, 255, .60);
+                      font-size: 11px;
+                      font-weight: 850;
+                      letter-spacing: .14em;
+                    }
+
+                    .h {
+                      fill: rgba(248, 250, 255, .92);
+                      font-size: 16px;
+                      font-weight: 850;
+                    }
+
+                    .p {
+                      fill: rgba(248, 250, 255, .74);
+                      font-size: 13px;
+                      font-weight: 650;
+                    }
+                    ]]>
+                  </style>
+                </defs>
+
+                <rect x="10" y="10" width="880" height="300" rx="22" fill="url(#dpBg)"
+                  stroke="rgba(255,255,255,0.12)" />
+                <text x="34" y="52" class="k">MODEL</text>
+                <text x="866" y="52" class="k" text-anchor="end">MONITOR → ALERT → REVIEW</text>
+
+                <text x="450" y="102" text-anchor="middle" class="h">Designed for institutional workflows</text>
+
+                <!-- nodes -->
+                <g filter="url(#dpSoft)">
+                  <rect x="110" y="140" width="210" height="86" rx="18" fill="rgba(255,255,255,0.04)"
+                    stroke="rgba(255,255,255,0.14)" />
+                  <text x="215" y="176" class="h" text-anchor="middle">Monitor</text>
+                  <text x="215" y="198" class="p" text-anchor="middle" fill="rgba(248,250,255,0.70)">baselines</text>
+                </g>
+
+                <g filter="url(#dpSoft)">
+                  <rect x="345" y="132" width="210" height="102" rx="20" fill="rgba(124,92,255,0.26)"
+                    stroke="rgba(200,121,255,0.55)" stroke-width="1.2" />
+                  <text x="450" y="174" class="h" text-anchor="middle">Alert</text>
+                  <text x="450" y="198" class="p" text-anchor="middle">anomaly spike</text>
+                </g>
+
+                <g filter="url(#dpSoft)">
+                  <rect x="580" y="140" width="210" height="86" rx="18" fill="rgba(255,255,255,0.04)"
+                    stroke="rgba(255,255,255,0.14)" />
+                  <text x="685" y="176" class="h" text-anchor="middle">Review</text>
+                  <text x="685" y="198" class="p" text-anchor="middle" fill="rgba(248,250,255,0.70)">forensics</text>
+                </g>
+
+                <!-- connectors -->
+                <path d="M320 183 C340 183 340 183 345 183" stroke="rgba(248,250,255,0.22)" stroke-width="6"
+                  stroke-linecap="round" />
+                <path d="M555 183 C575 183 575 183 580 183" stroke="rgba(248,250,255,0.22)" stroke-width="6"
+                  stroke-linecap="round" />
+
+                <!-- delivery bar -->
+                <g filter="url(#dpSoft)">
+                  <rect x="220" y="244" width="460" height="44" rx="22" fill="rgba(52,211,153,0.22)"
+                    stroke="rgba(52,211,153,0.55)" stroke-width="1.2" />
+                  <text x="450" y="271" class="h" text-anchor="middle" fill="rgba(248,250,255,0.92)">Dashboard • API •
+                    PDF reporting</text>
+                </g>
+              </svg>
+            </div>
+            <div class="caption">The decision moment must move earlier.</div>
+          </div>
+        </div>
+        <div class="claim">If the hidden layer is unknown, selection, timing, and pricing fail.</div>
+      </div>
+    </section>
+    <!-- SLIDE 5 (UPDATED) -->
+    <section class="slide imported evidenceSlide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">EVIDENCE</div>
+        <h2>Manipulation exists in <span class="accent">plain sight</span></h2>
+        <p class="sub">
+          Synthetic behavior is already normalized in high-spend ecosystems. The same failure mode appears in capital
+          markets:
+          volume looks real until authenticity is verified.
+        </p>
+        <div class="saSplit">
+          <div class="saCol">
+            <div class="card muted saPanel">
+              <div class="cardHead">
+                <span>Influencer manipulation examples</span>
+                <span class="pill">ILLUSTRATIVE</span>
+              </div>
+              <p class="micro" style="margin:0 0 14px 0;">
+                Examples of non-human followers / non-organic amplification.
+              </p>
+              <div class="saImgRow">
+                <figure class="saImgCard">
+                  <div class="saImg">
+                    <img alt="Chiara Ferragni example" loading="lazy"
+                      src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/chiara-ferragni-img.jpg" />
+                  </div>
+                  <figcaption>
+                    <div class="saName">Chiara Ferragni</div>
+                    <div class="saNote">Audience authenticity can materially change pricing and outcomes.</div>
+                  </figcaption>
+                </figure>
+                <figure class="saImgCard">
+                  <div class="saImg">
+                    <img alt="Rihanna Fenty example" loading="lazy"
+                      src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/Rihanna.width-1200.jpg" />
+                  </div>
+                  <figcaption>
+                    <div class="saName">Fenty (Rihanna)</div>
+                    <div class="saNote">Spend decisions look rational on dashboards—until non-organic amplification is
+                      separated out.</div>
+                  </figcaption>
+                </figure>
+                <figure class="saImgCard">
+                  <div class="saImg">
+                    <img alt="Kardashians example" loading="lazy"
+                      src="https://updatedcardscript.standard.us-east-1.oortstorages.com/kardashians.jpeg" />
+                  </div>
+                  <figcaption>
+                    <div class="saName">Kardashians</div>
+                    <div class="saNote">Engagement volume alone is not a trustworthy decision signal.</div>
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="saQuote">
+              Bridge to markets: the same “looks real until verified” dynamic shows up in public narrative around
+              issuers and assets.
+            </div>
+          </div>
+          <div class="saCol">
+            <div class="card primary saTakeaway">
+              <div class="cardHead" style="margin-bottom:14px;">
+                <span>Institutional takeaway</span>
+                <span class="pill">SIGNAL INTEGRITY</span>
+              </div>
+              <div class="saKV">
+                <div class="saKVRow">
+                  <div class="saLbl">Pattern</div>
+                  <div class="saBig">fake volume = false confidence</div>
+                  <div class="saSm">Surface metrics mislead when authenticity isn’t verified.</div>
+                </div>
+                <div class="saKVRow">
+                  <div class="saLbl">Failure mode</div>
+                  <div class="saBig">narrative “legitimizes”</div>
+                  <div class="saSm">Once coverage reacts, the market treats it as real demand.</div>
+                </div>
+                <div class="saKVRow saEmph">
+                  <div class="saLbl">What we provide</div>
+                  <div class="saBig">integrity verdict</div>
+                  <div class="saSm">Real vs engineered participation—before decision-makers act.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SLIDE 6 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">OUTPUT</div>
+        <h2>What SocialAudits Delivers</h2>
+        <p class="sub">Decision-ready verification — delivered as clear verdicts and alerts.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Authenticity verdict</strong>
+              <p>Is engagement real — or manufactured?</p>
+            </div>
+            <div class="card">
+              <strong>Coordination flags</strong>
+              <p>Detect coordinated narrative campaigns and amplification.</p>
+            </div>
+            <div class="card primary">
+              <strong>Integrity-adjusted sentiment</strong>
+              <p>Separate true community tone from engineered emotion.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>OUTPUTS</span><span><b>VERIFY</b> → DECIDE</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Verify to decide" preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s6g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- steps -->
+                <rect fill="rgba(255,255,255,.03)" height="96" rx="18" stroke="rgba(255,255,255,.14)" width="180"
+                  x="150" y="130"></rect>
+                <rect fill="rgba(255,255,255,.03)" height="96" rx="18" stroke="rgba(255,255,255,.14)" width="180"
+                  x="360" y="130"></rect>
+                <rect fill="rgba(124,92,255,.16)" height="96" rx="18" stroke="url(#s6g)" stroke-width="2.5" width="180"
+                  x="570" y="130"></rect>
+                <text fill="rgba(248,250,255,.88)" font-size="18" text-anchor="middle" x="240" y="170">Verify</text>
+                <text fill="rgba(248,250,255,.88)" font-size="18" text-anchor="middle" x="450" y="170">Detect</text>
+                <text fill="rgba(248,250,255,.94)" font-size="18" text-anchor="middle" x="660" y="170">Decide</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="240"
+                  y="196">authenticity</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="450"
+                  y="196">coordination</text>
+                <text fill="rgba(248,250,255,.70)" font-size="14" text-anchor="middle" x="660" y="196">risk &amp;
+                  timing</text>
+                <!-- connectors -->
+                <path d="M330 178 L360 178" stroke="rgba(248,250,255,.22)" stroke-linecap="round" stroke-width="5">
+                </path>
+                <path d="M540 178 L570 178" stroke="rgba(248,250,255,.22)" stroke-linecap="round" stroke-width="5">
+                </path>
+                <!-- footer -->
+                <rect fill="rgba(255,255,255,.03)" height="38" rx="14" stroke="rgba(255,255,255,.10)" width="480"
+                  x="210" y="244"></rect>
+                <text fill="rgba(248,250,255,.72)" font-size="15" text-anchor="middle" x="450" y="268">
+                  A single decision surface — backed by integrity scoring
+                </text>
+              </svg>
+            </div>
+            <div class="caption">This is verification — not social listening.</div>
+          </div>
+        </div>
+        <div class="claim">Outputs start with answers — so decisions happen earlier.</div>
+      </div>
+    </section>
+    <!-- SLIDE 7 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">CORE PRODUCT</div>
+        <h2>Synthetic Narrative Detection Layer</h2>
+        <p class="sub">We analyze the interaction surface — and isolate engineered momentum.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Identity &amp; behavior clustering</strong>
+              <p>Group accounts by behavioral signatures to isolate coordination.</p>
+            </div>
+            <div class="card">
+              <strong>Organic vs synthetic</strong>
+              <p>Separate real participation from manufactured momentum.</p>
+            </div>
+            <div class="card primary">
+              <strong>Narrative acceleration</strong>
+              <p>Detect when narratives ignite, accelerate, and legitimize.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>CORE</span><span><b>DETECTION</b> MODEL</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Core detection model" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s7g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <text fill="rgba(248,250,255,.84)" font-size="18" text-anchor="middle" x="450" y="112">
+                  Interaction Surface
+                </text>
+                <text fill="rgba(248,250,255,.58)" font-size="14" text-anchor="middle" x="450" y="134">
+                  accounts · content · timing · graphs
+                </text>
+                <!-- modules -->
+                <rect fill="rgba(255,255,255,.03)" height="92" rx="18" stroke="rgba(255,255,255,.12)" width="180"
+                  x="150" y="162"></rect>
+                <rect fill="rgba(255,255,255,.03)" height="92" rx="18" stroke="rgba(255,255,255,.12)" width="180"
+                  x="360" y="162"></rect>
+                <rect fill="rgba(124,92,255,.16)" height="92" rx="18" stroke="url(#s7g)" stroke-width="2.5" width="180"
+                  x="570" y="162"></rect>
+                <text fill="rgba(248,250,255,.86)" font-size="16" text-anchor="middle" x="240" y="206">Behavior</text>
+                <text fill="rgba(248,250,255,.86)" font-size="16" text-anchor="middle" x="450" y="206">Structure</text>
+                <text fill="rgba(248,250,255,.94)" font-size="16" text-anchor="middle" x="660" y="206">Momentum</text>
+                <!-- connectors -->
+                <path d="M330 208 L360 208" stroke="rgba(248,250,255,.20)" stroke-linecap="round" stroke-width="5">
+                </path>
+                <path d="M540 208 L570 208" stroke="rgba(248,250,255,.20)" stroke-linecap="round" stroke-width="5">
+                </path>
+              </svg>
+            </div>
+            <div class="caption">Detection must happen before narratives harden.</div>
+          </div>
+        </div>
+        <div class="claim">Overlay intelligence layer — built for verification, not hype.</div>
+      </div>
+    </section>
+    <!-- SLIDE 8 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">PIPELINE</div>
+        <h2>The Reporting Pipeline</h2>
+        <p class="sub">End-to-end workflow powering verification, attribution, and prediction.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Ingest</strong>
+              <p>Real-time social, news, and market-linked context.</p>
+            </div>
+            <div class="card">
+              <strong>Normalize</strong>
+              <p>Deduplicate, unify schemas, and align time and language.</p>
+            </div>
+            <div class="card primary">
+              <strong>Verify</strong>
+              <p>Integrity scoring: authenticity, coordination, anomaly detection.</p>
+            </div>
+            <p class="micro">Verification is the inflection point — everything depends on it.</p>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>PIPELINE</span><span><b>INGEST</b> → VERIFY</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Pipeline" preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s8g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- steps (6) -->
+                <!-- step 1 -->
+                <rect fill="rgba(255,255,255,.03)" height="70" rx="16" stroke="rgba(255,255,255,.12)" width="100"
+                  x="110" y="140"></rect>
+                <text fill="rgba(248,250,255,.88)" font-size="15" text-anchor="middle" x="160" y="175">Ingest</text>
+                <!-- step 2 -->
+                <rect fill="rgba(255,255,255,.03)" height="70" rx="16" stroke="rgba(255,255,255,.12)" width="110"
+                  x="230" y="140"></rect>
+                <text fill="rgba(248,250,255,.88)" font-size="15" text-anchor="middle" x="285" y="175">Normalize</text>
+                <!-- step 3 -->
+                <rect fill="rgba(255,255,255,.03)" height="70" rx="16" stroke="rgba(255,255,255,.12)" width="120"
+                  x="360" y="140"></rect>
+                <text fill="rgba(248,250,255,.88)" font-size="15" text-anchor="middle" x="420" y="175">Resolve</text>
+                <text fill="rgba(248,250,255,.55)" font-size="13" text-anchor="middle" x="420"
+                  y="194">identity/graph</text>
+                <!-- step 4 (highlight) -->
+                <rect fill="rgba(124,92,255,.16)" height="90" rx="18" stroke="url(#s8g)" stroke-width="2.5" width="130"
+                  x="500" y="130"></rect>
+                <text fill="rgba(248,250,255,.94)" font-size="16" text-anchor="middle" x="565" y="170">Verify</text>
+                <text fill="rgba(248,250,255,.70)" font-size="13" text-anchor="middle" x="565" y="192">integrity
+                  scoring</text>
+                <!-- step 5 -->
+                <rect fill="rgba(255,255,255,.03)" height="70" rx="16" stroke="rgba(255,255,255,.12)" width="90" x="650"
+                  y="140"></rect>
+                <text fill="rgba(248,250,255,.88)" font-size="15" text-anchor="middle" x="695" y="175">Deliver</text>
+                <!-- connectors -->
+                <g stroke="rgba(248,250,255,.18)" stroke-linecap="round" stroke-width="4">
+                  <line x1="210" x2="230" y1="175" y2="175"></line>
+                  <line x1="340" x2="360" y1="175" y2="175"></line>
+                  <line x1="480" x2="500" y1="175" y2="175"></line>
+                  <line x1="630" x2="650" y1="175" y2="175"></line>
+                </g>
+                <!-- title inside -->
+                <text fill="rgba(248,250,255,.82)" font-size="18" text-anchor="middle" x="450" y="112">
+                  Verification-first pipeline
+                </text>
+              </svg>
+            </div>
+            <div class="caption">Verification is the inflection point — everything depends on it.</div>
+          </div>
+        </div>
+        <div class="claim">A single pipeline powering audits today — and prediction next.</div>
+      </div>
+    </section>
+    <!-- SLIDE 9 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">MARKET GAP</div>
+        <h2>Most Tools Analyze the Wrong Layer</h2>
+        <p class="sub">Likes and follower ratios are easy to game. Impact lives in replies, quotes, and ignition
+          points.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>What most tools measure</strong>
+              <p>Surface metrics: likes, followers, generic engagement rates.</p>
+            </div>
+            <div class="card">
+              <strong>What actually moves outcomes</strong>
+              <p>Replies, quotes, coordination, and early velocity shifts.</p>
+            </div>
+            <div class="card primary">
+              <strong>What we do</strong>
+              <p>Integrity + momentum analysis across the interaction surface — not samples.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>COMPARISON</span><span><b>COVERAGE</b> GAP</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Coverage comparison" role="img" viewBox="0 0 900 320"
+                preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="ccBg" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,0.14)" />
+                    <stop offset="55%" stop-color="rgba(0,0,0,0)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,0.10)" />
+                  </linearGradient>
+                  <filter id="ccSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="rgba(0,0,0,0.35)" />
+                  </filter>
+                  <linearGradient id="ccAccent" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(200,121,255,0.95)" />
+                    <stop offset="100%" stop-color="rgba(124,92,255,0.95)" />
+                  </linearGradient>
+                  <style>
+                    <![CDATA[
+                    text {
+                      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+                    }
+
+                    .k {
+                      fill: rgba(248, 250, 255, .60);
+                      font-size: 11px;
+                      font-weight: 850;
+                      letter-spacing: .14em;
+                    }
+
+                    .h {
+                      fill: rgba(248, 250, 255, .92);
+                      font-size: 16px;
+                      font-weight: 850;
+                    }
+
+                    .p {
+                      fill: rgba(248, 250, 255, .74);
+                      font-size: 13px;
+                      font-weight: 650;
+                    }
+
+                    .m {
+                      fill: rgba(248, 250, 255, .66);
+                      font-size: 12px;
+                      font-weight: 650;
+                    }
+                    ]]>
+                  </style>
+                </defs>
+
+                <rect x="10" y="10" width="880" height="300" rx="22" fill="url(#ccBg)"
+                  stroke="rgba(255,255,255,0.12)" />
+                <text x="34" y="52" class="k">LEGACY</text>
+                <text x="866" y="52" class="k" text-anchor="end">VOLUME → CONFIDENCE</text>
+
+                <text x="450" y="102" text-anchor="middle" class="h">Verification beats measurement</text>
+
+                <!-- left: volume -->
+                <g filter="url(#ccSoft)">
+                  <rect x="125" y="136" width="260" height="140" rx="20" fill="rgba(255,255,255,0.04)"
+                    stroke="rgba(255,255,255,0.14)" />
+                  <text x="255" y="170" class="h" text-anchor="middle">Volume</text>
+                  <text x="255" y="192" class="m" text-anchor="middle" fill="rgba(248,250,255,0.55)">easy to
+                    manufacture</text>
+                  <rect x="165" y="218" width="180" height="16" rx="8" fill="rgba(239,68,68,0.22)"
+                    stroke="rgba(239,68,68,0.45)" />
+                  <text x="255" y="252" class="p" text-anchor="middle" fill="rgba(248,250,255,0.65)">false
+                    confidence</text>
+                </g>
+
+                <!-- arrow -->
+                <path d="M410 206 C455 176 490 176 535 206" fill="none" stroke="rgba(248,250,255,0.30)"
+                  stroke-width="10" stroke-linecap="round" />
+                <path d="M535 206 L520 195" stroke="rgba(248,250,255,0.30)" stroke-width="10" stroke-linecap="round" />
+                <path d="M535 206 L520 217" stroke="rgba(248,250,255,0.30)" stroke-width="10" stroke-linecap="round" />
+
+                <!-- right: integrity verdict -->
+                <g filter="url(#ccSoft)">
+                  <rect x="565" y="132" width="260" height="148" rx="22" fill="rgba(124,92,255,0.26)"
+                    stroke="rgba(200,121,255,0.55)" stroke-width="1.2" />
+                  <rect x="565" y="132" width="260" height="6" rx="3" fill="url(#ccAccent)" opacity="0.9" />
+                  <text x="695" y="172" class="h" text-anchor="middle">Integrity verdict</text>
+                  <text x="695" y="196" class="p" text-anchor="middle">real vs engineered</text>
+                  <rect x="625" y="218" width="140" height="28" rx="14" fill="rgba(52,211,153,0.24)"
+                    stroke="rgba(52,211,153,0.55)" />
+                  <text x="695" y="238" class="k" text-anchor="middle"
+                    fill="rgba(248,250,255,0.86)">DECISION‑GRADE</text>
+                </g>
+              </svg>
+            </div>
+            <div class="caption">The gap isn’t incremental — it’s architectural.</div>
+          </div>
+        </div>
+        <div class="claim">The risk is priced on the wrong data. We verify the layer that moves outcomes.</div>
+      </div>
+    </section>
+    <!-- SLIDE 10 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">GO-TO-MARKET</div>
+        <h2>Trust-First Distribution</h2>
+        <p class="sub">We expand through partnerships and enterprise buyers where integrity is non-negotiable.
+        </p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Partnerships</strong>
+              <p>Ecosystem and platform integrations that embed verification.</p>
+            </div>
+            <div class="card">
+              <strong>Direct enterprise</strong>
+              <p>Funds, agencies, and brands buying decision-grade intelligence.</p>
+            </div>
+            <div class="card primary">
+              <strong>Inbound credibility</strong>
+              <p>Research + narrative leadership compounding distribution over time.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>GTM</span><span><b>TRUST-FIRST</b> EXPANSION</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Go-to-market mix" preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s10g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- 3 bars -->
+                <text fill="rgba(248,250,255,.60)" font-size="14" x="140" y="118">channel mix</text>
+                <!-- Partnerships 35% -->
+                <text fill="rgba(248,250,255,.80)" font-size="15" x="140" y="160">Partnerships</text>
+                <rect fill="rgba(255,255,255,.06)" height="22" rx="11" stroke="rgba(255,255,255,.10)" width="420"
+                  x="260" y="146"></rect>
+                <rect fill="rgba(124,92,255,.28)" height="22" rx="11" stroke="rgba(124,92,255,.55)" width="147" x="260"
+                  y="146"></rect>
+                <text fill="rgba(248,250,255,.70)" font-size="14" text-anchor="end" x="700" y="162">35%</text>
+                <!-- Direct 45% (highlight) -->
+                <text fill="rgba(248,250,255,.86)" font-size="15" x="140" y="205">Direct
+                  enterprise</text>
+                <rect fill="rgba(255,255,255,.06)" height="22" rx="11" stroke="rgba(255,255,255,.10)" width="420"
+                  x="260" y="191"></rect>
+                <rect fill="rgba(124,92,255,.16)" height="22" rx="11" stroke="url(#s10g)" stroke-width="2" width="189"
+                  x="260" y="191"></rect>
+                <text fill="rgba(248,250,255,.70)" font-size="14" text-anchor="end" x="700" y="207">45%</text>
+                <!-- Inbound 20% -->
+                <text fill="rgba(248,250,255,.80)" font-size="15" x="140" y="250">Inbound</text>
+                <rect fill="rgba(255,255,255,.06)" height="22" rx="11" stroke="rgba(255,255,255,.10)" width="420"
+                  x="260" y="236"></rect>
+                <rect fill="rgba(52,211,153,.16)" height="22" rx="11" stroke="rgba(52,211,153,.45)" width="84" x="260"
+                  y="236"></rect>
+                <text fill="rgba(248,250,255,.70)" font-size="14" text-anchor="end" x="700" y="252">20%</text>
+                <!-- footer note -->
+                <rect fill="rgba(255,255,255,.03)" height="34" opacity="0" rx="14" stroke="rgba(255,255,255,.08)"
+                  width="560" x="170" y="275"></rect>
+              </svg>
+            </div>
+            <div class="caption">Trust compounds faster than volume-first distribution.</div>
+          </div>
+        </div>
+        <div class="claim">We win where the cost of being wrong is highest.</div>
+      </div>
+    </section>
+    <!-- SLIDE 11 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">CATEGORY DESIGN</div>
+        <h2>Bot Detection Has Moved Upstream</h2>
+        <p class="sub">When synthetic behavior looks human, downstream heuristics are too late.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Legacy approach</strong>
+              <p>Detect bots by activity patterns after narratives form.</p>
+            </div>
+            <div class="card">
+              <strong>Why it fails</strong>
+              <p>AI farms mirror human behavior and clear surface filters.</p>
+            </div>
+            <div class="card primary">
+              <strong>Our approach</strong>
+              <p>Track coordination at the source — before adoption and spend.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>POSITION</span><span><b>UPSTREAM</b> ADVANTAGE</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Upstream vs downstream" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s11g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- timeline -->
+                <line stroke="rgba(248,250,255,.16)" stroke-linecap="round" stroke-width="6" x1="140" x2="760" y1="190"
+                  y2="190"></line>
+                <!-- nodes -->
+                <circle cx="220" cy="190" fill="rgba(255,255,255,.06)" r="14" stroke="rgba(255,255,255,.18)"
+                  stroke-width="2"></circle>
+                <circle cx="420" cy="190" fill="rgba(255,255,255,.06)" r="14" stroke="rgba(255,255,255,.18)"
+                  stroke-width="2"></circle>
+                <circle cx="620" cy="190" fill="rgba(255,255,255,.06)" r="16" stroke="rgba(255,255,255,.18)"
+                  stroke-width="2"></circle>
+                <!-- upstream highlight -->
+                <circle cx="220" cy="190" fill="rgba(124,92,255,.14)" r="26" stroke="url(#s11g)" stroke-width="3">
+                </circle>
+                <text fill="rgba(248,250,255,.88)" font-size="15" text-anchor="middle" x="220" y="150">Source</text>
+                <text fill="rgba(248,250,255,.60)" font-size="13" text-anchor="middle" x="220"
+                  y="168">coordination</text>
+                <!-- mid -->
+                <text fill="rgba(248,250,255,.78)" font-size="15" text-anchor="middle" x="420" y="150">Narrative</text>
+                <text fill="rgba(248,250,255,.55)" font-size="13" text-anchor="middle" x="420" y="168">amplifies</text>
+                <!-- downstream -->
+                <text fill="rgba(248,250,255,.70)" font-size="15" text-anchor="middle" x="620" y="150">Outcomes</text>
+                <text fill="rgba(248,250,255,.55)" font-size="13" text-anchor="middle" x="620" y="168">spend /
+                  coverage</text>
+                <!-- labels -->
+                <rect fill="rgba(124,92,255,.12)" height="38" rx="14" stroke="rgba(124,92,255,.35)" width="280" x="140"
+                  y="226"></rect>
+                <text fill="rgba(248,250,255,.78)" font-size="15" text-anchor="middle" x="280" y="250">
+                  Upstream detection creates time advantage
+                </text>
+                <rect fill="rgba(255,255,255,.03)" height="38" rx="14" stroke="rgba(255,255,255,.10)" width="320"
+                  x="440" y="226"></rect>
+                <text fill="rgba(248,250,255,.62)" font-size="15" text-anchor="middle" x="600" y="250">
+                  Downstream analysis is reactive
+                </text>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.84)" font-size="18" text-anchor="middle" x="450" y="112">
+                  Detection must happen before adoption
+                </text>
+              </svg>
+            </div>
+            <div class="caption">Downstream reporting is too late. Upstream detection is the differentiator.
+            </div>
+          </div>
+        </div>
+        <div class="claim">When behavior looks human, you have to go upstream.</div>
+      </div>
+    </section>
+    <!-- SLIDE 12 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">DIFFERENTIATORS</div>
+        <h2>Influencer Selection Intelligence</h2>
+        <p class="sub">Decision support before capital deploys — built on integrity and momentum.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Audience quality (24h refresh)</strong>
+              <p>Authentic engagement, emotion, and momentum — updated continuously.</p>
+            </div>
+            <div class="card">
+              <strong>Network discovery</strong>
+              <p>Sector tags surface high-leverage creator clusters and adjacency.</p>
+            </div>
+            <div class="card primary">
+              <strong>Global coverage</strong>
+              <p>100+ languages normalized and translated for comparable signals.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>DECISION</span><span><b>SCORE</b> COMPRESSION</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Decision score compression" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s12g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- inputs -->
+                <rect fill="rgba(255,255,255,.03)" height="120" rx="20" stroke="rgba(255,255,255,.12)" width="220"
+                  x="120" y="130"></rect>
+                <text fill="rgba(248,250,255,.86)" font-size="16" text-anchor="middle" x="230" y="162">Inputs</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="230" y="190">integrity
+                  signals</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="230" y="210">momentum /
+                  velocity</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="230" y="230">network
+                  context</text>
+                <!-- decision score (highlight) -->
+                <rect fill="rgba(124,92,255,.16)" height="144" rx="22" stroke="url(#s12g)" stroke-width="2.5"
+                  width="170" x="380" y="118"></rect>
+                <text fill="rgba(248,250,255,.94)" font-size="16" text-anchor="middle" x="465" y="160">Decision
+                  Score</text>
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="465"
+                  y="184">confidence-weighted</text>
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="465"
+                  y="206">integrity-adjusted</text>
+                <!-- outputs -->
+                <rect fill="rgba(255,255,255,.03)" height="120" rx="20" stroke="rgba(255,255,255,.12)" width="240"
+                  x="590" y="130"></rect>
+                <text fill="rgba(248,250,255,.86)" font-size="16" text-anchor="middle" x="710" y="162">Outputs</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="710" y="190">shortlist</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="710" y="210">timing
+                  window</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="710" y="230">risk flags</text>
+                <!-- connectors -->
+                <path d="M340 190 L380 190" stroke="rgba(248,250,255,.20)" stroke-linecap="round" stroke-width="6">
+                </path>
+                <path d="M550 190 L590 190" stroke="rgba(248,250,255,.20)" stroke-linecap="round" stroke-width="6">
+                </path>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.84)" font-size="18" text-anchor="middle" x="450" y="112">
+                  Reduce complexity into a decision surface
+                </text>
+              </svg>
+            </div>
+            <div class="caption">Decision-grade clarity before spend.</div>
+          </div>
+        </div>
+        <div class="claim">Selection becomes a risk-managed decision — not a guess.</div>
+      </div>
+    </section>
+    <!-- SLIDE 13 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">REVENUE</div>
+        <h2>Revenue Engines (Live Today)</h2>
+        <p class="sub">Two monetized lanes now — with simulation as the expansion layer.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Subscriptions (Indexed intelligence)</strong>
+              <p>Time-boxed access to verified performance and integrity views.</p>
+              <p class="micro">24h $59.99 · 7d $189.99 · 30d $399.99</p>
+            </div>
+            <div class="card primary">
+              <strong>White-glove Reports</strong>
+              <p>High-touch audits priced by verified data volume and complexity.</p>
+              <p class="micro">$3K input per 1M data points · 5× markup</p>
+            </div>
+            <div class="card subtle">
+              <strong>IBIS (NEXT)</strong>
+              <p>Impact simulation powered by verified signals — premium pricing as prediction ships.</p>
+              <p class="micro">7.5× markup potential on verified simulation outputs</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>REVENUE</span><span><b>LAYERS</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Revenue layers" preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s13g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- layer 1 -->
+                <rect fill="rgba(255,255,255,.03)" height="60" rx="18" stroke="rgba(255,255,255,.12)" width="620"
+                  x="140" y="190"></rect>
+                <text fill="rgba(248,250,255,.86)" font-size="16" text-anchor="middle" x="450" y="224">
+                  Subscriptions — indexed intelligence
+                </text>
+                <!-- layer 2 (highlight) -->
+                <rect fill="rgba(124,92,255,.16)" height="64" rx="18" stroke="url(#s13g)" stroke-width="2.5" width="560"
+                  x="170" y="130"></rect>
+                <text fill="rgba(248,250,255,.94)" font-size="16" text-anchor="middle" x="450" y="168">
+                  White-glove reports — verified audits
+                </text>
+                <!-- layer 3 (next) -->
+                <rect fill="rgba(52,211,153,.10)" height="44" rx="16" stroke="rgba(52,211,153,.35)" width="480" x="210"
+                  y="90"></rect>
+                <text fill="rgba(248,250,255,.80)" font-size="15" text-anchor="middle" x="450" y="118">
+                  IBIS (NEXT) — impact simulation layer
+                </text>
+                <!-- note -->
+                <text fill="rgba(248,250,255,.58)" font-size="14" text-anchor="middle" x="450" y="280">
+                  One pipeline. Multiple monetization surfaces.
+                </text>
+              </svg>
+            </div>
+            <div class="caption">Same system. Different packaging.</div>
+          </div>
+        </div>
+        <div class="claim">Monetize verification now — expand into prediction next.</div>
+      </div>
+    </section>
+    <!-- SLIDE 14 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">FORECAST</div>
+        <h2>Revenue Scales With Prediction</h2>
+        <p class="sub">Verification monetizes linearly. Prediction compounds demand.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Today</strong>
+              <p>Revenue driven by audits, subscriptions, and white-glove reports.</p>
+            </div>
+            <div class="card">
+              <strong>Inflection</strong>
+              <p>Prediction shifts usage from reporting to continuous decision support.</p>
+            </div>
+            <div class="card primary">
+              <strong>Result</strong>
+              <p>Higher frequency, higher pricing power, longer contracts.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>TRAJECTORY</span><span><b>COMPOUNDING</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Revenue trajectory" preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s14g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- axes -->
+                <line stroke="rgba(248,250,255,.16)" stroke-width="2" x1="120" x2="780" y1="250" y2="250"></line>
+                <line stroke="rgba(248,250,255,.16)" stroke-width="2" x1="120" x2="120" y1="100" y2="250"></line>
+                <!-- linear (measurement) -->
+                <polyline fill="none" points="120,230 260,215 400,200 540,185" stroke="rgba(248,250,255,.35)"
+                  stroke-linecap="round" stroke-width="4"></polyline>
+                <text fill="rgba(248,250,255,.55)" font-size="14" x="540" y="178">measurement-led</text>
+                <!-- compounding (prediction) -->
+                <polyline fill="none" points="120,230 260,210 400,175 540,125 680,90" stroke="url(#s14g)"
+                  stroke-linecap="round" stroke-width="5"></polyline>
+                <text fill="rgba(248,250,255,.80)" font-size="14" text-anchor="end" x="680" y="84">
+                  prediction-led
+                </text>
+                <!-- inflection marker -->
+                <circle cx="400" cy="175" fill="#7C5CFF" r="6"></circle>
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="400" y="156">
+                  IBIS launch
+                </text>
+                <!-- labels -->
+                <text fill="rgba(248,250,255,.84)" font-size="18" text-anchor="middle" x="450" y="112">
+                  Prediction unlocks non-linear growth
+                </text>
+              </svg>
+            </div>
+            <div class="caption">Measurement caps upside. Prediction compounds it.</div>
+          </div>
+        </div>
+        <div class="claim">Verification builds trust. Prediction builds infrastructure.</div>
+      </div>
+    </section>
+    <!-- SLIDE 15 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">ADVANTAGE</div>
+        <h2>Structural, Not Incremental</h2>
+        <p class="sub">Our advantage compounds with scale, history, and access.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Rebuild cost</strong>
+              <p>$20–50M and multiple years of validated history.</p>
+            </div>
+            <div class="card">
+              <strong>Scale</strong>
+              <p>Billions of enriched interactions across news, social, and markets.</p>
+            </div>
+            <div class="card primary">
+              <strong>Access</strong>
+              <p>Exclusive partnerships and upstream visibility others can’t replicate.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>MOAT</span><span><b>COMPOUNDS</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Compounding moat" preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s15g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".92"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".86"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- layers -->
+                <rect fill="rgba(255,255,255,.04)" height="42" rx="16" stroke="rgba(255,255,255,.12)" width="540"
+                  x="180" y="210"></rect>
+                <text fill="rgba(248,250,255,.72)" font-size="15" text-anchor="middle" x="450" y="238">
+                  Data history
+                </text>
+                <rect fill="rgba(255,255,255,.05)" height="44" rx="16" stroke="rgba(255,255,255,.14)" width="480"
+                  x="210" y="160"></rect>
+                <text fill="rgba(248,250,255,.76)" font-size="15" text-anchor="middle" x="450" y="188">
+                  Models &amp; verification logic
+                </text>
+                <rect fill="rgba(124,92,255,.18)" height="46" rx="16" stroke="url(#s15g)" stroke-width="2.5" width="400"
+                  x="250" y="108"></rect>
+                <text fill="rgba(248,250,255,.92)" font-size="16" text-anchor="middle" x="450" y="138">
+                  Prediction layer
+                </text>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.84)" font-size="18" text-anchor="middle" x="450" y="100">
+                  Advantage increases with time and usage
+                </text>
+              </svg>
+            </div>
+            <div class="caption">Structural advantages compound. Feature advantages decay.</div>
+          </div>
+        </div>
+        <div class="claim">This is a system competitors can’t shortcut.</div>
+      </div>
+    </section>
+    <!-- SLIDE 16 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">VERSION 2</div>
+        <h2>Building Our Own Stack</h2>
+        <p class="sub">Real-time verification requires control across the entire pipeline.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Why rebuild</strong>
+              <p>Legacy tooling can’t detect coordination and velocity shifts at scale.</p>
+            </div>
+            <div class="card">
+              <strong>What changes</strong>
+              <p>End-to-end control over ingest, analysis, scoring, and delivery.</p>
+            </div>
+            <div class="card primary">
+              <strong>Result</strong>
+              <p>Faster detection, earlier alerts, and higher confidence decisions.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>STACK</span><span><b>CONTROL</b> → SPEED</span></div>
+            <div class="vizFrame">
+              <svg preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <!-- layers -->
+                <rect fill="rgba(255,255,255,.04)" height="40" rx="14" stroke="rgba(255,255,255,.12)" width="460"
+                  x="220" y="210"></rect>
+                <text fill="rgba(248,250,255,.72)" font-size="15" text-anchor="middle" x="450" y="236">
+                  Ingest &amp; preprocess
+                </text>
+                <rect fill="rgba(255,255,255,.05)" height="44" rx="16" stroke="rgba(255,255,255,.14)" width="500"
+                  x="200" y="170"></rect>
+                <text fill="rgba(248,250,255,.76)" font-size="15" text-anchor="middle" x="450" y="198">
+                  Analysis &amp; integrity scoring
+                </text>
+                <rect fill="rgba(124,92,255,.18)" height="46" rx="16" stroke="rgba(124,92,255,.45)" stroke-width="2"
+                  width="540" x="180" y="120"></rect>
+                <text fill="rgba(248,250,255,.92)" font-size="16" text-anchor="middle" x="450" y="150">
+                  Alerts, APIs, dashboards
+                </text>
+                <text fill="rgba(248,250,255,.84)" font-size="18" text-anchor="middle" x="450" y="104">
+                  Own the stack → detect earlier → act sooner
+                </text>
+              </svg>
+            </div>
+            <div class="caption">Control of the stack is required for real-time verification.</div>
+          </div>
+        </div>
+        <div class="claim">Speed is a product feature — and a competitive moat.</div>
+      </div>
+    </section>
+    <!-- SLIDE 17 (UPDATED) -->
+
+    <!-- SLIDE 18 (UPDATED) -->
+    <section class="slide imported sa-anom">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+
+        <div class="kicker">MODULE</div>
+        <h2 class="saH2">Anomaly spike <span class="accent">(timeline)</span></h2>
+        <p class="sub saSub">
+          Metric: abnormal spikes in activity or reach.<br />
+          Interpretation: spikes are where synthetic coordination shows up first.
+        </p>
+
+        <div class="saModuleGrid">
+          <div class="card saPanel">
+            <div class="saBetween">
+              <div>
+                <div class="saTiny">Timeline module</div>
+                <div class="saH3">Velocity + anomaly detection</div>
+                <div class="saMicro">Illustrative shape (not a screenshot)</div>
+              </div>
+              <div class="saAlert">
+                <div class="saTiny">Alert</div>
+                <div class="saMetric"><span class="saWarn">Spike</span></div>
+                <div class="saMicro">cluster review required</div>
+              </div>
+            </div>
+
+            <div class="saChart" aria-label="Anomaly sparkline">
+              <svg viewBox="0 0 1000 220" width="100%" height="180" preserveAspectRatio="none" role="img">
+                <defs>
+                  <linearGradient id="spark_sa" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(200,121,255,0.95)" />
+                    <stop offset="100%" stop-color="rgba(124,92,255,0.95)" />
+                  </linearGradient>
+                  <linearGradient id="fill_sa" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(124,92,255,0.22)" />
+                    <stop offset="100%" stop-color="rgba(124,92,255,0)" />
+                  </linearGradient>
+                </defs>
+
+                <path
+                  d="M0,180 C80,170 140,175 200,168 C260,160 320,170 380,155 C440,140 500,165 560,150 C620,132 680,165 720,110 C760,55 820,150 880,135 C940,120 980,130 1000,125"
+                  fill="none" stroke="url(#spark_sa)" stroke-width="6" stroke-linecap="round" />
+                <path
+                  d="M0,180 C80,170 140,175 200,168 C260,160 320,170 380,155 C440,140 500,165 560,150 C620,132 680,165 720,110 C760,55 820,150 880,135 C940,120 980,130 1000,125 L1000,220 L0,220 Z"
+                  fill="url(#fill_sa)" />
+
+                <line x1="760" y1="30" x2="760" y2="220" stroke="rgba(239,68,68,0.40)" stroke-width="3" />
+                <circle cx="760" cy="55" r="9" fill="rgba(239,68,68,0.95)" />
+              </svg>
+            </div>
+
+            <div class="saMini3">
+              <div class="saMini">
+                <div class="saTiny">Trigger</div>
+                <div class="saBase">abnormal lift</div>
+                <div class="saMicro">velocity jump</div>
+              </div>
+              <div class="saMini">
+                <div class="saTiny">Check</div>
+                <div class="saBase">cluster reuse</div>
+                <div class="saMicro">phrases, timing</div>
+              </div>
+              <div class="saMini saEmph">
+                <div class="saTiny">Outcome</div>
+                <div class="saBase">integrity verdict</div>
+                <div class="saMicro">real vs engineered</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card saActions">
+            <div class="saActionHead">
+              <div>
+                <div class="saTiny">What you do with it</div>
+              </div>
+              <div class="pill">Action</div>
+            </div>
+
+            <div class="saMini">
+              <div class="saTiny">Funds</div>
+              <div class="saBase">event window alerting</div>
+              <div class="saMicro">Treat spikes as an early warning system for narrative risk.</div>
+            </div>
+
+            <div class="saMini">
+              <div class="saTiny">Brands</div>
+              <div class="saBase">timing selection</div>
+              <div class="saMicro">Avoid paying peak pricing during synthetic lift.</div>
+            </div>
+
+            <div class="saMini saEmph">
+              <div class="saTiny">Both</div>
+              <div class="saBase">drill-down to posts</div>
+              <div class="saMicro">We surface the highest-impact drivers and the actors behind them.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="saQuote">Operational takeaway: the “spike” is where you start verification—before the narrative
+          hardens.</div>
+      </div>
+    </section>
+
+    <!-- SLIDE 19 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">REALITY</div>
+        <h2>Manipulation Already Moves Markets</h2>
+        <p class="sub">Synthetic momentum routinely precedes coverage, liquidity, and capital response.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Observed pattern</strong>
+              <p>Coordinated engagement appears days before mainstream attention.</p>
+            </div>
+            <div class="card">
+              <strong>False confirmation</strong>
+              <p>Volume legitimizes narratives before authenticity is verified.</p>
+            </div>
+            <div class="card primary">
+              <strong>Cost</strong>
+              <p>Capital commits into mispriced risk.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>SEQUENCE</span><span><b>SIGNAL</b> → REACTION</span></div>
+            <div class="vizFrame">
+              <svg preserveaspectratio="xMidYMid meet" viewbox="0 0 900 320">
+                <!-- timeline -->
+                <line stroke="rgba(248,250,255,.18)" stroke-linecap="round" stroke-width="6" x1="160" x2="740" y1="190"
+                  y2="190"></line>
+                <!-- nodes -->
+                <circle cx="260" cy="190" fill="rgba(124,92,255,.22)" r="16" stroke="rgba(124,92,255,.55)"
+                  stroke-width="2"></circle>
+                <circle cx="450" cy="190" fill="rgba(255,255,255,.06)" r="16" stroke="rgba(255,255,255,.18)"
+                  stroke-width="2"></circle>
+                <circle cx="640" cy="190" fill="rgba(52,211,153,.18)" r="16" stroke="rgba(52,211,153,.45)"
+                  stroke-width="2"></circle>
+                <!-- labels -->
+                <text fill="rgba(248,250,255,.82)" font-size="15" text-anchor="middle" x="260" y="160">Synthetic
+                  signal</text>
+                <text fill="rgba(248,250,255,.72)" font-size="15" text-anchor="middle" x="450" y="160">Coverage
+                  reacts</text>
+                <text fill="rgba(248,250,255,.72)" font-size="15" text-anchor="middle" x="640" y="160">Capital
+                  follows</text>
+                <text fill="rgba(248,250,255,.84)" font-size="18" text-anchor="middle" x="450" y="112">
+                  The damage happens before verification
+                </text>
+              </svg>
+            </div>
+            <div class="caption">By the time reporting arrives, outcomes are locked.</div>
+          </div>
+        </div>
+        <div class="claim">Markets don’t wait for audits.</div>
+      </div>
+    </section>
+    <section class="slide imported sa-case">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+
+        <div class="kicker">CASE STUDY (ILLUSTRATIVE)</div>
+        <h2 class="saH2">Bot-driven market distortion</h2>
+
+        <div class="saCaseSplit">
+          <div class="saLeft">
+            <p class="sub saSub">A public issuer undergoes a visible corporate action (e.g., brand / logo update).
+              Social backlash appears organic and widespread— but the integrity of that signal is the real question.</p>
+
+            <div class="card saFacts">
+              <div class="saKV">
+                <div class="saK">Event</div>
+                <div class="saV">Late 2025: backlash following a visible brand change; social outrage appeared organic.
+                </div>
+
+                <div class="saK">What our data revealed</div>
+                <div class="saV"><strong>~45% of early negative posts</strong> were driven by coordinated non-organic
+                  activity.</div>
+
+                <div class="saK">Market impact</div>
+                <div class="saV">Stock declined <strong>~10.5% in 24 hours</strong>. Approximately
+                  <strong>$100M</strong> in market value erased.
+                </div>
+
+                <div class="saK">Insight</div>
+                <div class="saV">Price moved on <strong>synthetic sentiment</strong>, not real consumer reaction.</div>
+
+                <div class="saK">What this enables</div>
+                <div class="saV">Detect sudden spikes in bot-driven negative sentiment and generate early warning
+                  signals across coverage universes.</div>
+              </div>
+            </div>
+
+            <div class="saQuote">When markets move on narratives, knowing whether the sentiment is real or synthetic
+              becomes alpha.</div>
+          </div>
+
+          <div class="card saMedia" aria-label="Cracker Barrel case visual">
+            <div class="saMediaFrame">
+              <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/cracker%20barrel.png"
+                alt="Cracker Barrel logo / case visual" loading="lazy" />
+            </div>
+            <div class="saCap">Illustrative: visible brand update → social narrative backlash</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 20 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">USAGE</div>
+        <h2>How Customers Use SocialAudits</h2>
+        <p class="sub">Verification is applied before decisions — not after outcomes.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Before spend</strong>
+              <p>Validate creator integrity and narrative authenticity.</p>
+            </div>
+            <div class="card">
+              <strong>During campaigns</strong>
+              <p>Monitor momentum shifts and coordination risk in real time.</p>
+            </div>
+            <div class="card primary">
+              <strong>After detection</strong>
+              <p>Adjust timing, messaging, or exposure immediately.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>WORKFLOW</span><span><b>VERIFY</b> → ACT</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Customer usage modes" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s20g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".90"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- swimlanes background -->
+                <rect fill="rgba(255,255,255,.03)" height="168" rx="18" stroke="rgba(255,255,255,.10)" width="220"
+                  x="80" y="96"></rect>
+                <rect fill="rgba(255,255,255,.03)" height="168" rx="18" stroke="rgba(255,255,255,.10)" width="220"
+                  x="340" y="96"></rect>
+                <rect fill="rgba(124,92,255,.20)" height="168" rx="18" stroke="url(#s20g)" stroke-width="2.5"
+                  width="220" x="600" y="96"></rect>
+                <!-- headers -->
+                <text fill="rgba(248,250,255,.78)" font-size="15" text-anchor="middle" x="190" y="122">Before
+                  spend</text>
+                <text fill="rgba(248,250,255,.78)" font-size="15" text-anchor="middle" x="450" y="122">In-flight</text>
+                <text fill="rgba(248,250,255,.94)" font-size="15" text-anchor="middle" x="710"
+                  y="122">Post-campaign</text>
+                <!-- icons -->
+                <circle cx="190" cy="150" fill="rgba(124,92,255,.20)" r="14" stroke="rgba(124,92,255,.60)"
+                  stroke-width="2"></circle>
+                <circle cx="450" cy="150" fill="rgba(52,211,153,.18)" r="14" stroke="rgba(52,211,153,.55)"
+                  stroke-width="2"></circle>
+                <circle cx="710" cy="150" fill="rgba(255,255,255,.08)" r="14" stroke="rgba(255,255,255,.30)"
+                  stroke-width="2"></circle>
+                <!-- bullets in each lane -->
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="190" y="180">vet
+                  creators</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="190" y="200">score
+                  integrity</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="190" y="220">stress-test
+                  narratives</text>
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="450" y="180">monitor
+                  ignition</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="450" y="200">flag
+                  coordination</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="450" y="220">adjust
+                  allocation</text>
+                <text fill="rgba(248,250,255,.78)" font-size="14" text-anchor="middle" x="710"
+                  y="180">post-mortem</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="710" y="200">benchmark
+                  integrity</text>
+                <text fill="rgba(248,250,255,.60)" font-size="14" text-anchor="middle" x="710" y="220">feed next
+                  plan</text>
+                <!-- flow arrows -->
+                <path d="M300 180 L340 180" stroke="rgba(248,250,255,.22)" stroke-linecap="round" stroke-width="6">
+                </path>
+                <path d="M560 180 L600 180" stroke="rgba(248,250,255,.22)" stroke-linecap="round" stroke-width="6">
+                </path>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.86)" font-size="18" text-anchor="middle" x="450" y="88">Same workflow, new
+                  verification layer</text>
+              </svg>
+            </div>
+            <div class="caption">Customers don’t change behavior — they gain visibility.</div>
+          </div>
+        </div>
+        <div class="claim">Verification fits into how decisions are already made.</div>
+      </div>
+    </section>
+    <!-- SLIDE 21 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">IMPACT</div>
+        <h2>Mispriced Narratives Create Real Loss</h2>
+        <p class="sub">When integrity is unknown, capital is misallocated.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Spend waste</strong>
+              <p>Marketing budgets fund synthetic reach.</p>
+            </div>
+            <div class="card">
+              <strong>Reputational risk</strong>
+              <p>Brands align with engineered narratives unknowingly.</p>
+            </div>
+            <div class="card primary">
+              <strong>Market distortion</strong>
+              <p>Liquidity reacts to signals that aren’t real.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>ECONOMICS</span><span><b>RISK</b> REALLOCATION</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Mispriced vs verified narratives" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s21g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#EF4444" stop-opacity=".80"></stop>
+                    <stop offset="1" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- left: mispriced -->
+                <rect fill="rgba(15,23,42,.80)" height="120" rx="20" stroke="rgba(248,113,113,.70)" stroke-width="1.5"
+                  width="260" x="90" y="110"></rect>
+                <text fill="rgba(248,250,255,.88)" font-size="16" text-anchor="middle" x="220" y="142">Mispriced</text>
+                <text fill="rgba(248,250,255,.65)" font-size="14" text-anchor="middle" x="220" y="166">unknown
+                  integrity</text>
+                <text fill="rgba(248,250,255,.55)" font-size="14" text-anchor="middle" x="220" y="188">leverage
+                  unchecked</text>
+                <!-- right: verified -->
+                <rect fill="rgba(22,163,74,.16)" height="140" rx="22" stroke="url(#s21g)" stroke-width="2.4" width="260"
+                  x="550" y="100"></rect>
+                <text fill="rgba(248,250,255,.94)" font-size="16" text-anchor="middle" x="680" y="136">Verified</text>
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="680"
+                  y="160">integrity-adjusted</text>
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="680" y="182">risk-aware
+                  sizing</text>
+                <text fill="rgba(248,250,255,.72)" font-size="14" text-anchor="middle" x="680" y="204">timing
+                  decisions</text>
+                <!-- capital flow arrow -->
+                <path d="M350 180 C410 150 470 150 550 170" fill="none" stroke="rgba(248,250,255,.22)"
+                  stroke-linecap="round" stroke-width="8"></path>
+                <!-- labels for arrows -->
+                <text fill="rgba(248,250,255,.70)" font-size="13" text-anchor="middle" x="450" y="150">capital
+                  reallocates with verification</text>
+                <!-- small loss indicator under mispriced -->
+                <rect fill="rgba(248,113,113,.12)" height="28" rx="12" stroke="rgba(248,113,113,.45)" width="180"
+                  x="130" y="230"></rect>
+                <text fill="rgba(248,250,255,.80)" font-size="14" text-anchor="middle" x="220" y="248">unseen risk →
+                  real loss</text>
+                <!-- small protection indicator under verified -->
+                <rect fill="rgba(34,197,94,.14)" height="28" rx="12" stroke="rgba(34,197,94,.55)" width="220" x="550"
+                  y="230"></rect>
+                <text fill="rgba(248,250,255,.86)" font-size="14" text-anchor="middle" x="660" y="248">verified signals
+                  → preserved capital</text>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.86)" font-size="18" text-anchor="middle" x="450" y="88">Integrity changes
+                  how capital moves</text>
+              </svg>
+            </div>
+            <div class="caption">Integrity changes how capital moves.</div>
+          </div>
+        </div>
+        <div class="claim">When signals are verified, capital behaves rationally.</div>
+      </div>
+    </section>
+    <!-- SLIDE 22 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">TIMING</div>
+        <h2>Why This Exists Now</h2>
+        <p class="sub">Narrative has become infrastructure — but verification hasn’t caught up.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>AI-driven manipulation</strong>
+              <p>Synthetic engagement now mirrors human behavior at scale.</p>
+            </div>
+            <div class="card">
+              <strong>Capital sensitivity</strong>
+              <p>Markets and brands react faster — mistakes compound quicker.</p>
+            </div>
+            <div class="card primary">
+              <strong>Technical readiness</strong>
+              <p>Real-time ingestion, graph resolution, and anomaly scoring are finally viable.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>INFLECTION</span><span><b>NOW</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Why this exists now timeline" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s22g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".90"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- baseline timeline -->
+                <line stroke="rgba(248,250,255,.18)" stroke-linecap="round" stroke-width="6" x1="120" x2="780" y1="190"
+                  y2="190"></line>
+                <!-- three eras -->
+                <circle cx="210" cy="190" fill="rgba(255,255,255,.06)" r="15" stroke="rgba(255,255,255,.20)"
+                  stroke-width="2"></circle>
+                <circle cx="450" cy="190" fill="rgba(124,92,255,.22)" r="18" stroke="rgba(124,92,255,.60)"
+                  stroke-width="2.4"></circle>
+                <circle cx="690" cy="190" fill="rgba(52,211,153,.20)" r="18" stroke="rgba(52,211,153,.55)"
+                  stroke-width="2.4"></circle>
+                <text fill="rgba(248,250,255,.65)" font-size="14" text-anchor="middle" x="210" y="162">Pre-AI</text>
+                <text fill="rgba(248,250,255,.80)" font-size="14" text-anchor="middle" x="450" y="162">AI-scale</text>
+                <text fill="rgba(248,250,255,.88)" font-size="14" text-anchor="middle" x="690" y="162">Now</text>
+                <text fill="rgba(248,250,255,.55)" font-size="13" text-anchor="middle" x="210" y="214">simple
+                  heuristics</text>
+                <text fill="rgba(248,250,255,.72)" font-size="13" text-anchor="middle" x="450" y="214">synthetic ≈
+                  human</text>
+                <text fill="rgba(248,250,255,.78)" font-size="13" text-anchor="middle" x="690" y="214">verification
+                  required</text>
+                <!-- risk threshold curve -->
+                <path d="M120 230 C 260 210, 380 220, 520 190 S 760 150, 780 140" fill="none" stroke="url(#s22g)"
+                  stroke-linecap="round" stroke-width="4"></path>
+                <text fill="rgba(248,250,255,.72)" font-size="13" text-anchor="middle" x="520" y="240">risk threshold
+                  crossed</text>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.86)" font-size="18" text-anchor="middle" x="450" y="96">The cost of not
+                  knowing has crossed a threshold</text>
+              </svg>
+            </div>
+            <div class="caption">Timing is driven by risk, not hype.</div>
+          </div>
+        </div>
+        <div class="claim">Verification becomes mandatory when speed outpaces trust.</div>
+      </div>
+    </section>
+    <!-- SLIDE 23 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">TEAM</div>
+        <h2>Built by Operators</h2>
+        <p class="sub">Experience across data infrastructure, influence systems, and market risk.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Data &amp; infrastructure</strong>
+              <p>Experience building high-throughput ingestion and analytics systems.</p>
+            </div>
+            <div class="card">
+              <strong>Influence &amp; narratives</strong>
+              <p>Deep understanding of creator ecosystems and manipulation patterns.</p>
+            </div>
+            <div class="card primary">
+              <strong>Execution focus</strong>
+              <p>Shipping live systems — not research decks.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>CAPABILITY</span><span><b>EXECUTION</b></span></div>
+            <div class="vizFrame">
+              <svg viewBox="0 0 980 320" width="100%" height="320" role="img"
+                aria-label="Execution matters more than claims">
+                <defs>
+                  <linearGradient id="execStroke" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,.80)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,.70)" />
+                  </linearGradient>
+                  <linearGradient id="execFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(255,255,255,.05)" />
+                    <stop offset="100%" stop-color="rgba(255,255,255,.02)" />
+                  </linearGradient>
+                  <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="b" />
+                    <feColorMatrix in="b" type="matrix" values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 .35 0" result="s" />
+                    <feMerge>
+                      <feMergeNode in="s" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                <!-- headline -->
+                <text x="490" y="52" text-anchor="middle" fill="rgba(248,250,255,.92)" font-size="18" font-weight="900"
+                  letter-spacing="-.01em">
+                  Execution matters more than claims
+                </text>
+
+                <!-- pedestal -->
+                <g filter="url(#soft)">
+                  <rect x="140" y="250" rx="18" ry="18" width="700" height="44" fill="rgba(255,255,255,.03)"
+                    stroke="rgba(255,255,255,.12)" stroke-width="2" />
+                  <rect x="170" y="262" rx="14" ry="14" width="640" height="20" fill="rgba(255,255,255,.02)"
+                    stroke="rgba(255,255,255,.06)" stroke-width="1" />
+                </g>
+
+                <text x="490" y="283" text-anchor="middle" fill="rgba(248,250,255,.62)" font-size="12" font-weight="800"
+                  letter-spacing=".10em">
+                  BUILT TO OPERATE, NOT THEORIZE
+                </text>
+
+                <!-- blocks -->
+                <g filter="url(#soft)">
+                  <!-- Engineering -->
+                  <rect x="160" y="112" rx="22" ry="22" width="250" height="128" fill="url(#execFill)"
+                    stroke="rgba(255,255,255,.12)" stroke-width="2" />
+                  <text x="285" y="160" text-anchor="middle" fill="rgba(248,250,255,.92)" font-size="16"
+                    font-weight="900">
+                    Engineering
+                  </text>
+                  <text x="285" y="184" text-anchor="middle" fill="rgba(248,250,255,.72)" font-size="13"
+                    font-weight="800">
+                    systems &amp; infra
+                  </text>
+
+                  <!-- Intelligence (highlight) -->
+                  <rect x="365" y="92" rx="26" ry="26" width="250" height="148" fill="rgba(124,92,255,.92)"
+                    stroke="url(#execStroke)" stroke-width="2.5" />
+                  <text x="490" y="154" text-anchor="middle" fill="rgba(248,250,255,.98)" font-size="16"
+                    font-weight="950">
+                    Intelligence
+                  </text>
+                  <text x="490" y="178" text-anchor="middle" fill="rgba(248,250,255,.86)" font-size="13"
+                    font-weight="850">
+                    analysis, models
+                  </text>
+
+                  <!-- Delivery -->
+                  <rect x="570" y="112" rx="22" ry="22" width="250" height="128" fill="url(#execFill)"
+                    stroke="rgba(255,255,255,.12)" stroke-width="2" />
+                  <text x="695" y="160" text-anchor="middle" fill="rgba(248,250,255,.92)" font-size="16"
+                    font-weight="900">
+                    Delivery
+                  </text>
+                  <text x="695" y="184" text-anchor="middle" fill="rgba(248,250,255,.72)" font-size="13"
+                    font-weight="800">
+                    clients &amp; ops
+                  </text>
+                </g>
+
+                <!-- subtle connectors -->
+                <path d="M410 240 C410 252, 410 252, 410 258" stroke="rgba(255,255,255,.10)" stroke-width="3"
+                  stroke-linecap="round" fill="none" />
+                <path d="M570 240 C570 252, 570 252, 570 258" stroke="rgba(255,255,255,.10)" stroke-width="3"
+                  stroke-linecap="round" fill="none" />
+              </svg>
+            </div>
+            <div class="caption">The system reflects the team that built it.</div>
+          </div>
+        </div>
+        <div class="claim">This is an execution problem — not an idea problem.</div>
+      </div>
+    </section>
+    <!-- SLIDE 24 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">NEXT</div>
+        <h2>What Comes Next</h2>
+        <p class="sub">We are scaling the signal engine and preparing the prediction layer.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Near-term</strong>
+              <p>Expand ingestion coverage and real-time alerting.</p>
+            </div>
+            <div class="card">
+              <strong>Mid-term</strong>
+              <p>Ship IBIS — impact simulation on verified signals.</p>
+            </div>
+            <div class="card primary">
+              <strong>Engagement</strong>
+              <p>Strategic partners and aligned capital.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>PATH</span><span><b>FORWARD</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Execution loop" preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s24g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".90"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- loop circle -->
+                <circle cx="450" cy="170" fill="rgba(15,23,42,.90)" r="90" stroke="url(#s24g)" stroke-width="3">
+                </circle>
+                <!-- loop arcs -->
+                <path d="M450 80 A90 90 0 0 1 536 122" fill="none" stroke="rgba(124,92,255,.75)" stroke-linecap="round"
+                  stroke-width="5"></path>
+                <path d="M536 218 A90 90 0 0 1 450 260" fill="none" stroke="rgba(52,211,153,.75)" stroke-linecap="round"
+                  stroke-width="5"></path>
+                <path d="M364 218 A90 90 0 0 1 364 122" fill="none" stroke="rgba(248,250,255,.28)"
+                  stroke-linecap="round" stroke-width="4"></path>
+                <!-- labels -->
+                <text fill="rgba(248,250,255,.88)" font-size="15" text-anchor="middle" x="450" y="146">Ship</text>
+                <text fill="rgba(248,250,255,.80)" font-size="15" text-anchor="middle" x="510" y="188">Measure</text>
+                <text fill="rgba(248,250,255,.80)" font-size="15" text-anchor="middle" x="390" y="212">Refine</text>
+                <text fill="rgba(248,250,255,.86)" font-size="18" text-anchor="middle" x="450" y="100">Execution
+                  compounding into advantage</text>
+              </svg>
+            </div>
+            <div class="caption">Execution continues — the system compounds.</div>
+          </div>
+        </div>
+        <div class="claim">We’re building the layer markets now require.</div>
+      </div>
+    </section>
+    <!-- SLIDE 25 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">APPENDIX</div>
+        <h2>System Architecture</h2>
+        <p class="sub">End-to-end control enables real-time verification.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Ingest</strong>
+              <p>Real-time collection across major social platforms.</p>
+            </div>
+            <div class="card">
+              <strong>Normalize &amp; resolve</strong>
+              <p>Identity, language, and graph normalization.</p>
+            </div>
+            <div class="card primary">
+              <strong>Score &amp; surface</strong>
+              <p>Anomaly scoring, alerts, APIs, dashboards.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>ARCHITECTURE</span><span><b>PIPELINE</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Architecture overview" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s25g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".90"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- layers -->
+                <rect fill="rgba(255,255,255,.03)" height="40" rx="16" stroke="rgba(255,255,255,.10)" width="660"
+                  x="120" y="210"></rect>
+                <rect fill="rgba(255,255,255,.04)" height="40" rx="16" stroke="rgba(255,255,255,.12)" width="620"
+                  x="140" y="170"></rect>
+                <rect fill="rgba(124,92,255,.18)" height="40" rx="16" stroke="url(#s25g)" stroke-width="2.4" width="560"
+                  x="170" y="130"></rect>
+                <text fill="rgba(248,250,255,.94)" font-size="15" text-anchor="middle" x="450" y="152">Verification
+                  &amp; signals</text>
+                <text fill="rgba(248,250,255,.70)" font-size="14" text-anchor="middle" x="450" y="192">storage · APIs ·
+                  analytics</text>
+                <text fill="rgba(248,250,255,.70)" font-size="14" text-anchor="middle" x="450" y="232">integrations
+                  &amp; surfaces</text>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.86)" font-size="18" text-anchor="middle" x="450" y="104">Architecture
+                  optimized for speed and verification</text>
+              </svg>
+            </div>
+            <div class="caption">Architecture is optimized for speed and verification.</div>
+          </div>
+        </div>
+        <div class="claim">Control of the pipeline enables early detection.</div>
+      </div>
+    </section>
+    <!-- SLIDE 26 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">SCALE</div>
+        <h2>Coverage at Internet Scale</h2>
+        <p class="sub">Verification requires breadth, depth, and history.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Languages</strong>
+              <p>100+ languages normalized and translated.</p>
+            </div>
+            <div class="card">
+              <strong>Platforms</strong>
+              <p>Major social networks and public discourse surfaces.</p>
+            </div>
+            <div class="card primary">
+              <strong>History</strong>
+              <p>Multi-year interaction history for baseline modeling.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>COVERAGE</span><span><b>DEPTH</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Coverage at internet scale" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s26g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".90"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- world-style coverage dots -->
+                <circle cx="260" cy="150" fill="rgba(248,250,255,.80)" r="3"></circle>
+                <circle cx="320" cy="190" fill="rgba(124,92,255,.88)" r="4"></circle>
+                <circle cx="380" cy="130" fill="rgba(248,250,255,.80)" r="3"></circle>
+                <circle cx="430" cy="210" fill="rgba(52,211,153,.90)" r="4"></circle>
+                <circle cx="500" cy="170" fill="rgba(248,250,255,.80)" r="3"></circle>
+                <circle cx="560" cy="130" fill="rgba(124,92,255,.88)" r="4"></circle>
+                <circle cx="620" cy="190" fill="rgba(248,250,255,.80)" r="3"></circle>
+                <circle cx="680" cy="150" fill="rgba(52,211,153,.90)" r="4"></circle>
+                <!-- soft globe -->
+                <ellipse cx="470" cy="175" fill="rgba(15,23,42,.85)" rx="260" ry="90" stroke="rgba(255,255,255,.06)">
+                </ellipse>
+                <!-- legends -->
+                <rect fill="rgba(255,255,255,.03)" height="32" rx="14" stroke="rgba(255,255,255,.10)" width="210"
+                  x="120" y="232"></rect>
+                <rect fill="rgba(124,92,255,.18)" height="32" rx="14" stroke="rgba(124,92,255,.55)" width="210" x="360"
+                  y="232"></rect>
+                <rect fill="rgba(52,211,153,.16)" height="32" rx="14" stroke="rgba(52,211,153,.55)" width="210" x="600"
+                  y="232"></rect>
+                <text fill="rgba(248,250,255,.72)" font-size="13" text-anchor="middle" x="225" y="252">breadth</text>
+                <text fill="rgba(248,250,255,.86)" font-size="13" text-anchor="middle" x="465" y="252">depth</text>
+                <text fill="rgba(248,250,255,.88)" font-size="13" text-anchor="middle" x="705" y="252">history</text>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.86)" font-size="18" text-anchor="middle" x="450" y="104">Coverage only
+                  matters when integrity is known</text>
+              </svg>
+            </div>
+            <div class="caption">Coverage only matters when integrity is known.</div>
+          </div>
+        </div>
+        <div class="claim">Breadth enables detection. History enables confidence.</div>
+      </div>
+    </section>
+    <!-- SLIDE 27 (UPDATED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+        <div class="kicker">RISK</div>
+        <h2>Known Constraints</h2>
+        <p class="sub">We design around limitations instead of ignoring them.</p>
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Platform access</strong>
+              <p>Public data constraints vary by network.</p>
+            </div>
+            <div class="card">
+              <strong>Adversarial evolution</strong>
+              <p>Manipulation tactics adapt over time.</p>
+            </div>
+            <div class="card primary">
+              <strong>Mitigation</strong>
+              <p>Continuous model updates and cross-signal validation.</p>
+            </div>
+          </div>
+          <div class="vizCard">
+            <div class="vizTitle"><span>RISK</span><span><b>MANAGEMENT</b></span></div>
+            <div class="vizFrame">
+              <svg aria-label="Limits and confidence" preserveaspectratio="xMidYMid meet" role="img"
+                viewbox="0 0 900 320">
+                <defs>
+                  <lineargradient id="s27g" x1="0" x2="1">
+                    <stop offset="0" stop-color="#7C5CFF" stop-opacity=".95"></stop>
+                    <stop offset="1" stop-color="#34D399" stop-opacity=".90"></stop>
+                  </lineargradient>
+                </defs>
+                <!-- two columns: what we cover vs what we don't -->
+                <rect fill="rgba(34,197,94,.16)" height="140" rx="20" stroke="rgba(34,197,94,.55)" width="260" x="110"
+                  y="110"></rect>
+                <rect fill="rgba(248,113,113,.12)" height="140" rx="20" stroke="rgba(248,113,113,.55)" width="260"
+                  x="530" y="110"></rect>
+                <text fill="rgba(248,250,255,.92)" font-size="15" text-anchor="middle" x="240" y="142">What we
+                  cover</text>
+                <text fill="rgba(248,250,255,.92)" font-size="15" text-anchor="middle" x="660" y="142">What we
+                  don’t</text>
+                <text fill="rgba(248,250,255,.80)" font-size="13" text-anchor="middle" x="240" y="170">integrity &amp;
+                  momentum</text>
+                <text fill="rgba(248,250,255,.80)" font-size="13" text-anchor="middle" x="240" y="190">coordination
+                  patterns</text>
+                <text fill="rgba(248,250,255,.80)" font-size="13" text-anchor="middle" x="240" y="210">interaction
+                  surface</text>
+                <text fill="rgba(248,250,255,.76)" font-size="13" text-anchor="middle" x="660" y="170">creative
+                  decisions</text>
+                <text fill="rgba(248,250,255,.76)" font-size="13" text-anchor="middle" x="660" y="190">brand
+                  voice</text>
+                <text fill="rgba(248,250,255,.76)" font-size="13" text-anchor="middle" x="660" y="210">media buying
+                  strategy</text>
+                <!-- bottom band -->
+                <rect fill="rgba(255,255,255,.03)" height="32" rx="14" stroke="rgba(255,255,255,.10)" width="500"
+                  x="200" y="236"></rect>
+                <text fill="rgba(248,250,255,.80)" font-size="14" text-anchor="middle" x="450" y="256">Acknowledging
+                  limits increases trust</text>
+                <!-- title -->
+                <text fill="rgba(248,250,255,.86)" font-size="18" text-anchor="middle" x="450" y="100">Clarity on what
+                  we do — and don’t — do</text>
+              </svg>
+            </div>
+            <div class="caption">Acknowledging limits increases trust.</div>
+          </div>
+        </div>
+        <div class="claim">Integrity requires ongoing defense.</div>
+      </div>
+    </section>
+    <!-- SLIDE X (ADDED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+
+        <div class="kicker">COMPARISON</div>
+        <h2>Why Volume-Based Sentiment <span class="accent">Misleads</span></h2>
+        <p class="sub">Most platforms measure engagement. Institutions need to know whether engagement is <b>real</b>.
+        </p>
+
+        <div class="cols">
+          <div class="stack">
+            <div class="card muted">
+              <strong>Volume is cheap</strong>
+              <p>Likes, follower counts, and generic “engagement rate” can be purchased or coordinated.</p>
+            </div>
+
+            <div class="card">
+              <strong>Coordination hides in plain sight</strong>
+              <p>Campaigns look organic once coverage reacts — even when the early drivers are synthetic.</p>
+            </div>
+
+            <div class="card primary">
+              <strong>What changes outcomes</strong>
+              <p>We verify actor authenticity and coordination patterns so decisions are made on
+                <b>integrity-adjusted</b> signals.
+              </p>
+            </div>
+          </div>
+
+          <div class="vizCard">
+            <div class="vizTitle"><span>LEGACY</span><span><b>VOLUME</b> → CONFIDENCE</span></div>
+            <div class="vizFrame">
+              <svg viewBox="0 0 980 320" width="100%" height="320" role="img"
+                aria-label="Verification beats measurement">
+                <defs>
+                  <linearGradient id="gStroke" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,.85)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,.70)" />
+                  </linearGradient>
+                  <linearGradient id="gFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(124,92,255,.18)" />
+                    <stop offset="100%" stop-color="rgba(0,0,0,0)" />
+                  </linearGradient>
+                </defs>
+
+                <!-- left: volume -->
+                <g transform="translate(70,76)">
+                  <rect x="0" y="0" rx="22" ry="22" width="320" height="168" fill="rgba(255,255,255,.03)"
+                    stroke="rgba(255,255,255,.12)" stroke-width="2" />
+                  <text x="28" y="44" fill="rgba(248,250,255,.92)" font-size="20" font-weight="850">Volume</text>
+                  <text x="28" y="72" fill="rgba(248,250,255,.65)" font-size="14" font-weight="700">easy to
+                    manufacture</text>
+
+                  <rect x="28" y="108" rx="999" ry="999" width="264" height="18" fill="rgba(239,68,68,.22)" />
+                  <rect x="28" y="108" rx="999" ry="999" width="264" height="18" fill="rgba(239,68,68,.72)" />
+
+                  <text x="28" y="148" fill="rgba(248,250,255,.60)" font-size="13" font-weight="700">false
+                    confidence</text>
+                </g>
+
+                <!-- arrow -->
+                <path d="M420,160 C470,120 510,120 560,160" fill="none" stroke="rgba(248,250,255,.82)" stroke-width="10"
+                  stroke-linecap="round" />
+                <path d="M420,160 C470,120 510,120 560,160" fill="none" stroke="rgba(124,92,255,.42)" stroke-width="4"
+                  stroke-linecap="round" />
+
+                <!-- right: verdict -->
+                <g transform="translate(590,66)">
+                  <rect x="0" y="0" rx="26" ry="26" width="320" height="188" fill="rgba(124,92,255,.16)"
+                    stroke="url(#gStroke)" stroke-width="3" />
+                  <text x="28" y="58" fill="rgba(248,250,255,.95)" font-size="20" font-weight="900">Integrity
+                    verdict</text>
+                  <text x="28" y="86" fill="rgba(248,250,255,.78)" font-size="14" font-weight="700">real vs
+                    engineered</text>
+
+                  <rect x="28" y="120" rx="999" ry="999" width="164" height="26" fill="rgba(52,211,153,.86)" />
+                  <text x="110" y="138" text-anchor="middle" fill="rgba(6,8,20,.98)" font-size="13"
+                    font-weight="950">decision‑grade</text>
+                </g>
+              </svg>
+            </div>
+            <div class="caption">Volume is a metric. Integrity is a decision input.</div>
+          </div>
+        </div>
+
+        <div class="claim">Institutions don’t need “more sentiment” — they need verified participation.</div>
+      </div>
+    </section>
+
+    <!-- SLIDE X (ADDED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+
+        <div class="kicker">REPORTING</div>
+        <h2>What an <span class="accent">Integrity Report</span> Shows</h2>
+        <p class="sub">A repeatable structure that turns narrative noise into an auditable decision surface.</p>
+
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Signal divergence</strong>
+              <p>Organic vs engineered participation, separated — with confidence.</p>
+            </div>
+
+            <div class="card">
+              <strong>Actor &amp; cluster attribution</strong>
+              <p>Who drove the move, how coordination formed, and where it propagated.</p>
+            </div>
+
+            <div class="card">
+              <strong>Timeline anomalies</strong>
+              <p>Where the narrative shifted, accelerated, and crossed alert thresholds.</p>
+            </div>
+
+            <div class="card primary">
+              <strong>Executive summary</strong>
+              <p>A one-page verdict: <b>real</b> vs <b>synthetic</b> — plus what changed materially.</p>
+            </div>
+          </div>
+
+          <div class="vizCard">
+            <div class="vizTitle"><span>OUTPUT</span><span><b>REPORT</b> FORMAT</span></div>
+            <div class="vizFrame">
+              <svg aria-label="Report format" role="img" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="rfBg" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,0.16)" />
+                    <stop offset="55%" stop-color="rgba(0,0,0,0)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,0.10)" />
+                  </linearGradient>
+                  <filter id="rfSoft" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="rgba(0,0,0,0.35)" />
+                  </filter>
+                  <linearGradient id="rfAccent" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(200,121,255,0.95)" />
+                    <stop offset="100%" stop-color="rgba(124,92,255,0.95)" />
+                  </linearGradient>
+                  <style>
+                    <![CDATA[
+                    text {
+                      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+                    }
+
+                    .k {
+                      fill: rgba(248, 250, 255, .60);
+                      font-size: 11px;
+                      font-weight: 850;
+                      letter-spacing: .14em;
+                    }
+
+                    .h {
+                      fill: rgba(248, 250, 255, .92);
+                      font-size: 16px;
+                      font-weight: 850;
+                    }
+
+                    .p {
+                      fill: rgba(248, 250, 255, .74);
+                      font-size: 13px;
+                      font-weight: 650;
+                    }
+
+                    .m {
+                      fill: rgba(248, 250, 255, .66);
+                      font-size: 12px;
+                      font-weight: 650;
+                    }
+                    ]]>
+                  </style>
+                </defs>
+
+                <rect x="10" y="10" width="880" height="300" rx="22" fill="url(#rfBg)"
+                  stroke="rgba(255,255,255,0.12)" />
+                <text x="34" y="52" class="k">OUTPUT</text>
+                <text x="866" y="52" class="k" text-anchor="end">REPORT FORMAT</text>
+
+                <text x="450" y="102" text-anchor="middle" class="h">A consistent structure across issuers and
+                  events</text>
+
+                <!-- report card -->
+                <g filter="url(#rfSoft)">
+                  <rect x="145" y="122" width="610" height="170" rx="20" fill="rgba(255,255,255,0.04)"
+                    stroke="rgba(255,255,255,0.14)" />
+                  <rect x="145" y="122" width="610" height="44" rx="20" fill="rgba(255,255,255,0.03)" />
+                  <text x="180" y="150" class="m">Integrity Report — Summary</text>
+
+                  <!-- verdict pill -->
+                  <rect x="190" y="184" width="210" height="54" rx="16" fill="rgba(124,92,255,0.26)"
+                    stroke="rgba(200,121,255,0.55)" stroke-width="1.2" />
+                  <rect x="190" y="184" width="210" height="6" rx="3" fill="url(#rfAccent)" opacity="0.9" />
+                  <text x="295" y="213" class="h" text-anchor="middle">Verdict</text>
+                  <text x="295" y="232" class="p" text-anchor="middle">real vs engineered</text>
+
+                  <!-- timeline mini chart -->
+                  <text x="495" y="202" class="m">Timeline</text>
+                  <text x="495" y="220" class="m" fill="rgba(248,250,255,0.55)">anomaly markers</text>
+                  <path d="M470 242 C510 235 540 250 575 236 C610 222 655 242 690 226" fill="none"
+                    stroke="rgba(200,121,255,0.75)" stroke-width="5" stroke-linecap="round" />
+                  <path d="M470 242 C510 235 540 250 575 236 C610 222 655 242 690 226" fill="none"
+                    stroke="rgba(52,211,153,0.55)" stroke-width="3" stroke-linecap="round" opacity="0.7" />
+                  <circle cx="610" cy="222" r="6.5" fill="rgba(239,68,68,0.95)" />
+                  <line x1="610" y1="212" x2="610" y2="268" stroke="rgba(239,68,68,0.28)" stroke-width="3" />
+
+                  <!-- footer bar -->
+                  <rect x="200" y="262" width="500" height="22" rx="11" fill="rgba(52,211,153,0.22)"
+                    stroke="rgba(52,211,153,0.50)" />
+                  <text x="450" y="277" class="k" text-anchor="middle" fill="rgba(248,250,255,0.78)">DECISION‑READY AND
+                    AUDITABLE</text>
+                </g>
+
+              </svg>
+            </div>
+            <div class="caption">This is how integrity becomes usable inside institutional workflows.</div>
+          </div>
+        </div>
+
+        <div class="claim">If the narrative moved price, we show whether the participation was authentic.</div>
+      </div>
+    </section>
+
+    <!-- SLIDE X (ADDED) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+
+        <div class="kicker">DEPLOYMENT</div>
+        <h2>Institutional <span class="accent">Deployment</span></h2>
+        <p class="sub">Delivered as intelligence infrastructure: monitoring, alerts, and forensic reporting.</p>
+
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Issuer / asset monitoring</strong>
+              <p>Ongoing coverage across selected universes with integrity baselines.</p>
+            </div>
+
+            <div class="card">
+              <strong>Event-driven alerts</strong>
+              <p>Flags when coordination and anomaly thresholds are crossed.</p>
+            </div>
+
+            <div class="card">
+              <strong>Historical forensics</strong>
+              <p>Post-event reviews that attribute drivers and quantify synthetic participation.</p>
+            </div>
+
+            <div class="card primary">
+              <strong>Dashboard + API</strong>
+              <p>Outputs integrate into research, risk, and surveillance workflows.</p>
+            </div>
+          </div>
+
+          <div class="vizCard">
+            <div class="vizTitle"><span>MODEL</span><span><b>MONITOR</b> → ALERT → REVIEW</span></div>
+            <div class="vizFrame">
+              <svg viewBox="0 0 980 320" width="100%" height="320" role="img" aria-label="Monitor alert review">
+                <defs>
+                  <linearGradient id="dStroke" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,.85)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,.70)" />
+                  </linearGradient>
+                </defs>
+
+                <text x="490" y="56" text-anchor="middle" fill="rgba(248,250,255,.94)" font-size="20" font-weight="900">
+                  Designed for institutional workflows
+                </text>
+
+                <!-- nodes -->
+                <g>
+                  <rect x="110" y="126" rx="22" ry="22" width="240" height="92" fill="rgba(10,16,48,.55)"
+                    stroke="rgba(255,255,255,.16)" stroke-width="2" />
+                  <text x="230" y="166" text-anchor="middle" fill="rgba(248,250,255,.94)" font-size="16"
+                    font-weight="950">Monitor</text>
+                  <text x="230" y="188" text-anchor="middle" fill="rgba(248,250,255,.74)" font-size="13"
+                    font-weight="850">baselines</text>
+
+                  <rect x="370" y="112" rx="26" ry="26" width="240" height="120" fill="rgba(124,92,255,.24)"
+                    stroke="url(#dStroke)" stroke-width="3" />
+                  <text x="490" y="162" text-anchor="middle" fill="rgba(248,250,255,.98)" font-size="16"
+                    font-weight="950">Alert</text>
+                  <text x="490" y="184" text-anchor="middle" fill="rgba(248,250,255,.82)" font-size="13"
+                    font-weight="850">anomaly spike</text>
+
+                  <rect x="630" y="126" rx="22" ry="22" width="240" height="92" fill="rgba(10,16,48,.55)"
+                    stroke="rgba(255,255,255,.16)" stroke-width="2" />
+                  <text x="750" y="166" text-anchor="middle" fill="rgba(248,250,255,.94)" font-size="16"
+                    font-weight="950">Review</text>
+                  <text x="750" y="188" text-anchor="middle" fill="rgba(248,250,255,.74)" font-size="13"
+                    font-weight="850">forensics</text>
+
+                  <!-- connectors -->
+                  <path d="M350,172 L370,172" stroke="rgba(248,250,255,.55)" stroke-width="6" stroke-linecap="round" />
+                  <path d="M610,172 L630,172" stroke="rgba(248,250,255,.55)" stroke-width="6" stroke-linecap="round" />
+                  <path d="M350,172 L370,172" stroke="rgba(124,92,255,.35)" stroke-width="2" stroke-linecap="round" />
+                  <path d="M610,172 L630,172" stroke="rgba(124,92,255,.35)" stroke-width="2" stroke-linecap="round" />
+                </g>
+
+                <!-- delivery bar -->
+                <g transform="translate(220,236)">
+                  <rect x="0" y="0" rx="999" ry="999" width="540" height="32" fill="rgba(52,211,153,.74)" />
+                  <text x="270" y="22" text-anchor="middle" fill="rgba(6,8,20,.98)" font-size="14" font-weight="950">
+                    Dashboard · API · PDF reporting
+                  </text>
+                </g>
+              </svg>
+            </div>
+            <div class="caption">Monitoring + alerts + attribution — in one system.</div>
+          </div>
+        </div>
+
+        <div class="claim">This is decision support infrastructure — not a marketing dashboard.</div>
+      </div>
+    </section>
+
+    <!-- SLIDE: TEAM (UPDATED — no overlap, uniform SVG style) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+
+        <div class="kicker">TEAM</div>
+        <h2>Built by Operators</h2>
+        <p class="sub">Experience across data infrastructure, influence systems, and market risk.</p>
+
+        <div class="cols">
+          <div class="stack">
+            <div class="card">
+              <strong>Data &amp; infrastructure</strong>
+              <p>Experience building high-throughput ingestion and analytics systems.</p>
+            </div>
+
+            <div class="card">
+              <strong>Influence &amp; narratives</strong>
+              <p>Deep understanding of creator ecosystems and manipulation patterns.</p>
+            </div>
+
+            <div class="card primary">
+              <strong>Execution focus</strong>
+              <p>Shipping live systems — not research decks.</p>
+            </div>
+
+            <p class="micro">Team slide can be expanded with bios on request.</p>
+          </div>
+
+          <div class="vizCard">
+            <div class="vizTitle"><span>CAPABILITY</span><span><b>EXECUTION</b></span></div>
+
+            <div class="vizFrame">
+              <svg viewBox="0 0 900 280" width="100%" height="280" role="img" aria-label="Execution model">
+                <defs>
+                  <linearGradient id="teamGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(124,92,255,.95)" />
+                    <stop offset="100%" stop-color="rgba(52,211,153,.90)" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Title (kept safely above shapes) -->
+                <text x="450" y="44" text-anchor="middle" font-size="18" font-weight="700" fill="rgba(248,250,255,.88)">
+                  Execution matters more than claims
+                </text>
+
+                <!-- Cards row -->
+                <!-- Left: Engineering -->
+                <rect x="120" y="92" width="200" height="96" rx="18" fill="rgba(255,255,255,.04)"
+                  stroke="rgba(255,255,255,.14)" />
+                <text x="220" y="128" text-anchor="middle" font-size="15" font-weight="750"
+                  fill="rgba(248,250,255,.88)">
+                  Engineering
+                </text>
+                <text x="220" y="152" text-anchor="middle" font-size="12" font-weight="600"
+                  fill="rgba(248,250,255,.62)">
+                  systems &amp; infra
+                </text>
+
+                <!-- Middle: Intelligence (highlight) -->
+                <rect x="350" y="82" width="200" height="106" rx="20" fill="rgba(124,92,255,.18)"
+                  stroke="url(#teamGrad)" stroke-width="2.4" />
+                <text x="450" y="124" text-anchor="middle" font-size="15" font-weight="800"
+                  fill="rgba(248,250,255,.96)">
+                  Intelligence
+                </text>
+                <text x="450" y="150" text-anchor="middle" font-size="12" font-weight="650"
+                  fill="rgba(248,250,255,.74)">
+                  analysis, models
+                </text>
+
+                <!-- Right: Delivery -->
+                <rect x="580" y="92" width="200" height="96" rx="18" fill="rgba(255,255,255,.04)"
+                  stroke="rgba(255,255,255,.14)" />
+                <text x="680" y="128" text-anchor="middle" font-size="15" font-weight="750"
+                  fill="rgba(248,250,255,.88)">
+                  Delivery
+                </text>
+                <text x="680" y="152" text-anchor="middle" font-size="12" font-weight="600"
+                  fill="rgba(248,250,255,.62)">
+                  clients &amp; ops
+                </text>
+
+                <!-- Base banner (placed BELOW cards so it never overlaps) -->
+                <rect x="170" y="214" width="560" height="34" rx="14" fill="rgba(255,255,255,.04)"
+                  stroke="rgba(255,255,255,.12)" />
+                <text x="450" y="236" text-anchor="middle" font-size="13" font-weight="750" fill="rgba(248,250,255,.76)"
+                  letter-spacing=".08em">
+                  BUILT TO OPERATE, NOT THEORIZE
+                </text>
+              </svg>
+            </div>
+
+            <div class="caption">The system reflects the team that built it.</div>
+          </div>
+        </div>
+
+        <div class="claim">This is an execution problem — not an idea problem.</div>
+      </div>
+    </section>
+
+    <!-- SLIDE: CLOSE (FIXED LOGO LAYOUT) -->
+    <section class="slide">
+      <div class="sheet">
+        <div class="progress"><span></span></div>
+
+        <div class="kicker">CLOSE</div>
+        <h2>SocialAudits AI</h2>
+        <p class="sub">The verification layer for modern narrative-driven markets.</p>
+
+        <div class="cols">
+          <!-- LEFT -->
+          <div class="stack">
+            <div class="card">
+              <strong>What we do</strong>
+              <p>Detect synthetic momentum before it moves capital.</p>
+            </div>
+
+            <div class="card">
+              <strong>Why it matters</strong>
+              <p>Markets behave differently when signals are real.</p>
+            </div>
+
+            <div class="card primary">
+              <strong>Next step</strong>
+              <p>Conversations with partners who care about integrity.</p>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="vizCard">
+            <div class="vizTitle">
+              <span>CONTACT</span>
+              <span><b>NEXT</b></span>
+            </div>
+
+            <!-- Single clean logo surface -->
+            <div class="vizFrame" style="display:flex; align-items:center; justify-content:center; padding: 26px;">
+              <div style="
+              width: 100%;
+              height: 100%;
+              min-height: 280px;
+              border-radius: 20px;
+              border: 1px solid rgba(255,255,255,.10);
+              background: linear-gradient(180deg, rgba(14,22,52,.42), rgba(8,12,32,.18));
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              overflow:hidden;
+            ">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/SA_logo_white.png"
+                  alt="SocialAudits logo" style="
+                width: min(520px, 78%);
+                height: auto;
+                display:block;
+                opacity: .98;
+                filter: drop-shadow(0 18px 40px rgba(0,0,0,.35));
+              " />
+              </div>
+            </div>
+
+            <div class="caption">Integrity before outcomes. Decision-grade verification.</div>
+          </div>
+        </div>
+
+        <div class="claim">Verification is no longer optional.</div>
+      </div>
+    </section>
+
+    <!-- HUD NAV -->
+    <div aria-hidden="false" class="hud">
+      <div class="left">
+        <button class="btn" id="prevBtn">← Prev</button>
+        <button class="btn primary" id="nextBtn">Next →</button>
+      </div>
+      <div class="center">
+        <span class="kbd" id="counter">1 / 28</span>
+        <span class="kbd">← →</span>
+        <span class="kbd">Space</span>
+      </div>
+      <div class="right">
+        <label class="toggle" title="Optional: click anywhere on the slide to advance">
+          <input id="clickAdvance" type="checkbox" />
+          click-to-advance
+        </label>
+      </div>
+    </div>
+  </div>
+  <script>
+    (() => {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const counter = document.getElementById('counter');
+      const clickAdvance = document.getElementById('clickAdvance');
+      const deck = document.getElementById('deck');
+
+      let index = 0;
+
+      function setProgressForActive() {
+        const pct = ((index + 1) / slides.length) * 100;
+        // Update only the active slide’s bar (clean + correct)
+        slides.forEach((s, i) => {
+          const bar = s.querySelector('.progress > span');
+          if (!bar) return;
+          bar.style.width = (i === index) ? (pct + '%') : '0%';
+        });
+      }
+
+      function updateHUD() {
+        counter.textContent = `${index + 1} / ${slides.length}`;
+        prevBtn.disabled = index === 0;
+        nextBtn.disabled = index === slides.length - 1;
+        setProgressForActive();
+      }
+
+      function show(i) {
+        slides[index].classList.remove('active');
+        index = Math.max(0, Math.min(slides.length - 1, i));
+        slides[index].classList.add('active');
+        updateHUD();
+      }
+
+      prevBtn.addEventListener('click', () => show(index - 1));
+      nextBtn.addEventListener('click', () => show(index + 1));
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        const key = e.key;
+        if (key === 'ArrowRight' || key === ' ') { e.preventDefault(); show(index + 1); }
+        if (key === 'ArrowLeft') { e.preventDefault(); show(index - 1); }
+        if (key === 'Home') { e.preventDefault(); show(0); }
+        if (key === 'End') { e.preventDefault(); show(slides.length - 1); }
+      });
+
+      // Optional click-to-advance (off by default)
+      deck.addEventListener('click', (e) => {
+        // ignore clicks on HUD controls
+        if (e.target.closest('.hud')) return;
+        if (!clickAdvance.checked) return;
+        show(index + 1);
+      });
+
+      // Init
+      updateHUD();
+    })();
+  </script>
+</body>
+
+</html>
