@@ -69,7 +69,7 @@
         linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
       background-size: 44px 44px;
-      mask-image: radial-gradient(circle at 50% 40%, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .35) 56%, rgba(0, 0, 0, 0) 80%);
+      /* mask removed */ mask-image: radial-gradient(circle at 50% 40%, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .35) 56%, rgba(0, 0, 0, 0) 80%);
       pointer-events: none;
       opacity: .33;
     }
@@ -1551,12 +1551,86 @@
 .minirow .mini{ font-size: 13px; letter-spacing: .01em; }
 .minirow .dot{ opacity: .55; }
 
+
+/* ==== Slide 2: TAM (SocialAudits style) ==== */
+.slide.tamSlide{ justify-content:center; }
+.tamWrap{ position:relative; border:1px solid rgba(255,255,255,.13); border-radius: var(--r2); background: linear-gradient(180deg, rgba(14,22,52,.78), rgba(8,12,32,.62)); box-shadow: 0 14px 30px rgba(0,0,0,.22); padding: 22px; overflow:hidden; }
+.tamWrap::before{
+  content:"";
+  position:absolute; inset:-40px -40px -40px -40px;
+  background-image: radial-gradient(900px 520px at 22% 18%, rgba(124,92,255,.28) 0%, rgba(124,92,255,0) 62%),
+                    radial-gradient(820px 520px at 84% 26%, rgba(52,211,153,.14) 0%, rgba(52,211,153,0) 60%);
+  pointer-events:none;
+  opacity:.9;
+}
+
+.tamGrid{ position:relative; display:grid; grid-template-columns: 1.55fr 0.95fr; gap: 18px; align-items: start; }
+.tamList{ border: 1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02); border-radius: 18px; padding: 16px 16px 14px; }
+.tamListTop{ display:flex; align-items:flex-end; justify-content:space-between; gap: 12px; margin-bottom: 12px; }
+.tamListTop .h{ font-size: 14px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: rgba(248,250,255,.72); }
+.tamListTop .n{ font-size: 12px; letter-spacing: .10em; text-transform: uppercase; color: rgba(248,250,255,.58); white-space: nowrap; }
+.tamBullets{ column-count: 2; column-gap: 18px; }
+.tamItem{ break-inside: avoid; margin: 0 0 12px 0; padding: 0 0 12px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+.tamItem:last-child{ border-bottom:none; padding-bottom:0; margin-bottom:0; }
+.tamItem .t{ font-weight: 900; letter-spacing: -.01em; color: rgba(248,250,255,.95); font-size: 15px; line-height: 1.25; }
+.tamItem .t .amt{ color: rgba(248,250,255,.86); font-weight: 900; }
+.tamItem .d{ margin-top: 6px; color: rgba(248,250,255,.76); font-size: 13px; line-height: 1.35; }
+.tamRight{ display:grid; gap: 12px; }
+.tamTotal{
+  border: 1px solid rgba(200,121,255,.22);
+  background: linear-gradient(90deg, rgba(124,92,255,.16), rgba(52,211,153,.08));
+  border-radius: 18px;
+  padding: 16px 16px 14px;
+}
+.tamTotal .lbl{ font-size: 12px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; color: rgba(248,250,255,.70); }
+.tamTotal .big{ margin-top: 10px; font-size: clamp(46px, 4.4vw, 76px); font-weight: 950; letter-spacing: -.03em; line-height: 1.02; }
+.tamTotal .big .accent{ color: var(--accent); }
+.tamTotal .sm{ margin-top: 10px; color: rgba(248,250,255,.78); font-size: 14px; line-height: 1.45; }
+.tamNote{ border: 1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.02); border-radius: 18px; padding: 14px; }
+.tamNote .p{ margin-top: 8px; color: rgba(248,250,255,.82); font-size: 14px; line-height: 1.45; }
+@media (max-width: 980px){
+  .tamGrid{ grid-template-columns: 1fr; }
+  .tamBullets{ column-count: 1; }
+  
+}
+
+
+/* ---- Finance comp table emphasis ---- */
+.tbl tr.rowEmph td{
+  border-top: 1px solid rgba(200,121,255,.28);
+  border-bottom: 1px solid rgba(200,121,255,.22);
+  background: linear-gradient(90deg, rgba(124,92,255,.14), rgba(52,211,153,.06));
+}
+.tbl tr.rowEmph td strong{ color: rgba(248,250,255,.98); }
+
+
+/* ---- Slide counter (debug + presenter sanity) ---- */
+.slideCounter{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(10,16,48,.52);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.22);
+  font-size: 13px;
+  color: rgba(248,250,255,.82);
+  user-select:none;
+  pointer-events:none;
+}
+@media (max-width: 980px){
+  .slideCounter{ position: sticky; left: 0; bottom: 12px; margin-right:auto; width: fit-content; }
+}
+
 </style>
 </head>
 
 <body>
   <div class="stage">
     <div class="viewport" id="viewport" aria-label="Click to advance">
+      <div class="slideCounter" id="slideCounter">1 / 1</div>
 
       <main id="deck" role="region" aria-label="Slide deck">
 
@@ -1573,6 +1647,142 @@
     Designed to answer: <strong>“What’s about to break pattern—and why?”</strong>
   </div>
 </section>
+
+
+<section class="slide compact tamSlide">
+  <div class="kicker"><span class="line"></span> MARKET</div>
+
+  <h2>Technology applications at <span class="accent">institutional scale</span></h2>
+
+  <p class="subhead">
+    SocialAudits maps how narratives form, accelerate, and become decision signals across high-spend ecosystems.
+    The same verification layer supports multiple adjacent markets.
+  </p>
+
+  <div class="tamWrap">
+    
+    <div class="tamGrid">
+      <div class="tamList">
+        <div class="tamListTop">
+          <div class="h">Technology Applications</div>
+          <div class="n">Annual market size</div>
+        </div>
+
+        <div class="tamBullets">
+          <div class="tamItem">
+            <div class="t">Advertising &amp; Growth Intelligence <span class="amt">— $1.0T+</span></div>
+            <div class="d">Capture trends before saturation.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Financial Markets &amp; Alternative Data <span class="amt">— $300B+</span></div>
+            <div class="d">Detect narrative-driven market moves early.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Cybersecurity (Narrative Attack Surface) <span class="amt">— $250B+</span></div>
+            <div class="d">Identify social manipulation as an attack vector.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Platforms &amp; Market Trust Infrastructure <span class="amt">— $200B+</span></div>
+            <div class="d">Stop brigading and algorithm gaming.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Government &amp; National Security <span class="amt">— $100B+</span></div>
+            <div class="d">Detect foreign influence operations early.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Healthcare &amp; Public Trust <span class="amt">— $100B+</span></div>
+            <div class="d">Intercept misinformation before scale.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Brand Safety &amp; Reputation Risk <span class="amt">— $75B+</span></div>
+            <div class="d">Catch synthetic outrage early.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Insurance &amp; Risk Underwriting <span class="amt">— $50B+</span></div>
+            <div class="d">Price virality-driven risk.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Telecom &amp; Critical Infrastructure <span class="amt">— $100B+</span></div>
+            <div class="d">Detect coordinated panic events.</div>
+          </div>
+
+          <div class="tamItem">
+            <div class="t">Pharma &amp; Consumer Goods <span class="amt">— $75B+</span></div>
+            <div class="d">Stop counterfeit narrative spread.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tamRight">
+        <div class="tamTotal">
+          <div class="lbl">Total addressable market</div>
+          <div class="big">≈ <span class="accent">2.25T+</span></div>
+          <div class="sm">Annual spend influenced by narrative formation, perception, and synthetic amplification.</div>
+        </div>
+
+        <div class="tamNote">
+          <div class="tTiny">Why this matters</div>
+          <div class="p">Institutions can’t price or respond to narrative-driven outcomes without separating <strong>organic</strong> participation from <strong>engineered</strong> momentum.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote">
+    Core point: these are not “social metrics.” They are <strong>signal integrity problems</strong> across trillion‑dollar markets.
+  </div>
+</section>
+
+<section class="slide compact">
+  <div class="kicker"><span class="line"></span> FINANCE COMPETITION</div>
+
+  <h2>Why finance incumbents miss <span class="accent">early narrative risk</span></h2>
+
+  <p class="subhead">
+    Existing market intelligence platforms detect <strong>events after narratives harden</strong>
+    into news, volume, or price. SocialAudits verifies narrative integrity
+    <strong>before</strong> capital reacts.
+  </p>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="title">Incumbent platforms (reactive)</div>
+    <ul>
+      <li><strong>Dataminr</strong> — post‑event alerts once virality is visible</li>
+      <li><strong>RavenPack</strong> — structured news NLP; publication‑timed</li>
+      <li><strong>Accern</strong> — sentiment appears after volume</li>
+      <li><strong>Sentifi</strong> — volume‑dependent social sentiment</li>
+      <li><strong>Social Market Analytics</strong> — ticker aggregation, not formation</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:14px; border-color: rgba(200,121,255,.25);">
+    <div class="title"><span class="brand">SocialAudits</span> (proactive)</div>
+    <ul>
+      <li><strong>Pre‑virality timing</strong> — seconds to minutes</li>
+      <li><strong>Micro‑pattern granularity</strong> — interaction + coordination</li>
+      <li><strong>Explainable output</strong> — actors, pathways, integrity verdict</li>
+      <li><strong>Overlay model</strong> — complements existing market workflows</li>
+    </ul>
+  </div>
+
+  <div class="quote" style="margin-top:14px;">
+    Bottom line: others measure <strong>outcomes</strong>. SocialAudits verifies the
+    <strong>system that creates them</strong>.
+  </div>
+</section>
+
+
+
+
+
 
         <section class="slide">
           <div class="kicker"><span class="line"></span> WHAT WE DETECT</div>
@@ -2477,56 +2687,15 @@
       <div class="body">
         <ul >
           <li>Detects <strong>pre-trend</strong> coordination</li>
-          <li>Explains <strong>why</strong> it’s moving</li>
-          <li>Connects actors → content → engagement loops</li>
-        </ul>
-      </div>
-    </div>
-  </div>
+          <li>Explains <strong>why</strong> it’s mov
 
-  <div class="quote" style="margin-top:14px;">
-    The market fragments the problem. We model the full stack: <strong>content + engagement + coordination</strong>.
-  </div>
-</section>
 
-<section class="slide compact">
-  <div class="kicker"><span class="line"></span> FINANCE COMPETITION</div>
 
-  <h2>Behavior vs. <span class="accent">engagement</span> dynamics</h2>
-  <p class="subhead">They study account behavior. We study the engagement activities that gets content trending.</p>
 
-  <div class="tableCard" style="margin-top:16px;">
-    <div class="tHead">
-      <div class="h">How the market frames the problem</div>
-      <div class="note">simplified comparison</div>
-    </div>
 
-    <table class="tbl">
-      <thead>
-        <tr>
-          <th>Lens</th>
-          <th>What they measure</th>
-          <th>What they miss</th>
-          <th><span class="accent">What we add</span></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Account behavior</strong></td>
-          <td>Followers, posting cadence, bot heuristics</td>
-          <td>How engagement loops create lift</td>
-          <td>Propagation mechanics &amp; coordinated amplification</td>
-        </tr>
-        <tr>
-          <td><strong>Market narratives</strong></td>
-          <td>Mentions, sentiment, topics</td>
-          <td>Who is driving it and how it’s being pushed</td>
-          <td>Actor → content → engagement attribution</td>
-        </tr>
-        <tr>
-          <td><strong>Alternative data</strong></td>
-          <td>Signals after a move starts</td>
-          <td>Early coordination &amp; pre-trend staging</td>
+
+
+ &amp; pre-trend staging</td>
           <td>Early detection: “about to break pattern”</td>
         </tr>
       </tbody>
@@ -2613,80 +2782,42 @@
 </section>
 
 
-    <section class="slide compact">
-      <div class="kicker"><span class="line"></span> APPENDIX 02 • PRICING</div>
+    
+<section class="slide compact appendix">
+  <div class="kicker"><span class="line"></span> APPENDIX • PRICING</div>
 
-      <h2>Subscription <span class="accent">model</span></h2>
+  <h2>Enterprise throughput <span class="accent">pricing</span></h2>
 
-      <p class="subhead">
-        Current report types plus enterprise-priced data throughput options (illustrative).
-      </p>
+  <p class="subhead">
+    For IB materials, pricing is presented in the appendix and scoped per enterprise engagement.
+    SocialAudits is priced on <strong>data throughput</strong> and <strong>analytical depth</strong> — not self-serve reports.
+  </p>
 
-      <div class="exhibitGrid">
-        <div class="tableCard">
-          <div class="tHead">
-            <div class="h">Indexed reports</div>
-            <div class="note">self-serve</div>
-          </div>
+  <div class="grid two" style="margin-top: 14px;">
+    <div class="card" style="min-height: unset;">
+      <div class="title">Enterprise throughput <span class="chip">White-glove</span></div>
+      <ul>
+        <li><strong>Input cost:</strong> $3,000 per 1M data points</li>
+        <li><strong>Client charge:</strong> 5× ($15,000 per 1M)</li>
+        <li><strong>Use case:</strong> Full brand + influencer intelligence</li>
+      </ul>
+    </div>
 
-          <table class="tbl">
-            <thead>
-              <tr>
-                <th>Report type</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>24-Hour Influencer Index</strong></td>
-                <td>$59.99</td>
-              </tr>
-              <tr>
-                <td><strong>7-Day Trend Index</strong></td>
-                <td>$189.99</td>
-              </tr>
-              <tr>
-                <td><strong>30-Day Narrative Index</strong></td>
-                <td>$399.99</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="card" style="min-height: unset;">
+      <div class="title">Advanced simulation <span class="chip">IBIS</span></div>
+      <ul>
+        <li><strong>Input cost:</strong> $3,000 per 1M data points</li>
+        <li><strong>Client charge:</strong> 7.5× ($22,500 per 1M)</li>
+        <li><strong>Use case:</strong> Predictive simulation via IBIS</li>
+      </ul>
+    </div>
+  </div>
 
-        <div class="tableCard">
-          <div class="tHead">
-            <div class="h">Enterprise throughput</div>
-            <div class="note">white-glove</div>
-          </div>
+  <div class="quote" style="margin-top: 12px;">
+    Positioning note: enterprise pricing is engagement-scoped and belongs in the appendix for IB decks.
+  </div>
+</section>
 
-          <table class="tbl">
-            <thead>
-              <tr>
-                <th>Data input cost</th>
-                <th>Client charge</th>
-                <th>Use case</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>$3,000</strong> per 1M data points</td>
-                <td>5× (<strong>$15,000</strong> per 1M)</td>
-                <td>Full brand-influencer intelligence</td>
-              </tr>
-              <tr>
-                <td><strong>$3,000</strong> per 1M data points</td>
-                <td>7.5× (<strong>$22,500</strong> per 1M)</td>
-                <td>Predictive simulation via IBIS</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="quote">
-        Positioning note: for IB decks, pricing lives in the appendix.
-      </div>
-    </section>
 
 
     <section class="slide compact">
@@ -2789,6 +2920,8 @@
 
       function render() {
         slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+        const c = document.getElementById('slideCounter');
+        if (c) c.textContent = `${i + 1} / ${slides.length}`;
       }
 
       function go(n) {
