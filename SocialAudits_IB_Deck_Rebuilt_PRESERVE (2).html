@@ -1,0 +1,2844 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialAudits — IB Deck</title>
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg0: #060814;
+      --bg1: #0A1030;
+
+      /* Higher contrast (readable on projectors + Zoom) */
+      --text: rgba(248, 250, 255, .98);
+      --muted: rgba(248, 250, 255, .86);
+      --faint: rgba(248, 250, 255, .72);
+
+      /* Slightly stronger borders for clarity */
+      --border: rgba(255, 255, 255, .13);
+
+      --accent: #7C5CFF;
+      --accent2: #34D399;
+
+      --shadow: 0 18px 60px rgba(0, 0, 0, .45);
+      --r2: 18px;
+
+      /* Typographic scale (bigger by default) */
+      --body: clamp(18px, 1.35vw, 22px);
+      --bodySmall: clamp(16px, 1.15vw, 20px);
+      --kicker: clamp(12px, 0.95vw, 14px);
+
+      --warn: #EF4444;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--text);
+    }
+
+    body {
+      background:
+        radial-gradient(1000px 700px at 18% 18%, rgba(124, 92, 255, .18) 0%, rgba(124, 92, 255, 0) 55%),
+        radial-gradient(900px 650px at 82% 22%, rgba(52, 211, 153, .12) 0%, rgba(52, 211, 153, 0) 62%),
+        radial-gradient(900px 650px at 55% 92%, rgba(255, 255, 255, .07) 0%, rgba(255, 255, 255, 0) 70%),
+        linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 100%);
+      overflow: hidden;
+    }
+
+    /* Subtle institutional grid */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(circle at 50% 40%, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .35) 56%, rgba(0, 0, 0, 0) 80%);
+      pointer-events: none;
+      opacity: .33;
+    }
+
+    /* FULLSCREEN 16:9 STAGE */
+    .stage {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .viewport {
+      width: min(100vw, calc(100vh * (16/9)));
+      height: min(100vh, calc(100vw * (9/16)));
+      position: relative;
+      border-radius: 0;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    #deck {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    /* Uniform slide padding (bigger safe margins for readability) */
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: clamp(46px, 4.2vw, 72px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .26s ease, transform .26s ease;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .kicker {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--kicker);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .72);
+      margin-bottom: 2px;
+    }
+
+    .kicker .line {
+      width: 52px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(124, 92, 255, .95), rgba(52, 211, 153, .95));
+      opacity: .95;
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      letter-spacing: -.03em;
+      line-height: 1.04;
+    }
+
+    h1 {
+      font-size: clamp(52px, 5.4vw, 82px);
+      font-weight: 850;
+      line-height: 1.06;
+    }
+
+    h2 {
+      font-size: clamp(40px, 4.8vw, 70px);
+      font-weight: 850;
+      line-height: 1.08;
+    }
+
+    .subhead {
+      max-width: 1020px;
+      margin: 0;
+      max-width: 1080px;
+      font-size: var(--body);
+      line-height: 1.62;
+      color: var(--muted);
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    
+
+    .brand {
+      color: var(--accent);
+      font-weight: 900;
+    }
+.quote {
+      margin-top: 10px;
+      max-width: 1080px;
+      padding: 16px 18px;
+      border-radius: var(--r2);
+      border: 1px solid rgba(124, 92, 255, .28);
+      background: linear-gradient(90deg, rgba(124, 92, 255, .16), rgba(52, 211, 153, .08));
+      color: rgba(248, 250, 255, .92);
+      font-weight: 650;
+      font-size: var(--bodySmall);
+      line-height: 1.55;
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .four {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      background: linear-gradient(180deg, rgba(14, 22, 52, .78), rgba(8, 12, 32, .62));
+      padding: 20px 20px 18px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .22);
+      min-height: 132px;
+    }
+
+    .card .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: clamp(16px, 1.25vw, 19px);
+      font-weight: 850;
+      letter-spacing: -.01em;
+      color: rgba(248, 250, 255, .96);
+      margin-bottom: 12px;
+    }
+
+    .chip {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .04);
+      color: rgba(248, 250, 255, .78);
+      white-space: nowrap;
+    }
+
+    .card p {
+      margin: 0;
+      color: rgba(248, 250, 255, .84);
+      font-size: var(--bodySmall);
+      line-height: 1.6;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: rgba(248, 250, 255, .86);
+      font-size: var(--bodySmall);
+      line-height: 1.6;
+    }
+
+    .card li {
+      margin: 8px 0;
+    }
+
+    /* Minimal hint (auto hides; toggled with H) */
+    .hint {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(10, 16, 48, .52);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .22);
+      font-size: 13px;
+      color: rgba(248, 250, 255, .82);
+      user-select: none;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity .35s ease;
+    }
+
+    .hint.hidden {
+      opacity: 0;
+    }
+
+    /* ---- Module + utility styles ---- */
+    .muted2 {
+      color: rgba(248, 250, 255, .70);
+    }
+
+    .warn {
+      color: var(--warn);
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      background: linear-gradient(180deg, rgba(14, 22, 52, .84), rgba(8, 12, 32, .66));
+      padding: 22px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .22);
+    }
+
+    .moduleGrid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+
+    .rowBetween {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .metric {
+      letter-spacing: -.02em;
+    }
+
+    .mini3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .miniCard {
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .miniCard.emph {
+      border-color: rgba(200, 121, 255, .22);
+    }
+
+    .tTiny {
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .10em;
+      color: rgba(248, 250, 255, .66);
+    }
+
+    .tBase {
+      font-size: clamp(16px, 1.2vw, 19px);
+      font-weight: 850;
+      margin-top: 8px;
+      color: rgba(248, 250, 255, .95);
+    }
+
+    .tSmall {
+      margin-top: 4px;
+      font-size: 14px;
+      color: rgba(248, 250, 255, .78);
+      line-height: 1.5;
+    }
+
+    /* ---- Case study split ---- */
+    .split {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 18px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .caseTitle {
+      font-size: clamp(34px, 3.6vw, 54px);
+      font-weight: 950;
+      letter-spacing: -.03em;
+      line-height: 1.05;
+      margin: 0;
+    }
+
+    .caseBlock {
+      margin-top: 10px;
+      display: grid;
+      gap: 10px;
+      max-width: 1040px;
+      font-size: var(--bodySmall);
+      line-height: 1.6;
+      color: rgba(248, 250, 255, .86);
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .kv b {
+      color: rgba(248, 250, 255, .96);
+      font-weight: 900;
+    }
+
+    .mediaBox {
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: var(--r2);
+      background: rgba(255, 255, 255, .02);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
+      min-height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      text-align: center;
+      color: rgba(248, 250, 255, .78);
+      overflow: hidden;
+    }
+
+    .mediaBox img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      filter: saturate(1.02) contrast(1.02);
+    }
+
+    /* ---- Evidence slide (updated “plain sight”) ---- */
+    .evidenceTop {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 18px;
+      align-items: start;
+      margin-top: 6px;
+    }
+
+    .evidenceKickerLine {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .evidenceKickerLine .tinyLine {
+      width: 56px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(124, 92, 255, .95), rgba(52, 211, 153, .95));
+      opacity: .9;
+    }
+
+    .evidenceKickerLine .tinyTxt {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .70);
+    }
+
+    .evidenceH2 {
+      font-size: clamp(50px, 5.3vw, 84px);
+      font-weight: 950;
+      letter-spacing: -.035em;
+      line-height: 1.02;
+      margin: 0;
+    }
+
+    .takeawayCard {
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(14, 22, 52, .82), rgba(8, 12, 32, .62));
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .26);
+      padding: 18px;
+    }
+
+    .takeawayHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .takeawayHeader .h {
+      font-size: clamp(18px, 1.4vw, 22px);
+      font-weight: 900;
+      color: rgba(248, 250, 255, .96);
+      letter-spacing: -.01em;
+    }
+
+    .pillChip {
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .04);
+      color: rgba(248, 250, 255, .78);
+      white-space: nowrap;
+    }
+
+    .takeawayStack {
+      display: grid;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .takeawayRow {
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 16px;
+      padding: 14px 14px 13px;
+    }
+
+    .takeawayRow .lbl {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .66);
+    }
+
+    .takeawayRow .big {
+      margin-top: 6px;
+      font-size: clamp(16px, 1.25vw, 19px);
+      font-weight: 950;
+      color: rgba(248, 250, 255, .96);
+      letter-spacing: -.01em;
+    }
+
+    .takeawayRow .sm {
+      margin-top: 4px;
+      font-size: 14px;
+      color: rgba(248, 250, 255, .78);
+      line-height: 1.45;
+    }
+
+    .evidenceBottom {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .evidenceImages {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .imgCard {
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .02);
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .imgCard .imgWrap {
+      height: 188px;
+      background: rgba(255, 255, 255, .02);
+      overflow: hidden;
+    }
+
+    .imgCard img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.02) contrast(1.02);
+      transform: scale(1.01);
+    }
+
+    .imgCard .cap {
+      padding: 12px 12px 12px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .imgCard .cap .name {
+      font-weight: 950;
+      letter-spacing: -.01em;
+      color: rgba(248, 250, 255, .96);
+      font-size: 16px;
+    }
+
+    .imgCard .cap .note {
+      font-size: 13px;
+      color: rgba(248, 250, 255, .78);
+      line-height: 1.45;
+    }
+
+    /* Mobile */
+    @media (max-width: 980px) {
+      body {
+        overflow: auto;
+      }
+
+      .stage {
+        position: relative;
+        padding: 12px;
+      }
+
+      .viewport {
+        width: 100%;
+        height: auto;
+        min-height: 900px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        cursor: default;
+      }
+
+      #deck {
+        position: relative;
+      }
+
+      .slide {
+        position: relative;
+        padding: 46px 22px 38px;
+      }
+
+      .two,
+      .three,
+      .four {
+        grid-template-columns: 1fr;
+      }
+
+      .hint {
+        position: sticky;
+        bottom: 12px;
+        margin-left: auto;
+        width: fit-content;
+      }
+
+      .moduleGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .mini3 {
+        grid-template-columns: 1fr;
+      }
+
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .kv {
+        grid-template-columns: 1fr;
+      }
+
+      .mediaBox {
+        min-height: 240px;
+      }
+
+      .evidenceTop {
+        grid-template-columns: 1fr;
+      }
+
+      .evidenceImages {
+        grid-template-columns: 1fr;
+      }
+
+      .imgCard .imgWrap {
+        height: 220px;
+      }
+    }
+
+    /* ---- Screen-fit overrides for the Evidence slide (no overlap, always 16:9 safe) ---- */
+    .evidenceTop {
+      grid-template-columns: 1.15fr 0.95fr;
+      /* slightly narrower right column */
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .evidenceH2 {
+      font-size: clamp(42px, 4.6vw, 72px);
+      line-height: 1.02;
+    }
+
+    .takeawayCard {
+      padding: 14px;
+      border-radius: 20px;
+    }
+
+    .takeawayHeader {
+      margin-bottom: 8px;
+    }
+
+    .takeawayStack {
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .takeawayRow {
+      padding: 12px 12px 11px;
+      border-radius: 14px;
+    }
+
+    .takeawayRow .big {
+      font-size: clamp(15px, 1.15vw, 18px);
+    }
+
+    .takeawayRow .sm {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .evidenceBottom {
+      margin-top: 12px;
+      gap: 12px;
+    }
+
+    .evidenceImages {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .imgCard {
+      min-height: 220px;
+    }
+
+    .imgCard .imgWrap {
+      height: 150px;
+    }
+
+    .imgCard .cap {
+      padding: 10px 10px 10px;
+      gap: 5px;
+    }
+
+    .imgCard .cap .name {
+      font-size: 15px;
+    }
+
+    .imgCard .cap .note {
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    /* Make Evidence slide text blocks slightly tighter */
+    .slide .subhead.tight {
+      line-height: 1.52;
+    }
+
+
+    /* ---- Compact slide mode (used for dense narrative slides at the top) ---- */
+    .slide.compact {
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .slide.compact .kicker {
+      margin-bottom: 2px;
+    }
+
+    .slide.compact h1 {
+      font-size: clamp(44px, 4.6vw, 72px);
+      line-height: 1.06;
+    }
+
+    .slide.compact h2 {
+      font-size: clamp(38px, 4.2vw, 64px);
+      line-height: 1.08;
+    }
+
+    .slide.compact .subhead {
+      max-width: 1040px;
+      line-height: 1.52;
+    }
+
+    .slide.compact .quote {
+      margin-top: 6px;
+      padding: 14px 16px;
+      font-size: clamp(15px, 1.05vw, 18px);
+      line-height: 1.45;
+    }
+
+    .slide.compact .grid {
+      margin-top: 10px;
+      gap: 12px;
+    }
+
+    .slide.compact .card {
+      padding: 16px 16px 15px;
+    }
+
+    .slide.compact .card .title {
+      margin-bottom: 8px;
+    }
+
+    .slide.compact .card p,
+    .slide.compact .card ul {
+      font-size: clamp(14px, 1.05vw, 18px);
+      line-height: 1.45;
+    }
+
+    .slide.compact .card li {
+      margin: 6px 0;
+    }
+
+
+    /* ---- WHO WE ARE slide: image size reduction to guarantee fit ---- */
+    .slide.compact.who-we-are img,
+    .slide.who-we-are img {
+      max-height: 220px;
+      width: auto;
+      object-fit: contain;
+      margin: 8px auto 0;
+      display: block;
+    }
+
+    /* If logo or hero image sits inside a media box, constrain it */
+    .slide.compact.who-we-are .mediaBox,
+    .slide.who-we-are .mediaBox {
+      min-height: unset;
+      height: auto;
+      padding: 12px;
+    }
+
+
+    /* ---- Image support slides (financials / subscription / comps) ---- */
+    .slide.imgOnly {
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .slide.imgOnly .subhead {
+      max-width: 1040px;
+      line-height: 1.45;
+      font-size: var(--bodySmall);
+      color: rgba(248, 250, 255, .82);
+    }
+
+    .imgFrame {
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .02);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
+      padding: 14px;
+      overflow: hidden;
+      flex: 1 1 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+
+    .imgFrame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      max-height: 560px;
+      /* safe in 16:9 with header */
+    }
+
+    .imgMeta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: rgba(248, 250, 255, .72);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .imgMeta .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(124, 92, 255, .95), rgba(52, 211, 153, .95));
+      opacity: .9;
+    }
+
+
+    /* ---- Generated exhibit tables (IB-safe, fit-to-screen) ---- */
+    .exhibitGrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+      align-items: start;
+    }
+
+    .tableCard {
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(14, 22, 52, .82), rgba(8, 12, 32, .62));
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .18);
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .tableCard .tHead {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .tableCard .tHead .h {
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .72);
+    }
+
+    .tableCard .tHead .note {
+      font-size: 12px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .58);
+      white-space: nowrap;
+    }
+
+    table.tbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      line-height: 1.35;
+      color: rgba(248, 250, 255, .86);
+    }
+
+    .tbl th,
+    .tbl td {
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, .10);
+      vertical-align: top;
+    }
+
+    .tbl th {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .66);
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+
+    .tbl tr:last-child td {
+      border-bottom: none;
+    }
+
+    .tbl td strong {
+      font-weight: 900;
+      color: rgba(248, 250, 255, .94);
+    }
+
+    .exhibitChips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .exChip {
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(255, 255, 255, .04);
+      color: rgba(248, 250, 255, .74);
+      white-space: nowrap;
+    }
+
+    /* ---- Cracker Barrel slide: prevent stretch ---- */
+    .slide.cracker .mediaBox {
+      min-height: 320px;
+    }
+
+    .slide.cracker .mediaBox img {
+      width: 100%;
+      height: auto;
+      max-height: 320px;
+      object-fit: contain;
+    }
+
+    @media (max-width: 980px) {
+      .exhibitGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .slide.cracker .mediaBox img {
+        max-height: 260px;
+      }
+    }
+
+
+    /* ---- Appendix alignment (make exhibits feel perfectly aligned) ---- */
+    .slide.appendix {
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .slide.appendix .subhead {
+      max-width: 1040px;
+    }
+
+    .slide.appendix h2 {
+      margin-top: 2px;
+    }
+
+    .exhibitGrid {
+      align-items: stretch;
+    }
+
+    .exhibitGrid>.tableCard {
+      height: 100%;
+    }
+
+    .tableCard {
+      padding: 14px;
+    }
+
+    table.tbl {
+      font-variant-numeric: tabular-nums;
+    }
+
+
+    /* ---- Evidence slide: fit images to card container (no cropping) ---- */
+    .imgCard .imgWrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .imgCard img {
+      object-fit: contain !important;
+      height: 100%;
+      width: 100%;
+      transform: none !important;
+    }
+
+
+    /* ---- Cracker Barrel slide: make image smaller and never stretched ---- */
+    .slide.cracker .mediaBox {
+      min-height: 260px;
+      padding: 14px;
+    }
+
+    .slide.cracker .mediaBox img {
+      max-height: 250px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    @media (max-width: 980px) {
+      .slide.cracker .mediaBox {
+        min-height: 220px;
+      }
+
+      .slide.cracker .mediaBox img {
+        max-height: 210px;
+      }
+    }
+
+
+    /* ---- Cracker Barrel slide: keep image column compact + aligned ---- */
+    .slide.cracker .split {
+      grid-template-columns: 1.55fr 0.85fr;
+      align-items: start;
+    }
+
+    .slide.cracker .mediaBox {
+      max-width: 420px;
+      margin-left: auto;
+    }
+
+
+    /* ================= BALANCED IMAGE FIXES ================= */
+
+    /* --- Cracker Barrel slide: medium emphasis (not tiny, not dominant) --- */
+    .slide.cracker .split {
+      grid-template-columns: 1.45fr 1.05fr;
+      align-items: center;
+    }
+
+    .slide.cracker .mediaBox {
+      max-width: 520px;
+      min-height: 360px;
+      padding: 18px;
+    }
+
+    .slide.cracker .mediaBox img {
+      max-height: 340px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* --- Evidence slide: expand images horizontally --- */
+    .evidenceImages {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .imgCard {
+      min-height: 300px;
+    }
+
+    .imgCard .imgWrap {
+      height: 210px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .imgCard img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* fill horizontally */
+    }
+
+    /* Mobile safety */
+    @media (max-width: 980px) {
+      .slide.cracker .split {
+        grid-template-columns: 1fr;
+      }
+
+      .slide.cracker .mediaBox {
+        max-width: 100%;
+        min-height: 260px;
+      }
+
+      .slide.cracker .mediaBox img {
+        max-height: 240px;
+      }
+
+      .evidenceImages {
+        grid-template-columns: 1fr;
+      }
+
+      .imgCard .imgWrap {
+        height: 240px;
+      }
+    }
+
+
+    /* ---- Cracker Barrel slide: make the case visual clearly readable (bigger) ---- */
+    .slide.cracker .split {
+      grid-template-columns: 1.25fr 1.25fr;
+      /* equal columns so image gets real space */
+      align-items: center;
+      gap: 18px;
+    }
+
+    .slide.cracker .mediaBox {
+      max-width: none;
+      /* let it use the column width */
+      width: 100%;
+      min-height: 460px;
+      /* taller container */
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.cracker .mediaBox img {
+      width: 100%;
+      height: 100%;
+      max-height: 430px;
+      /* large, but still safe */
+      object-fit: contain;
+    }
+
+    /* If the left side gets too tall, tighten kv blocks slightly on this slide only */
+    .slide.cracker .kv {
+      padding: 10px 12px;
+    }
+
+    .slide.cracker .caseBlock {
+      gap: 8px;
+    }
+
+
+    /* ================== POLISH PASS (3 SLIDES) ================== */
+
+    /* --- Evidence slide: cleaner spacing + uniform horizontal tiles --- */
+    .slide.evidenceClean .evidenceTop {
+      grid-template-columns: 1.20fr 0.80fr;
+      gap: 16px;
+      margin-top: 2px;
+    }
+
+    .slide.evidenceClean .evidenceH2 {
+      font-size: clamp(44px, 4.9vw, 78px);
+    }
+
+    .slide.evidenceClean .subhead {
+      max-width: 980px;
+      line-height: 1.52;
+    }
+
+    .slide.evidenceClean .evidenceBottom {
+      margin-top: 14px;
+    }
+
+    .slide.evidenceClean .panel {
+      padding: 14px !important;
+    }
+
+    .slide.evidenceClean .evidenceImages {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .slide.evidenceClean .imgCard {
+      min-height: 250px;
+    }
+
+    .slide.evidenceClean .imgCard .imgWrap {
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, .02);
+    }
+
+    .slide.evidenceClean .imgCard img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: none;
+      filter: saturate(1.02) contrast(1.02);
+    }
+
+    .slide.evidenceClean .imgCard .cap {
+      padding: 10px 12px 12px;
+    }
+
+    .slide.evidenceClean .imgCard .cap .name {
+      font-size: 15px;
+    }
+
+    .slide.evidenceClean .imgCard .cap .note {
+      font-size: 12.5px;
+      line-height: 1.35;
+    }
+
+    .slide.evidenceClean .quote {
+      margin-top: 10px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    /* --- Appendix Revenue Forecast: reduce vertical density + align tables --- */
+    .slide.revClean h2 {
+      font-size: clamp(38px, 4.4vw, 66px);
+    }
+
+    .slide.revClean .exhibitGrid {
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .slide.revClean .tableCard {
+      padding: 12px;
+      border-radius: 18px;
+    }
+
+    .slide.revClean .tableCard .tHead {
+      margin-bottom: 8px;
+    }
+
+    .slide.revClean table.tbl {
+      font-size: 13px;
+      line-height: 1.28;
+    }
+
+    .slide.revClean .tbl th,
+    .slide.revClean .tbl td {
+      padding: 8px 9px;
+    }
+
+    .slide.revClean .quote {
+      margin-top: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+
+    .slide.revClean .exChip {
+      padding: 6px 9px;
+      font-size: 10px;
+    }
+
+    .slide.revClean .tbl th {
+      font-size: 11px;
+    }
+
+    .slide.revClean .tableCard[style*="margin-top"] {
+      margin-top: 12px !important;
+    }
+
+    /* --- Team slide: new uniform headshot grid --- */
+    .slide.teamClean .moduleGrid {
+      grid-template-columns: 1.35fr 0.65fr;
+    }
+
+    .slide.teamClean .teamPanel {
+      padding: 14px !important;
+    }
+
+    .teamGrid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .teamMember {
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 18px;
+      padding: 12px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 128px;
+    }
+
+    .teamAvatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .14);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, .18);
+      background: rgba(255, 255, 255, .04);
+    }
+
+    .teamAvatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .teamName {
+      margin-top: 10px;
+      font-weight: 900;
+      letter-spacing: -.01em;
+      font-size: 13px;
+      color: rgba(248, 250, 255, .92);
+    }
+
+    .teamRole {
+      margin-top: 4px;
+      font-size: 11px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: rgba(248, 250, 255, .62);
+    }
+
+    .teamNote {
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(248, 250, 255, .68);
+      line-height: 1.35;
+    }
+
+    @media (max-width: 980px) {
+      .slide.teamClean .moduleGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .teamGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+
+    /* ---- TEAM slide alignment fixes ---- */
+    .slide.teamClean .moduleGrid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+      align-items: stretch;
+      /* panels same baseline */
+    }
+
+    .slide.teamClean .panel {
+      height: 100%;
+    }
+
+    /* Left panel: more breathing room + cleaner grid */
+    .slide.teamClean .teamPanel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide.teamClean .teamGrid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      /* less cramped than 4 */
+      gap: 12px;
+    }
+
+    .slide.teamClean .teamMember {
+      min-height: 138px;
+      padding: 14px 10px 12px;
+    }
+
+    .slide.teamClean .teamAvatar {
+      width: 72px;
+      height: 72px;
+    }
+
+    .slide.teamClean .teamName {
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    /* Right panel typography alignment */
+    .slide.teamClean .whyBlock {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .slide.teamClean .whyTitle {
+      font-weight: 900;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .slide.teamClean .whyText {
+      font-size: 14px;
+      line-height: 1.45;
+      color: rgba(248, 250, 255, .80);
+    }
+
+    @media (max-width: 980px) {
+      .slide.teamClean .moduleGrid {
+        grid-template-columns: 1fr;
+      }
+
+      .slide.teamClean .teamGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+
+    /* ---- TEAM slide: center avatars + match typography to deck ---- */
+    .slide.teamClean .teamMember {
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .slide.teamClean .teamAvatar {
+      margin: 2px auto 0;
+    }
+
+    .slide.teamClean .teamName {
+      margin-top: 12px;
+      font-size: clamp(14px, 1.05vw, 18px);
+      color: rgba(248, 250, 255, .88);
+    }
+
+    .slide.teamClean .whyTitle {
+      font-size: clamp(14px, 1.05vw, 18px);
+    }
+
+    .slide.teamClean .whyText {
+      font-size: clamp(14px, 1.05vw, 18px);
+      color: rgba(248, 250, 255, .82);
+    }
+
+
+    /* ---- TEAM avatars: better face framing + perfect centering ---- */
+    .slide.teamClean .teamMember {
+      padding-top: 16px;
+    }
+
+    .slide.teamClean .teamAvatar {
+      width: 78px;
+      height: 78px;
+    }
+
+    .slide.teamClean .teamAvatar img {
+      object-fit: cover;
+      object-position: 50% 22%;
+      /* bias slightly upward so faces are centered */
+    }
+
+    .slide.teamClean .teamName {
+      text-align: center;
+      width: 100%;
+      padding: 0 8px;
+    }
+
+    /* Make team cards visually consistent */
+    .slide.teamClean .teamMember {
+      border-radius: 18px;
+    }
+
+    /* Institutional table header alignment */
+    .tbl thead th {
+      text-align: left;
+      vertical-align: bottom;
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+
+    /* Optional: tighten header-to-row relationship */
+    .tbl thead th {
+      padding-bottom: 10px;
+    }
+
+    .tbl tbody td {
+      text-align: left;
+    }
+  
+/* --- Fit-to-screen market slide tuning --- */
+.slide.market h2{ margin-bottom: 10px; }
+.slide.market .subhead{ max-width: 980px; }
+.slide.market .grid.two{ gap: 12px; margin-top: 14px !important; }
+.slide.market .card{ padding: 14px 16px; }
+.slide.market .title{ font-size: 16px; line-height: 1.25; }
+.slide.market .note{ font-size: 14px; line-height: 1.35; opacity: .92; }
+.slide.market .quote{ margin-top: 12px !important; padding: 12px 14px; }
+
+/* --- Small inline row (used on competition slide) --- */
+.minirow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top: 10px;
+  opacity: .92;
+  flex-wrap: wrap;
+}
+.minirow .mini{ font-size: 13px; letter-spacing: .01em; }
+.minirow .dot{ opacity: .55; }
+
+</style>
+</head>
+
+<body>
+  <div class="stage">
+    <div class="viewport" id="viewport" aria-label="Click to advance">
+
+      <main id="deck" role="region" aria-label="Slide deck">
+
+        <section class="slide active compact who-we-are cracker">
+  <div class="kicker"><span class="line"></span> FOUNDATIONAL LAYER</div>
+
+  <h1><span class="brand">SocialAudits</span><br/>Unlocking &amp; Advancing Virality AI</h1>
+
+  <p class="subhead">
+    <span class="brand">SocialAudits</span> is a foundational technology layer for detecting and understanding the behaviors of coordinated and organic virality before something trends.
+  </p>
+
+  <div class="quote">
+    Designed to answer: <strong>“What’s about to break pattern—and why?”</strong>
+  </div>
+</section>
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHAT WE DETECT</div>
+
+          <h2>Emerging virality, <span class="accent">explained</span></h2>
+
+          <p class="subhead">
+            We don’t try to predict content. We detect the earliest signal that attention has broken pattern—
+            and explain how it spreads in a way decision-makers can trust.
+          </p>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="title">What’s breaking <span class="chip">Now</span></div>
+              <p>Real-time detection of unusual attention on a topic—before it “trends.”</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Where it started <span class="chip">Origin</span></div>
+              <p>Early communities, creators, and regions where momentum first appeared.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Who’s driving it <span class="chip">Actors</span></div>
+              <p>Insight into who is amplifying the narrative and how it’s spreading.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Market impact <span class="chip">Linkage</span></div>
+              <p>Context on how social momentum connects to news coverage and market movement.</p>
+            </div>
+          </div>
+
+          <div class="quote">
+            Designed to answer: <strong>“Is this real—and why does it matter?”</strong>
+          </div>
+        </section>
+
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> HOW WE DO IT</div>
+
+          <h2>Baseline → anomaly → <span class="accent">fingerprint</span></h2>
+
+          <p class="subhead">
+            We continuously monitor topics across major social platforms, alongside news and market data.
+            For each topic, we learn what “normal” looks like, then flag the moment attention breaks pattern.
+            From there, we fingerprint the spread—showing who amplified it, how it moved across communities and
+            regions, and whether it appears organic or coordinated.
+          </p>
+
+          <div class="grid four">
+            <div class="card">
+              <div class="title">1 <span class="chip">Monitor</span></div>
+              <p>Ongoing topic monitoring across social, news, and market data.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">2 <span class="chip">Learn</span></div>
+              <p>Adaptive baselines that reflect normal behavior for each topic.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">3 <span class="chip">Detect</span></div>
+              <p>Early alerts when attention meaningfully deviates from baseline.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">4 <span class="chip">Explain</span></div>
+              <p>Diffusion and coordination fingerprints, linked to news and price/volume.</p>
+            </div>
+          </div>
+
+          <div class="quote">
+            Key point: <strong>early</strong> isn’t enough. The signal must be
+            <strong>explainable</strong> and <strong>verifiable</strong>.
+          </div>
+        </section>
+
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHY BUSINESSES NEED IT</div>
+
+          <h2>Virality is a <span class="accent">leading indicator</span></h2>
+
+          <p class="subhead">
+            Virality often signals risk, opportunity, or market movement before most teams are aware.
+            Businesses need early visibility to understand what’s emerging—and respond appropriately.
+          </p>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Risk <span class="chip">Downside</span></div>
+              <p>
+                Coordinated hype, sudden sentiment shifts, and narrative shocks can distort perception and positioning.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="title">Opportunity <span class="chip">Upside</span></div>
+              <p>
+                Breakout topics and early adoption narratives appear well before traditional dashboards catch up.
+              </p>
+            </div>
+          </div>
+
+          <div class="quote">
+            Most tools measure volume. We explain <strong>what changed</strong>, <strong>why</strong>,
+            and <strong>whether it’s real</strong>.
+          </div>
+        </section>
+
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> EXAMPLES</div>
+
+          <h2>Two workflows that break <span class="accent">first</span></h2>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="title">HFT / Risk <span class="chip">Markets</span></div>
+              <ul>
+                <li>Early narrative shifts often precede volume and volatility.</li>
+                <li>Surface coordinated hype and event-driven spikes before reaction windows narrow.</li>
+                <li>Connects <strong>social → news → market</strong> so decisions aren’t made on intuition.
+                </li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">VC / Diligence <span class="chip">Private</span></div>
+              <ul>
+                <li>Identify emerging companies and narratives within specific communities.</li>
+                <li>Understand where momentum began and whether it’s moving beyond a niche.</li>
+                <li>Separate real traction from manufactured hype using coordination and diffusion signals.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="quote">
+            Same engine; different outputs: <strong>early signal</strong> +
+            <strong>explanation</strong> + <strong>integrity verdict</strong>.
+          </div>
+        </section>
+
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> THE OUTPUT</div>
+
+          <h2>What <span class="brand">SocialAudits</span> <span class="accent">Delivers</span></h2>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Authenticity verification <span class="chip">Core</span></div>
+              <p>Assessment of whether engagement is <strong>organic</strong> or <strong>manufactured</strong>.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Coordination detection <span class="chip">Core</span></div>
+              <p>Identification of <strong>coordinated narrative activity</strong>.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Sentiment integrity <span class="chip">Core</span></div>
+              <p>Early detection of <strong>artificial or distorted sentiment shifts</strong>.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Asset-level intelligence <span class="chip">Use</span></div>
+              <p>Decision-ready output for <strong>research</strong>, <strong>risk</strong>, and
+                <strong>diligence</strong> teams.
+              </p>
+            </div>
+          </div>
+
+          <div class="quote">
+            Not social listening. <strong>Authenticity verification.</strong>
+          </div>
+        </section>
+
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHY THIS EXISTS</div>
+
+          <h2>Narrative Is Now a <span class="accent">Market Variable</span></h2>
+
+          <p class="subhead">
+            Every day, roughly <strong>1 trillion</strong> social engagements occur across major platforms.<br>
+            Our data indicates a significant portion are <strong>non-human</strong> or <strong>coordinated</strong>.
+          </p>
+
+          <div class="grid three">
+            <div class="card">
+              <div class="title">Markets react to <span class="chip">Perception</span></div>
+              <p>Perceived demand and narrative credibility influence behavior.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Markets react to <span class="chip">Momentum</span></div>
+              <p>Acceleration patterns shape positioning and risk response.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Markets react to <span class="chip">Velocity</span></div>
+              <p>Narrative speed drives coverage, attention, and liquidity.</p>
+            </div>
+          </div>
+
+          <div class="quote">
+            Without verification, these signals are <strong>misread</strong>.
+          </div>
+        </section>
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> WHAT MAKES THIS AN INSTITUTIONAL PROBLEM</div>
+
+          <h2>The Risk Is Not Volatility — It’s <span class="accent">Misinterpretation</span></h2>
+
+          <p class="subhead">
+            Most institutions already ingest sentiment data. What they still can’t reliably answer:
+          </p>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Unanswered questions <span class="chip">Gap</span></div>
+              <ul>
+                <li>Who is actually participating?</li>
+                <li>Is the activity coordinated?</li>
+                <li>Is sentiment organic or engineered?</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="title">Why tools fall short <span class="chip">Reality</span></div>
+              <p>
+                Existing tools measure <strong>volume</strong>. They don’t verify <strong>authenticity</strong>.
+              </p>
+            </div>
+          </div>
+        </section>
+
+
+        <section class="slide">
+          <div class="kicker"><span class="line"></span> What we built</div>
+
+          <h2>Synthetic Narrative <span class="accent">Detection Layer</span></h2>
+
+          <p class="subhead">
+            SocialAudits analyzes <strong>100%</strong> of observed data—not samples.
+          </p>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="title">Identity &amp; behavior clustering <span class="chip">Capability</span></div>
+              <p>Groups accounts by behavioral signatures to surface coordinated participation.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Coordination detection <span class="chip">Capability</span></div>
+              <p>Identifies synchronized posting patterns and amplification structures.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Organic vs synthetic classification <span class="chip">Capability</span></div>
+              <p>Distinguishes real participation from manufactured momentum.</p>
+            </div>
+
+            <div class="card">
+              <div class="title">Narrative acceleration tracking <span class="chip">Capability</span></div>
+              <p>Detects when narratives shift, accelerate, and gain perceived legitimacy.</p>
+            </div>
+          </div>
+
+          <div class="quote">
+            We operate as an overlay intelligence layer—not a trading system.
+          </div>
+        </section>
+
+
+        <section class="slide evidenceClean">
+          <div class="evidenceKickerLine">
+            <span class="tinyLine" aria-hidden="true"></span>
+            <span class="tinyTxt">EVIDENCE</span>
+          </div>
+
+          <div class="evidenceTop">
+            <div>
+              <h2 class="evidenceH2">
+                Manipulation exists in <span class="accent">plain sight</span>
+              </h2>
+              <p class="subhead tight" style="margin-top: 14px; max-width: 980px;">
+                Synthetic behavior is already normalized in high-spend ecosystems.
+                The same failure mode appears in capital markets: volume looks real
+                until authenticity is verified.
+              </p>
+            </div>
+
+            <div class="takeawayCard">
+              <div class="takeawayHeader">
+                <div class="h">Institutional takeaway</div>
+                <div class="pillChip">SIGNAL INTEGRITY</div>
+              </div>
+
+              <div class="takeawayStack">
+                <div class="takeawayRow">
+                  <div class="lbl">PATTERN</div>
+                  <div class="big">fake volume → false confidence</div>
+                  <div class="sm">Surface metrics mislead when authenticity isn’t assessed.</div>
+                </div>
+
+                <div class="takeawayRow">
+                  <div class="lbl">FAILURE MODE</div>
+                  <div class="big">narrative “legitimizes”</div>
+                  <div class="sm">Once coverage reacts, markets treat it as real demand.</div>
+                </div>
+
+                <div class="takeawayRow" style="border-color: rgba(200,121,255,.22);">
+                  <div class="lbl">WHAT WE PROVIDE</div>
+                  <div class="big">integrity verdict</div>
+                  <div class="sm">Real vs engineered participation—before decisions are made.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="evidenceBottom">
+            <div class="panel" style="padding: 14px;">
+              <div class="tTiny">Influencer manipulation examples</div>
+            </div>
+
+            <div class="evidenceImages" style="margin-top: 12px;">
+              <div class="imgCard">
+                <div class="imgWrap">
+                  <img
+                    src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/chiara-ferragni-img.jpg"
+                    alt="Chiara Ferragni example" />
+                </div>
+                <div class="cap">
+                  <div class="name">Chiara Ferragni</div>
+                  <div class="note">
+                    High-visibility campaigns where audience authenticity can materially change pricing and outcomes.
+                  </div>
+                </div>
+              </div>
+
+              <div class="imgCard">
+                <div class="imgWrap">
+                  <img
+                    src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/Rihanna.width-1200.jpg"
+                    alt="Rihanna Fenty example" />
+                </div>
+                <div class="cap">
+                  <div class="name">Fenty (Rihanna)</div>
+                  <div class="note">
+                    Spend decisions appear rational on dashboards—until non-organic amplification is separated out.
+                  </div>
+                </div>
+              </div>
+
+              <div class="imgCard">
+                <div class="imgWrap">
+                  <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/kardashians.jpeg"
+                    alt="Kardashians example" />
+                </div>
+                <div class="cap">
+                  <div class="name">Kardashians</div>
+                  <div class="note">
+                    The core lesson: engagement volume alone is not a reliable decision signal.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <div class="quote" style="margin-top: 8px;">
+      Bridge to markets: the same “looks real until verified” dynamic appears in public narratives around issuers and
+      assets.
+    </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> HOW THE SIGNAL FORMS</div>
+
+      <h2>How Narrative Manipulation Typically <span class="accent">Emerges</span></h2>
+
+      <div class="grid four">
+        <div class="card">
+          <div class="title">1 <span class="chip">Start</span></div>
+          <p>Coordinated synthetic engagement begins.</p>
+        </div>
+
+        <div class="card">
+          <div class="title">2 <span class="chip">Scale</span></div>
+          <p>Activity grows and crosses anomaly thresholds.</p>
+        </div>
+
+        <div class="card">
+          <div class="title">3 <span class="chip">Appear</span></div>
+          <p>The narrative presents as organic.</p>
+        </div>
+
+        <div class="card">
+          <div class="title">4 <span class="chip">React</span></div>
+          <p>Media, analysts, and capital respond.</p>
+        </div>
+      </div>
+
+      <div class="quote">
+        SocialAudits detects manipulation <strong>before Step 3</strong>.
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> MODULE</div>
+      <h2>Anomaly spike <span class="accent"></span></h2>
+      <p class="subhead">
+        Metric: abnormal spikes in activity or reach.<br>
+        Interpretation: spikes are where synthetic coordination shows up first.
+      </p>
+
+      <div class="moduleGrid">
+        <div class="panel">
+          <div class="rowBetween">
+            <div>
+              <div class="tTiny">Timeline module</div>
+              <div class="tBase" style="margin-top:10px;">Velocity + anomaly detection</div>
+              <div class="tSmall muted2" style="margin-top:6px;">Illustrative shape (not a screenshot)</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="tTiny">Alert</div>
+              <div class="metric" style="margin-top:10px; font-size: clamp(34px, 3.4vw, 54px); font-weight: 950;">
+                <span class="warn">Spike</span>
+              </div>
+              <div class="tSmall muted2" style="margin-top:6px;">cluster review required</div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <!-- minimal chart -->
+            <svg viewBox="0 0 1000 220" width="100%" height="220" aria-label="Anomaly sparkline">
+              <defs>
+                <linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="rgba(200,121,255,0.95)" />
+                  <stop offset="100%" stop-color="rgba(124,92,255,0.95)" />
+                </linearGradient>
+                <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(124,92,255,0.26)" />
+                  <stop offset="100%" stop-color="rgba(124,92,255,0)" />
+                </linearGradient>
+              </defs>
+
+              <path
+                d="M0,180 C80,170 140,175 200,168 C260,160 320,170 380,155 C440,140 500,165 560,150 C620,132 680,165 720,110 C760,55 820,150 880,135 C940,120 980,130 1000,125"
+                fill="none" stroke="url(#spark)" stroke-width="6" stroke-linecap="round" />
+              <path
+                d="M0,180 C80,170 140,175 200,168 C260,160 320,170 380,155 C440,140 500,165 560,150 C620,132 680,165 720,110 C760,55 820,150 880,135 C940,120 980,130 1000,125 L1000,220 L0,220 Z"
+                fill="url(#fill)" />
+
+              <!-- spike marker -->
+              <line x1="760" y1="30" x2="760" y2="220" stroke="rgba(239,68,68,0.40)" stroke-width="3" />
+              <circle cx="760" cy="55" r="9" fill="rgba(239,68,68,0.95)" />
+            </svg>
+
+            <div class="mini3">
+              <div class="miniCard">
+                <div class="tTiny">Trigger</div>
+                <div class="tBase">abnormal lift</div>
+                <div class="tSmall">velocity jump</div>
+              </div>
+              <div class="miniCard">
+                <div class="tTiny">Check</div>
+                <div class="tBase">cluster reuse</div>
+                <div class="tSmall">phrases, timing</div>
+              </div>
+              <div class="miniCard emph">
+                <div class="tTiny">Outcome</div>
+                <div class="tBase">integrity verdict</div>
+                <div class="tSmall">real vs engineered</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="min-height: unset;">
+          <div class="title" style="margin-bottom:10px;">
+            What we do with it <span class="chip">Action</span>
+          </div>
+
+          <div class="miniCard" style="margin-top:10px;">
+            <div class="tTiny">Funds</div>
+            <div class="tBase">event window alerting</div>
+            <div class="tSmall">Treat spikes as an early warning system for narrative risk.</div>
+          </div>
+
+          <div class="miniCard" style="margin-top:10px;">
+            <div class="tTiny">Brands</div>
+            <div class="tBase">timing selection</div>
+            <div class="tSmall">Avoid paying peak pricing during synthetic lift.</div>
+          </div>
+
+          <div class="miniCard emph" style="margin-top:10px;">
+            <div class="tTiny">Both</div>
+            <div class="tBase">drill-down to posts</div>
+            <div class="tSmall">We surface the highest-impact drivers and the actors behind them.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote">Operational takeaway: the “spike” is where we start verification—before the narrative
+        hardens.</div>
+    </section>
+
+    <section class="slide cracker">
+      <div class="kicker"><span class="line"></span> CASE STUDY</div>
+      <h2 class="caseTitle">Bot-Driven Market Distortion</h2>
+
+      <div class="split">
+        <div>
+          <p class="subhead" style="max-width: 980px;">
+            A public issuer undergoes a visible corporate action (e.g., a brand / logo update). Social backlash
+            appears widespread and organic—
+            but the integrity of that signal is the real question.
+          </p>
+
+          <div class="caseBlock">
+            <div class="kv">
+              <b>Event</b>
+              <div>Late 2025: backlash following a visible brand change; social outrage appeared organic.</div>
+            </div>
+
+            <div class="kv">
+              <b>What our data showed</b>
+              <div><strong>~45% of early negative posts</strong> were linked to coordinated, non-organic activity.</div>
+            </div>
+
+            <div class="kv">
+              <b>Market impact</b>
+              <div>Stock declined <strong>~10.5% in 24 hours</strong>. Approximately <strong>$100M</strong> in market
+                value erased.</div>
+            </div>
+
+            <div class="kv">
+              <b>Insight</b>
+              <div>Price moved on <strong>synthetic sentiment</strong>, not broad consumer reaction.</div>
+            </div>
+
+            <div class="kv">
+              <b>What this enables</b>
+              <div>Detect bot-driven negative sentiment spikes early and generate warning signals across monitored
+                coverage.</div>
+            </div>
+          </div>
+
+          <div class="quote">
+            When markets move on narratives, separating real from synthetic sentiment becomes an advantage.
+          </div>
+        </div>
+
+        <div class="mediaBox" aria-label="Cracker Barrel case visual">
+          <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/cracker%20barrel.png"
+            alt="Cracker Barrel logo / case visual" />
+        </div>
+      </div>
+    </section>
+
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> REAL-WORLD SCENARIO</div>
+
+      <h2>Public Issuer <span class="accent">Narrative Distortion</span></h2>
+
+      <p class="subhead">
+        A public company undergoes a visible corporate action. Social sentiment quickly turns negative.
+      </p>
+
+      <div class="grid two">
+        <div class="card">
+          <div class="title">Traditional interpretation <span class="chip">Assumption</span></div>
+          <p>→ “Investor backlash”</p>
+        </div>
+
+        <div class="card">
+          <div class="title"><span class="brand">SocialAudits</span> finding <span class="chip">Verified</span></div>
+          <p>→ Majority of activity driven by <strong>coordinated, non-organic accounts</strong></p>
+        </div>
+      </div>
+
+      <div class="quote">
+        Result: narrative risk mispriced. Perception diverges from reality.
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> WHO THIS IS FOR</div>
+
+      <h2>Primary <span class="accent">Institutional Users</span></h2>
+
+      <div class="grid two">
+        <div class="card">
+          <div class="title">Investment Banks <span class="chip">IB</span></div>
+          <p>ECM, Research, Risk</p>
+        </div>
+
+        <div class="card">
+          <div class="title">Hedge Funds <span class="chip">Buy-side</span></div>
+          <p>Diligence and positioning</p>
+        </div>
+
+        <div class="card">
+          <div class="title">Asset Managers <span class="chip">AM</span></div>
+          <p>Signal validation and exposure management</p>
+        </div>
+
+        <div class="card">
+          <div class="title">Corporate Strategy &amp; IR <span class="chip">Issuer</span></div>
+          <p>Perception risk monitoring and event response</p>
+        </div>
+      </div>
+
+      <div class="quote">
+        Decision-support infrastructure — not marketing software.
+      </div>
+    </section>
+
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> USE CASES BY FUNCTION</div>
+
+      <h2>Where SocialAudits Is <span class="accent">Deployed</span></h2>
+
+      <div class="grid two">
+        <div class="card">
+          <div class="title">Equity Research <span class="chip">Validate</span></div>
+          <p>Assess whether sentiment reflects genuine investor interest.</p>
+        </div>
+
+        <div class="card">
+          <div class="title">Risk &amp; Surveillance <span class="chip">Flag</span></div>
+          <p>Identify artificial or coordinated narrative shocks.</p>
+        </div>
+
+        <div class="card">
+          <div class="title">Capital Markets <span class="chip">Monitor</span></div>
+          <p>Track perception around offerings, rebrands, and restructurings.</p>
+        </div>
+
+        <div class="card">
+          <div class="title">Due Diligence <span class="chip">Separate</span></div>
+          <p>Distinguish organic traction from manufactured attention.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> WHAT MAKES US DIFFERENT</div>
+
+      <h2>Why Existing Platforms <span class="accent">Fall Short</span></h2>
+
+      <div class="grid two">
+        <div class="card">
+          <div class="title">Legacy approach <span class="chip">Common</span></div>
+          <ul>
+            <li>Sample a small fraction of available data</li>
+            <li>Rely primarily on engagement volume</li>
+            <li>Limited visibility into coordination</li>
+            <li>No verification of actor authenticity</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="title"><span class="brand">SocialAudits</span> <span class="chip">Forensic</span></div>
+          <ul>
+            <li>Full-dataset ingestion</li>
+            <li>Behavior-level analysis</li>
+            <li>Forensic classification of activity</li>
+            <li>Reporting aligned with institutional standards</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide teamClean">
+      <div class="kicker"><span class="line"></span> TEAM</div>
+
+      <h2>Credible operators, <span class="accent">institutional context</span></h2>
+
+      <p class="subhead">
+        Cross-disciplinary experience across markets, data, and growth — built to support institutional decision-making.
+      </p>
+
+      <div class="moduleGrid" style="margin-top: 18px;">
+
+        <!-- Left: uniform headshot grid -->
+        <div class="panel teamPanel" style="padding: 16px;">
+          <div class="tTiny">Team (selected)</div>
+          <div class="teamNote">Uniform headshots for consistent institutional presentation.</div>
+
+          <div class="teamGrid" style="margin-top: 12px;">
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/8.jpg"
+                  alt="Sang Lee" />
+              </div>
+              <div class="teamName">Sang Lee</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/6.jpg"
+                  alt="Helena Emig" />
+              </div>
+              <div class="teamName">Helena Emig</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/11.jpg"
+                  alt="Tyler Lockley" />
+              </div>
+              <div class="teamName">Tyler Lockley</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/1.jpg"
+                  alt="Jeremy" />
+              </div>
+              <div class="teamName">Jeremy</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/7.jpg"
+                  alt="Ben Reinberg" />
+              </div>
+              <div class="teamName">Ben Reinberg</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/4.jpg"
+                  alt="Jason Marah" />
+              </div>
+              <div class="teamName">Jason Marah</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/5.jpg"
+                  alt="Amir Zada" />
+              </div>
+              <div class="teamName">Amir Zada</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/9.jpg"
+                  alt="Peter Danihel" />
+              </div>
+              <div class="teamName">Peter Danihel</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/3.jpg"
+                  alt="Akash Singh" />
+              </div>
+              <div class="teamName">Akash Singh</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/10.jpg"
+                  alt="Tommy Barker" />
+              </div>
+              <div class="teamName">Tommy Barker</div>
+            </div>
+
+            <div class="teamMember">
+              <div class="teamAvatar">
+                <img src="https://updatedcardscript.standard.us-east-1.oortstorages.com/updated%20card%20script/2.jpg"
+                  alt="Alistair Ewhart" />
+              </div>
+              <div class="teamName">Alistair Ewhart</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: Why this team -->
+        <div class="panel">
+          <div class="tTiny">Why this team</div>
+
+          <div class="whyBlock">
+
+            <div class="whyItem">
+              <div class="whyTitle">Markets-native perspective</div>
+              <div class="whyText">
+                Built by operators who understand how narratives translate into risk, liquidity, and positioning —
+                not surface-level engagement metrics.
+              </div>
+            </div>
+
+            <div class="whyItem">
+              <div class="whyTitle">Forensic data discipline</div>
+              <div class="whyText">
+                Experience working with full datasets, attribution challenges, and integrity-sensitive analysis —
+                not sampled dashboards.
+              </div>
+            </div>
+
+            <div class="whyItem">
+              <div class="whyTitle">Institutional operating context</div>
+              <div class="whyText">
+                Designed around how IB, research, risk, and diligence teams consume signals under real-time constraints.
+              </div>
+            </div>
+
+            <div class="whyItem">
+              <div class="whyTitle">Credibility over narrative</div>
+              <div class="whyText">
+                No intent claims or black-box scoring — explainable outputs that withstand internal review and committee
+                scrutiny.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> DEPLOYMENT MODEL</div>
+      <h2>Institutional <span class="accent">Deployment</span></h2>
+      <div class="grid two">
+        <div class="card">
+          <div class="title">Issuer-level monitoring <span class="chip">Ongoing</span></div>
+          <p>Continuous monitoring around selected issuers/assets.</p>
+        </div>
+        <div class="card">
+          <div class="title">Event-driven alerts <span class="chip">Triggers</span></div>
+          <p>Alerts when integrity thresholds and anomalies are crossed.</p>
+        </div>
+        <div class="card">
+          <div class="title">Historical forensics <span class="chip">Review</span></div>
+          <p>Forensic review for events, campaigns, and perception shocks.</p>
+        </div>
+        <div class="card">
+          <div class="title">Dashboard / API delivery <span class="chip">Integrate</span></div>
+          <p>Delivered as intelligence infrastructure into existing workflows.</p>
+        </div>
+      </div>
+      <div class="quote">Positioned as intelligence infrastructure — not a roadmap promise.</div>
+    </section>
+
+
+    <section class="slide compact">
+  <div class="kicker"><span class="line"></span> COMPETITION</div>
+
+  <h2>What others <span class="accent">miss</span></h2>
+  <p class="subhead">They fail to see the full picture.</p>
+
+  <div class="minirow">
+    <span class="chip">Examples</span>
+    <span class="mini brand">SocialAudits</span>
+    <span class="dot">•</span>
+    <span class="mini">HypeAuditor</span>
+    <span class="dot">•</span>
+    <span class="mini">Modash</span>
+    <span class="dot">•</span>
+    <span class="mini">CreatorIQ</span>
+  </div>
+
+  <div class="grid three">
+    <div class="card">
+      <div class="title">Verification &amp; audits <span class="pill">after-the-fact</span></div>
+      <div class="body">
+        <ul >
+          <li>Proves what happened</li>
+          <li>Weak on <strong>early</strong> emergence</li>
+          <li>Not designed to model propagation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">Campaign intelligence <span class="pill">bounded</span></div>
+      <div class="body">
+        <ul >
+          <li>Measures reach &amp; spend</li>
+          <li>Misses coordinated engagement mechanics</li>
+          <li>Limited cross-platform linking</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">Virality intelligence <span class="pill">our layer</span></div>
+      <div class="body">
+        <ul >
+          <li>Detects <strong>pre-trend</strong> coordination</li>
+          <li>Explains <strong>why</strong> it’s moving</li>
+          <li>Connects actors → content → engagement loops</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote" style="margin-top:14px;">
+    The market fragments the problem. We model the full stack: <strong>content + engagement + coordination</strong>.
+  </div>
+</section>
+
+<section class="slide compact">
+  <div class="kicker"><span class="line"></span> FINANCE COMPETITION</div>
+
+  <h2>Behavior vs. <span class="accent">engagement</span> dynamics</h2>
+  <p class="subhead">They study account behavior. We study the engagement activities that gets content trending.</p>
+
+  <div class="tableCard" style="margin-top:16px;">
+    <div class="tHead">
+      <div class="h">How the market frames the problem</div>
+      <div class="note">simplified comparison</div>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Lens</th>
+          <th>What they measure</th>
+          <th>What they miss</th>
+          <th><span class="accent">What we add</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Account behavior</strong></td>
+          <td>Followers, posting cadence, bot heuristics</td>
+          <td>How engagement loops create lift</td>
+          <td>Propagation mechanics &amp; coordinated amplification</td>
+        </tr>
+        <tr>
+          <td><strong>Market narratives</strong></td>
+          <td>Mentions, sentiment, topics</td>
+          <td>Who is driving it and how it’s being pushed</td>
+          <td>Actor → content → engagement attribution</td>
+        </tr>
+        <tr>
+          <td><strong>Alternative data</strong></td>
+          <td>Signals after a move starts</td>
+          <td>Early coordination &amp; pre-trend staging</td>
+          <td>Early detection: “about to break pattern”</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="quote" style="margin-top:14px;">
+    We don’t just observe outcomes — we model the <strong>system that creates virality</strong>.
+  </div>
+</section>
+
+<section class="slide compact market">
+  <div class="kicker"><span class="line"></span> MARKET OPPORTUNITY</div>
+
+  <h2>Annual market <span class="accent">exposure</span></h2>
+  <p class="subhead">
+    <span class="brand">SocialAudits</span> operates as a foundational virality-intelligence layer across commercial,
+    financial, and national-security decision systems.
+  </p>
+
+  <div class="grid two" style="margin-top: 18px;">
+    <div class="card">
+      <div class="title">Advertising &amp; Growth Intelligence <span class="chip">$1T+</span></div>
+      <p class="note">Capture trends before saturation.</p>
+    </div>
+
+    <div class="card">
+      <div class="title">Financial Markets &amp; Alternative Data <span class="chip">$300B+</span></div>
+      <p class="note">Detect narrative-driven market moves early.</p>
+    </div>
+
+    <div class="card">
+      <div class="title">Cybersecurity (Narrative Attack Surface) <span class="chip">$250B+</span></div>
+      <p class="note">Identify social manipulation as an attack vector.</p>
+    </div>
+
+    <div class="card">
+      <div class="title">Platforms &amp; Market Trust <span class="chip">$200B+</span></div>
+      <p class="note">Stop brigading and algorithm gaming.</p>
+    </div>
+  </div>
+
+  <div class="quote">
+    Total addressable exposure: <strong>$2.25T+ annually</strong>
+  </div>
+</section>
+<section class="slide compact revClean">
+  <div class="kicker"><span class="line"></span> REVENUE</div>
+
+  <h2>Revenue <span class="accent">strategy</span></h2>
+
+  <p class="subhead">
+    v1 revenue begins in <strong>Q2 this year</strong>. v2 expands into an ARR model with tiered pricing.
+  </p>
+
+  <div class="grid two" style="margin-top:16px;">
+    <div class="card">
+      <div class="title">v1 — Initial revenue <span class="pill">Q2</span></div>
+      <div class="body">
+        <ul >
+          <li>Early customers onboard starting Q2</li>
+          <li>Focused on high-signal use cases and white-glove deployments</li>
+          <li>Proves value on “what breaks next” detection</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">v2 — ARR model <span class="pill">Live Q1 2027</span></div>
+      <div class="body">
+        <ul >
+          <li><strong>Tier 1:</strong> 5 keywords — $5,000 / month</li>
+          <li><strong>Tier 2:</strong> 15 keywords — $10,000 / month</li>
+          <li><strong>Tier 3:</strong> 50 keywords — $25,000 / month</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote" style="margin-top:14px;">
+    Initial push: ~<strong>10</strong> Tier 1, <strong>7</strong> Tier 2, <strong>3</strong> Tier 3 customers.
+    White-glove expansion increases ARPU over time.
+  </div>
+</section>
+
+
+    <section class="slide compact">
+      <div class="kicker"><span class="line"></span> APPENDIX 02 • PRICING</div>
+
+      <h2>Subscription <span class="accent">model</span></h2>
+
+      <p class="subhead">
+        Current report types plus enterprise-priced data throughput options (illustrative).
+      </p>
+
+      <div class="exhibitGrid">
+        <div class="tableCard">
+          <div class="tHead">
+            <div class="h">Indexed reports</div>
+            <div class="note">self-serve</div>
+          </div>
+
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Report type</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>24-Hour Influencer Index</strong></td>
+                <td>$59.99</td>
+              </tr>
+              <tr>
+                <td><strong>7-Day Trend Index</strong></td>
+                <td>$189.99</td>
+              </tr>
+              <tr>
+                <td><strong>30-Day Narrative Index</strong></td>
+                <td>$399.99</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tableCard">
+          <div class="tHead">
+            <div class="h">Enterprise throughput</div>
+            <div class="note">white-glove</div>
+          </div>
+
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Data input cost</th>
+                <th>Client charge</th>
+                <th>Use case</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>$3,000</strong> per 1M data points</td>
+                <td>5× (<strong>$15,000</strong> per 1M)</td>
+                <td>Full brand-influencer intelligence</td>
+              </tr>
+              <tr>
+                <td><strong>$3,000</strong> per 1M data points</td>
+                <td>7.5× (<strong>$22,500</strong> per 1M)</td>
+                <td>Predictive simulation via IBIS</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="quote">
+        Positioning note: for IB decks, pricing lives in the appendix.
+      </div>
+    </section>
+
+
+    <section class="slide compact">
+      <div class="kicker"><span class="line"></span> APPENDIX 03 • COMP SET</div>
+
+      <h2>Competitive <span class="accent">benchmarking</span></h2>
+
+      <p class="subhead">
+        Reference set of adjacent platforms (seed-stage lens). Core differentiation is virality + integrity
+        fingerprinting.
+      </p>
+
+      <div class="tableCard" style="margin-top:12px;">
+        <div class="tHead">
+          <div class="h">Market reference</div>
+          <div class="note">$32.55B (North America)</div>
+        </div>
+
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Company</th>
+              <th>Stage</th>
+              <th>Raised</th>
+              <th>Capability at raise</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Traackr</strong></td>
+              <td>Early</td>
+              <td>$6M</td>
+              <td>Influencer analytics</td>
+            </tr>
+            <tr>
+              <td><strong>CreatorIQ</strong></td>
+              <td>Seed</td>
+              <td>$3M+</td>
+              <td>Audience demographics</td>
+            </tr>
+            <tr>
+              <td><strong>Upfluence</strong></td>
+              <td>Early</td>
+              <td>$3M</td>
+              <td>Creator CRM tools</td>
+            </tr>
+            <tr>
+              <td><strong>HypeAuditor</strong></td>
+              <td>Pre-scale</td>
+              <td>$3.5M+</td>
+              <td>Bot/fraud detection</td>
+            </tr>
+            <tr>
+              <td><strong>Tagger Media</strong></td>
+              <td>Early</td>
+              <td>$5M</td>
+              <td>Dashboard reporting</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="quote">
+        How we differ: earliest topic-level virality, attribution, and coordination — linked to news and markets.
+      </div>
+    </section>
+
+
+    <section class="slide">
+      <div class="kicker"><span class="line"></span> THE TAKEAWAY</div>
+
+      <h2>The Internet Now <span class="accent">Moves Markets</span></h2>
+
+      <p class="subhead">But the signal is contaminated.</p>
+
+      <p class="subhead">
+        SocialAudits exists to <strong>separate real attention from engineered activity</strong>,
+        so institutional decisions are made on verified signal — not narrative noise.
+      </p>
+
+      <div class="quote">
+        Closing: If we’re allocating risk, reputation, or capital based on social data… is what we’re seeing
+        <strong>real</strong>?
+      </div>
+    </section>
+
+
+    </main>
+
+    <div class="hint" id="hint">Click / Space to advance • ← to go back • H toggles this</div>
+  </div>
+  </div>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const viewport = document.getElementById('viewport');
+      const hint = document.getElementById('hint');
+      let i = 0;
+
+      function render() {
+        slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+      }
+
+      function go(n) {
+        i = Math.max(0, Math.min(slides.length - 1, n));
+        render();
+      }
+
+      // Auto-hide hint after 3 seconds (doesn't steal attention)
+      let hintTimer = setTimeout(() => hint?.classList.add('hidden'), 3000);
+
+      function toggleHint() {
+        if (!hint) return;
+        hint.classList.toggle('hidden');
+        clearTimeout(hintTimer);
+      }
+
+      // Click anywhere to advance (ignore interactive elements if added later)
+      viewport.addEventListener('click', (e) => {
+        if (e.target.closest('button,a,input,textarea,select')) return;
+        go(i + 1);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        const k = e.key;
+
+        // forward
+        if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); go(i + 1); }
+
+        // back
+        if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') { e.preventDefault(); go(i - 1); }
+
+        // optional
+        if (k === 'Home') { e.preventDefault(); go(0); }
+        if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
+
+        // hint toggle
+        if (k === 'h' || k === 'H') { e.preventDefault(); toggleHint(); }
+
+        // fullscreen toggle (optional)
+        if (k === 'f' || k === 'F') {
+          e.preventDefault();
+          const el = document.documentElement;
+          if (!document.fullscreenElement) el.requestFullscreen?.();
+          else document.exitFullscreen?.();
+        }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+
+</html>
